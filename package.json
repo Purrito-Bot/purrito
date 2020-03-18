@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/djaustin/purrito-bot#readme",
   "dependencies": {
+    "@types/node": "^13.9.1",
     "discord.js": "^12.0.2"
   },
   "devDependencies": {
