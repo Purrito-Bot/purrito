@@ -4,6 +4,7 @@
   "description": "Discord bot",
   "main": "index.js",
   "scripts": {
+    "build-and-run": "tsc && node dist/index.js",
     "build": "tsc",
     "test": "echo \"Warning: no test specified\" && exit 0"
   },
@@ -26,6 +27,7 @@
     "discord.js": "^12.0.2"
   },
   "devDependencies": {
+    "prettier": "^1.19.1",
     "typescript": "^3.8.3"
   }
 }
