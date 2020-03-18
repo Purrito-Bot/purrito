@@ -17,7 +17,7 @@ client.on('ready', () => {
     )
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
-    client.user?.setActivity(`Serving ${client.guilds.cache.size} servers`)
+    client.user?.setActivity(`with yarn`)
 })
 
 client.on('guildCreate', guild => {
@@ -33,6 +33,7 @@ client.on('guildDelete', guild => {
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`)
     client.user?.setActivity(`Serving ${client.guilds.cache.size} servers`)
 })
+
 client.on('message', async (message: Discord.Message) => {
     // This event will run on every single message received, from any channel or DM.
 
@@ -42,8 +43,14 @@ client.on('message', async (message: Discord.Message) => {
 
     // Also good practice to ignore any message that does not start with our prefix,
     // which is set in the configuration file.
-    if (message.content.indexOf(config.prefix) !== 0) return
 
+    if (message.content.indexOf(config.prefix) !== 0) {
+        // Randomly meow when a message is received
+        if (Math.random() < 0.05) {
+            await message.channel.send('Meow.')
+        }
+        return
+    }
     // Here we separate our "command" name, and our "arguments" for the command.
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
