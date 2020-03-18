@@ -1,12 +1,9 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Build and test Node app & Docker image
 
 on:
-  push:
-    branches: 
-      - '*'
   pull_request:
     branches: 
       - '*'
@@ -30,3 +27,4 @@ jobs:
     - run: npm test
       env:
         CI: true
+    - run: docker image build -t test .
