@@ -1,0 +1,2 @@
+# purrito-bot
+Discord bot
