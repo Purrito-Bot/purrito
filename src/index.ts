@@ -24,7 +24,7 @@ client.on('guildDelete', guild => {
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`)
     client.user?.setActivity(`Serving ${client.guilds.cache.size} servers`)
 })
-client.on('message', async (message: Message) => {
+client.on('message', async (message: Discord.Message) => {
     // This event will run on every single message received, from any channel or DM.
 
     // It's good practice to ignore other bots. This also makes your bot ignore itself
