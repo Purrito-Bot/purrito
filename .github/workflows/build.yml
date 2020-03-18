@@ -4,9 +4,6 @@
 name: Build and test Node app & Docker image
 
 on:
-  push:
-    branches: 
-      - '*'
   pull_request:
     branches: 
       - '*'
