@@ -50,8 +50,9 @@ Code is written in [TypeScript](https://www.typescriptlang.org/) and runs in a [
 3. Run `npm run build` to transpile the TypeScript code to JavaScript.
 4. Run `node dist/index.js` to run the bot on your local machine.
     - Note you will need to have the bot token specified as an environment variable named `TOKEN` for the bot to be able to login.
-5. Ensure necessary changes to tests and documentation are completed.
-6. Make a pull request for review.
+5. Run `docker image build -t purrito .` to test that the Docker image successfully builds on your local machine.
+6. Ensure necessary changes to tests and documentation are completed.
+7. Make a pull request for review.
 
 ## :book: License
 
