@@ -69,6 +69,10 @@ client.on('message', async (message: Discord.Message) => {
                 message.createdTimestamp}ms.`
         )
     }
+
+    if (command === 'speak') {
+        await message.channel.send('Meow!')
+    }
 })
 
 client.login(process.env.TOKEN)
