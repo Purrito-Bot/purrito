@@ -1,15 +1,24 @@
 // Load up the discord.js library
-import Discord from 'discord.js'
+import Discord, { Message } from 'discord.js'
 
 // config.token contains the bot's token
 // config.prefix contains the message prefix.
 import config from './config.json'
 
-// This is your client. Some people call it `bot`, some people call it `self`, 
+// This is your client. Some people call it `bot`, some people call it `self`,
 // some might call it `cootchie`. Either way, when you see `client.something`, or `bot.something`,
 // this is what we're refering to. Your client.
-const client = new Discord.Client();
+const client = new Discord.Client()
 
+client.on('ready', () => {
+    // This event will run if the bot starts, and logs in, successfully.
+    console.log(
+        `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
+    )
+    // Example of changing the bot's playing game to something useful. `client.user` is what the
+    // docs refer to as the "ClientUser".
+    client.user?.setActivity(`Serving ${client.guilds.cache.size} servers`)
+})
 
 client.on('guildCreate', guild => {
     // This event triggers when the bot joins a guild.
