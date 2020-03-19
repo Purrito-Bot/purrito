@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import { speak } from './commands/speak'
 import config from './config.json'
 import { executeCommand } from './utils'
+import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
+
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
@@ -35,17 +37,25 @@ client.on('guildDelete', guild => {
 client.on('message', async (message: Message) => {
     // This event will run on every single message received, from any channel or DM.
 
-    // Ignore other bots
+    console.log(`On message fired - ${message.author.username}, ${message.content}.`)
+
+    if (message.author.username === 'Dice Maiden') {
+        parseDiceMaidenMessage(message.content)
+    }
+
+    // Ignore bots
     if (message.author.bot) return
 
     // On messages without prefix run these commands
     if (message.content.indexOf(config.prefix) !== 0) {
         // Randomly meow when a message is received
-        if (Math.random() < 0.05) speak(message)
-        return
+        if (Math.random() < 0.05) {
+            speak(message)
+        }
     }
-
-    executeCommand(message)
+    else {
+        executeCommand(message)
+    }
 })
 
 client.login(process.env.TOKEN)
