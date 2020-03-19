@@ -7,6 +7,9 @@ import { defend } from './commands/defend'
 import { speak } from './commands/speak'
 import _do from './commands/do'
 import { logger } from './logger'
+import { setConfig } from './commands/setConfig'
+import { getConfig } from './commands/getConfig'
+import { GuildSettings } from './models/guild'
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -52,5 +55,23 @@ export function executeCommand(message: Message): void {
         case 'do':
             _do(message, args)
             break
+        case 'setconfig':
+            setConfig(message, args)
+            break
+        case 'getconfig':
+            getConfig(message, args)
+            break
     }
+}
+
+export function allConfigAsMessageString(settings: GuildSettings) {
+    let response = ''
+    Object.keys(config.defaultSettings).forEach(key => {
+        const value = (settings as any)[key]
+        if (value) {
+            response += `${key}:\t**${value}**\n`
+        }
+    })
+
+    return response
 }

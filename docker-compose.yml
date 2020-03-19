@@ -1,0 +1,20 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+    mongo:
+        image: mongo:latest
+        restart: always
+        volumes:
+            - db-data:/data/db
+    purrito:
+        build: .
+        image: daustin/purrito:latest
+        restart: always
+        environment:
+            - TOKEN=changeme
+        depends_on:
+            - mongo
+
+volumes:
+    db-data:
