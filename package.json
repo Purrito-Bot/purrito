@@ -4,7 +4,6 @@
     "description": "Discord bot",
     "main": "index.js",
     "scripts": {
-        "start": "node dist/index.js",
         "build-and-run": "tsc && node dist/index.js",
         "build": "tsc",
         "test": "echo \"Warning: no test specified\" && exit 0"

@@ -1,8 +1,10 @@
 import { Message } from 'discord.js'
+import { attack } from './commands/attack'
+import { ping } from './commands/ping'
 import config from './config.json'
-import { Command } from './commands/command'
-import { AttackCommand } from './commands/attackCommand'
-import { PingCommand } from './commands/pingCommand'
+import { snack } from './commands/snack'
+import { defend } from './commands/defend'
+import { speak } from './commands/speak'
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -11,7 +13,7 @@ import { PingCommand } from './commands/pingCommand'
  * args = ["Is", "this", "the", "real", "life?"]
  * @param message - this is the Discord message
  */
-export function parseMessage(message: Message): [string, string[]] {
+function parseMessage(message: Message): [string, string[]] {
     const args = message.content
         .slice(config.prefix.length)
         .trim()
@@ -21,14 +23,26 @@ export function parseMessage(message: Message): [string, string[]] {
     return [command, args]
 }
 
-export function determineCommand(command: string): Command | undefined {
-    let commandClass: Command
+/**
+ * @description given a message - determine what command is being run and execute it
+ * @param message
+ */
+export function executeCommand(message: Message): void {
+    const [command, args] = parseMessage(message)
     switch (command) {
         case 'attack':
-            commandClass = new AttackCommand()
-            return commandClass
+            attack(message)
+            break
         case 'ping':
-            commandClass = new PingCommand()
-            return commandClass
+            ping(message)
+            break
+        case 'snack':
+        case 'snacc':
+            snack(message)
+            break
+        case 'defend':
+            defend(message)
+        case 'speak':
+            speak(message)
     }
 }
