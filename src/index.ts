@@ -40,7 +40,10 @@ client.on('message', async (message: Message) => {
     console.log(`On message fired - ${message.author.username}, ${message.content}.`)
 
     if (message.author.username === 'Dice Maiden') {
-        parseDiceMaidenMessage(message.content)
+        const diceResult = parseDiceMaidenMessage(message.content)
+        if (diceResult.hasNatural20()) {
+            await message.channel.send(':star2: MEEEOW!!! :star2:')
+        }
     }
 
     // Ignore bots
