@@ -1,3 +1,6 @@
 {
-    "prefix": "+"
+    "prefix": "+",
+    "defaultSettings": {
+        "randomSpeechProbability": 0.05
+    }
 }
