@@ -2,7 +2,7 @@ import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
 import { randomMeow } from './commands/randomMeow'
 import config from './config.json'
-import { parseMessage, determineCommand } from './utils'
+import { executeCommand } from './utils'
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
@@ -45,14 +45,7 @@ client.on('message', async (message: Message) => {
         return
     }
 
-    const [command, args] = parseMessage(message)
-
-    const commandClass = determineCommand(command)
-    if (commandClass) commandClass.executeCommand(message, args)
-
-    if (command === 'speak') {
-        await message.channel.send('Meow!')
-    }
+    executeCommand(message)
 })
 
 client.login(process.env.TOKEN)
