@@ -42,6 +42,7 @@ export function executeCommand(message: Message): void {
             break
         case 'defend':
             defend(message)
+            break
         case 'speak':
             speak(message)
     }
