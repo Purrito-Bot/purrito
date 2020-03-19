@@ -17,9 +17,7 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
     }
 
     const totalResultStr = messageContent.match(/(?<=Result:\s)\d+/)
-    console.log(totalResultStr)
     if (totalResultStr && totalResultStr.length === 1) {
-        console.log(totalResultStr[0])
         const totalResult = Number.parseInt(totalResultStr[0], 10)
         if (!isNaN(totalResult)) {
             result.success = true
@@ -28,10 +26,7 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
     }
 
     const rollStrs = messageContent.match(/\[\d+\]/g)
-    console.log('rolls' + rollStrs + ' ')
     if (rollStrs && rollStrs.length >= 1) {
-        console.log('rolls len' + rollStrs.length)
-        console.log(rollStrs[0])
         rollStrs.forEach(rollStr => {
             const rollNumStr = rollStr.replace('[', '').replace(']', '');
             const rollResult = Number.parseInt(rollNumStr, 10)
@@ -40,8 +35,6 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
             }
         })
     }
-
-    console.log(`Dice Maiden parse result: ${JSON.stringify(result)}`)
 
     return result
 }
