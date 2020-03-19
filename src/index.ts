@@ -1,6 +1,6 @@
 import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
-import { randomMeow } from './commands/randomMeow'
+import { speak } from './commands/speak'
 import config from './config.json'
 import { executeCommand } from './utils'
 // Initialise dotenv config - if you're doing config that way
@@ -41,7 +41,7 @@ client.on('message', async (message: Message) => {
     // On messages without prefix run these commands
     if (message.content.indexOf(config.prefix) !== 0) {
         // Randomly meow when a message is received
-        randomMeow(message)
+        if (Math.random() < 0.05) speak(message)
         return
     }
 

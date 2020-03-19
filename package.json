@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build-and-run": "tsc && node dist/index.js",
+        "prettier": "prettier --write src/**/*.{ts,tsx,js,css,html,json}",
         "build": "tsc",
         "test": "echo \"Warning: no test specified\" && exit 0"
     },
