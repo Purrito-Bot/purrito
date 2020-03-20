@@ -28,7 +28,7 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
 function extractDiceRolls(messageContent: string): number[] | null {
     let result: number[] | null = null
 
-    const rollStrs = messageContent.match(/(?<=Roll:\s)\[.+\]/g)
+    const rollStrs = messageContent.match(/(?<=Roll:\s`)\[.+\]/g)
     if (rollStrs && rollStrs.length >= 1) {
 
         const rolls = rollStrs
