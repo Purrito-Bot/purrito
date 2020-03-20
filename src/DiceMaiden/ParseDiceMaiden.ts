@@ -16,7 +16,7 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
     const diceRolls = extractDiceRolls(messageContent)
 
     if (rollerName && totalResult && diceRolls) {
-        result.success = true
+        result.parseSuccessful = true
         result.rollerName = rollerName
         result.totalResult = totalResult
         result.diceRolls = diceRolls
