@@ -13,7 +13,7 @@ export class DiceMaidenResult {
     totalResult: number = 0;
 
     hasNatural20(): boolean {
-        return this.parseSuccessful && this.diceRolls.filter(r => r === 20).length > 0
+        return this.parseSuccessful && this.diceRolls.some(r => r === 20)
     }
 
     hasNatural1(): boolean {
