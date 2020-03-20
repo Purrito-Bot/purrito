@@ -1,6 +1,10 @@
 export class DiceMaidenResult {
 
-    success: boolean = false;
+    /**
+     * Indicates whether a dice maiden parse was successful.
+     * If this is false other members in this class are not to be trusted.
+     */
+    parseSuccessful: boolean = false;
 
     rollerName: string = '';
 
@@ -9,7 +13,7 @@ export class DiceMaidenResult {
     totalResult: number = 0;
 
     hasNatural20(): boolean {
-        return this.success && this.diceRolls.filter(r => r === 20).length > 0
+        return this.parseSuccessful && this.diceRolls.filter(r => r === 20).length > 0
     }
 
     hasNatural1(): boolean {
