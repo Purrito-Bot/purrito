@@ -31,8 +31,8 @@ function extractDiceRolls(messageContent: string): number[] | null {
     const rollStrs = messageContent.match(/(?<=Roll:\s)\[.+\]/g)
     if (rollStrs && rollStrs.length >= 1) {
 
-        // check for multiple rolls in the set
         const rolls = rollStrs
+            // check for multiple rolls in the set by splitting on the comma
             .flatMap(rollStr => rollStr.split(','))
             .map(rollStr => rollStr.replace('[', '').replace(']', '').replace(',', '').trim())
             .filter(rollStr => rollStr !== null && rollStr !== '')
