@@ -32,7 +32,7 @@ function extractDiceRolls(messageContent: string): number[] | null {
     if (rollStrs && rollStrs.length >= 1) {
         const rolls = rollStrs
             .map(rollStr => rollStr.replace('[', '').replace(']', ''))
-            .map(rollNumStr => Number.parseInt(rollNumStr, 10))
+            .map(rollNumStr => parseInt(rollNumStr, 10))
 
         if (rolls.filter(roll => isNaN(roll)).length === 0) {
 
@@ -46,7 +46,7 @@ function extractTotalResult(messageContent: string): number | null {
     let result: number | null = null;
     const totalResultStr = messageContent.match(/(?<=Result:\s)\d+/)
     if (totalResultStr && totalResultStr.length === 1) {
-        const totalResult = Number.parseInt(totalResultStr[0], 10)
+        const totalResult = parseInt(totalResultStr[0], 10)
         if (!isNaN(totalResult)) {
             result = totalResult
         }
