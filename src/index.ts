@@ -37,7 +37,7 @@ client.on('guildDelete', guild => {
 client.on('message', async (message: Message) => {
     // This event will run on every single message received, from any channel or DM.
 
-    if (message.author.username === 'Dice Maiden') {
+    if (message.author.tag === 'Dice Maiden#9678') {
         const diceResult = parseDiceMaidenMessage(message.content)
         if (diceResult.hasNatural20()) {
             await message.channel.send(':star2: MEEEOW!!! :star2:')
