@@ -28,10 +28,14 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
 function extractDiceRolls(messageContent: string): number[] | null {
     let result: number[] | null = null
 
-    const rollStrs = messageContent.match(/\[\d+\]/g)
+    const rollStrs = messageContent.match(/(?<=Roll:\s)\[.+\]/g)
     if (rollStrs && rollStrs.length >= 1) {
+
+        // check for multiple rolls in the set
         const rolls = rollStrs
-            .map(rollStr => rollStr.replace('[', '').replace(']', ''))
+            .flatMap(rollStr => rollStr.split(','))
+            .map(rollStr => rollStr.replace('[', '').replace(']', '').replace(',', '').trim())
+            .filter(rollStr => rollStr !== null && rollStr !== '')
             .map(rollNumStr => parseInt(rollNumStr, 10))
 
         if (rolls.filter(roll => isNaN(roll)).length === 0) {
