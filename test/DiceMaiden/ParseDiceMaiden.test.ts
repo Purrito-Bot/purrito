@@ -1,4 +1,4 @@
-import { parseDiceMaidenMessage } from '../../DiceMaiden/ParseDiceMaiden'
+import { parseDiceMaidenMessage } from '../../src/DiceMaiden/ParseDiceMaiden'
 
 test('Username is correctly parsed', () => {
 
