@@ -2,6 +2,8 @@
 
 ![Build & Test](https://github.com/djaustin/purrito-bot/workflows/Build%20&%20Test/badge.svg)
 ![Publish Image and Deploy](https://github.com/djaustin/purrito/workflows/Publish%20Image%20and%20Deploy/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fc1d27cb162204bdc70f/maintainability)](https://codeclimate.com/github/djaustin/purrito/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fc1d27cb162204bdc70f/test_coverage)](https://codeclimate.com/github/djaustin/purrito/test_coverage)
 ![Docker Pulls](https://img.shields.io/docker/pulls/daustin/purrito)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/daustin/purrito)
 
