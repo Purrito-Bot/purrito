@@ -4,6 +4,7 @@ import { speak } from './commands/speak'
 import config from './config.json'
 import { executeCommand } from './utils'
 import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
+import { logger } from './logger'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
@@ -12,7 +13,7 @@ const client = new Client()
 
 client.on('ready', () => {
     // This event will run if the bot starts, and logs in, successfully.
-    console.log(
+    logger.info(
         `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
     )
     // Example of changing the bot's playing game to something useful. `client.user` is what the
@@ -22,7 +23,7 @@ client.on('ready', () => {
 
 client.on('guildCreate', guild => {
     // This event triggers when the bot joins a guild.
-    console.log(
+    logger.info(
         `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
     )
     client.user?.setActivity(`with yarn`)
@@ -30,12 +31,13 @@ client.on('guildCreate', guild => {
 
 client.on('guildDelete', guild => {
     // this event triggers when the bot is removed from a guild.
-    console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`)
+    logger.info(`I have been removed from: ${guild.name} (id: ${guild.id})`)
     client.user?.setActivity(`with yarn`)
 })
 
 client.on('message', async (message: Message) => {
     // This event will run on every single message received, from any channel or DM.
+    logger.debug("Entered on message.")
 
     if (message.author.tag === 'Dice Maiden#9678') {
         const diceResult = parseDiceMaidenMessage(message.content)
