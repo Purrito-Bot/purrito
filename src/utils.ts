@@ -5,6 +5,7 @@ import config from './config.json'
 import { snack } from './commands/snack'
 import { defend } from './commands/defend'
 import { speak } from './commands/speak'
+import { logger } from './logger'
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -29,6 +30,7 @@ function parseMessage(message: Message): [string, string[]] {
  */
 export function executeCommand(message: Message): void {
     const [command, args] = parseMessage(message)
+    logger.debug(`Command parsed: '${command}'`)
     switch (command) {
         case 'attack':
             attack(message)
@@ -45,5 +47,6 @@ export function executeCommand(message: Message): void {
             break
         case 'speak':
             speak(message)
+            break
     }
 }

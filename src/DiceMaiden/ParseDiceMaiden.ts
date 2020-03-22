@@ -1,4 +1,5 @@
 import { DiceMaidenResult } from "./DiceMaidenResult";
+import { logger } from "../logger";
 
 /**
  * @description Parse the message from Dice Maiden into a DiceMaidenResult object.
@@ -21,6 +22,9 @@ export function parseDiceMaidenMessage(messageContent: string): DiceMaidenResult
         result.totalResult = totalResult
         result.diceRolls = diceRolls
     }
+    else {
+        logger.warn(`Dice parsing failed: ${JSON.stringify({rollerName: rollerName, totalResult: totalResult, diceRolls: diceRolls, messageContent: messageContent}, null, 2)}.`)
+    }
     return result
 }
 
@@ -39,7 +43,6 @@ function extractDiceRolls(messageContent: string): number[] | null {
             .map(rollNumStr => parseInt(rollNumStr, 10))
 
         if (rolls.filter(roll => isNaN(roll)).length === 0) {
-
             result = rolls
         }
     }
