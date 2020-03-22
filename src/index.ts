@@ -5,6 +5,7 @@ import config from './config.json'
 import { executeCommand } from './utils'
 import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
 import { logger } from './logger'
+import * as fs from 'fs'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
@@ -13,8 +14,17 @@ const client = new Client()
 
 client.on('ready', () => {
     // This event will run if the bot starts, and logs in, successfully.
+
+    // print banner text. only the console needs to this.
+    try {
+        var data = fs.readFileSync('./src/banner.txt', 'utf8');
+        console.log(data);
+    } catch (e) {
+        logger.warn('Failed to print banner text.', e);
+    }
+
     logger.info(
-        `Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
+        `Purrito is awake, with ${client.users.cache.size} users in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`
     )
     // Example of changing the bot's playing game to something useful. `client.user` is what the
     // docs refer to as the "ClientUser".
