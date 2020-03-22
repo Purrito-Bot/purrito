@@ -33,6 +33,12 @@ Purrito will respond to approximately 5% of messages with a 'Meow.'. It also has
    `docker container run -d -e TOKEN=<YOUR_TOKEN> daustin/purrito`
 4. Follow instructions [here](https://discordpy.readthedocs.io/en/latest/discord.html#inviting-your-bot) to generate a link which will allow Discord users to invite your bot to their server.
 
+### Logs
+
+Purriot uses [Winston](https://github.com/winstonjs/winston) for logging. Debug level logs are written to the console and purrito.log.
+
+Log configuration is managed in src/logger.ts.
+
 ## :book: License
 
 [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
