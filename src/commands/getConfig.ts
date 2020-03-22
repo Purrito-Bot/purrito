@@ -14,14 +14,20 @@ export async function getConfig(message: Message, args: string[]) {
     let response = ''
 
     if (key) {
-        const value = (settings as any)[key]
-        if (value) {
-            response = `${key}:\t**${value}**`
-        } else {
-            response = `No config value found for "${key}".`
-        }
+        response = getConfigByKey(key, settings)
     } else {
         response = 'All server config:\n\n' + allConfigAsMessageString(settings)
     }
     return await message.channel.send(response)
+}
+
+function getConfigByKey(key: string, settings: GuildSettings) {
+    const value = (settings as any)[key]
+    let response: string
+    if (value) {
+        response = `${key}:\t**${value}**`
+    } else {
+        response = `No config value found for "${key}".`
+    }
+    return response
 }
