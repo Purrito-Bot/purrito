@@ -9,7 +9,6 @@ import * as fs from 'fs'
 
 import mongoose from 'mongoose'
 import Guild, { GuildSettings } from './models/guild'
-import { settings } from 'cluster'
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 

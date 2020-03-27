@@ -27,18 +27,43 @@ Purrito will respond to approximately 5% of messages with a 'Meow.'. It also has
 
 ## :runner: Running your own Purrito
 
-1. Follow the instructions [here](https://discordapp.com/developers/docs/intro) to set up your bot in the Discord developer portal.
-2. Retrieve your bot token from the developer portal.
-3. Pull and run the docker image at https://hub.docker.com/r/daustin/purrito
-   `docker image pull daustin/purrito`
-   `docker container run -d -e TOKEN=<YOUR_TOKEN> daustin/purrito`
+### Prerequisites
+
+-   A Discord bot token from the Discord developer portal
+    -   Follow the instructions [here](https://discordapp.com/developers/docs/intro) to set up your bot.
+
+### Running
+
+Purrito is released as a Docker image with a dependency on a [mongodb](https://www.mongodb.com/) database for storing pesistent data such as Discord server configuration.
+
+1. Download the example Docker Compose file from this repository:
+
+```bash
+wget https://raw.githubusercontent.com/djaustin/purrito/master/docker-compose.yml
+```
+
+2. Update the file to contain your own Discord bot token in place of `changeme` in the following YAML.
+
+```yaml
+purrito:
+    build: .
+    image: daustin/purrito:latest
+    restart: always
+    environment:
+        - TOKEN=changeme
+    depends_on:
+        - mongo
+```
+
+3. Run `docker-compose up` to start your own Purrito.
+
 4. Follow instructions [here](https://discordpy.readthedocs.io/en/latest/discord.html#inviting-your-bot) to generate a link which will allow Discord users to invite your bot to their server.
 
-### Logs
+### :memo: Logs
 
-Purriot uses [Winston](https://github.com/winstonjs/winston) for logging. Debug level logs are written to the console and purrito.log.
+Purrito uses [Winston](https://github.com/winstonjs/winston) for logging. Debug level logs are written to the console and `purrito.log`.
 
-Log configuration is managed in src/logger.ts.
+Log configuration is managed in `src/logger.ts`.
 
 ## :book: License
 
