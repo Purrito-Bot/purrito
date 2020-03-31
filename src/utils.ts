@@ -5,6 +5,7 @@ import config from './config.json'
 import { snack } from './commands/snack'
 import { defend } from './commands/defend'
 import { speak } from './commands/speak'
+import _do from './commands/do'
 import { logger } from './logger'
 
 /**
@@ -47,6 +48,9 @@ export function executeCommand(message: Message): void {
             break
         case 'speak':
             speak(message)
+            break
+        case 'do':
+            _do(message, args)
             break
     }
 }
