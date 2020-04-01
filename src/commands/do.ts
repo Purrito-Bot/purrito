@@ -11,10 +11,11 @@ export default async function _do(message: Message, args: string[]) {
         .toPresentTense()
         .all()
         .text()
-    if (proceesedSentence.length < 1) {
+    if (args[0] === proceesedSentence.split(' ')[0]) {
         logger.error(
             `No verb detected in sentence "${messageString}". Making best attempt.`
         )
+        logger.debug(lazyConjugate(args[0]))
         if (args.length > 1) {
             proceesedSentence = `${lazyConjugate(args[0])} ${args
                 .slice(1)
