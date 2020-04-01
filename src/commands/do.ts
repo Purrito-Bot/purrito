@@ -9,6 +9,7 @@ export default async function _do(message: Message, args: string[]) {
     let proceesedSentence = sentence
         .verbs()
         .toPresentTense()
+        .all()
         .text()
     if (proceesedSentence.length < 1) {
         logger.error(
