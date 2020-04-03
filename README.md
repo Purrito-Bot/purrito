@@ -19,11 +19,13 @@ Purrito commands use the plus symbol '+' as a prefix.
 
 Purrito will respond to approximately 5% of messages with a 'Meow.'. It also has the following user commands
 
-| Command  | Parameters                           | Behaviour                                                                                                  |
-| -------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `+speak` | -                                    | Sends `Meow!` to the channel .                                                                             |
-| `+do`    | verb or sentence beginning with verb | Responds with italised message with Purrito carryingout the action. e.g. `+do glare` -> _`purrito glares`_ |
-| `+ping`  | -                                    | Responds with the round-trip latency between sending a message and editing it.                             |
+| Command      | Parameters                           | Behaviour                                                                                                                        |
+| ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `+speak`     | -                                    | Sends `Meow!` to the channel .                                                                                                   |
+| `+do`        | verb or sentence beginning with verb | Responds with italised message with Purrito carryingout the action. e.g. `+do glare` -> _`purrito glares`_                       |
+| `+ping`      | -                                    | Responds with the round-trip latency between sending a message and editing it.                                                   |
+| `+die`       | -                                    | Lowers Purrito's life count by 1. If it hits 0, no commands other than `+resurrect` will work until Purrito has at least 1 life. |
+| `+resurrect` | -                                    | Raises Purrito's life count by 1.                                                                                                |
 
 ## :runner: Running your own Purrito
 
