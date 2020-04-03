@@ -2,7 +2,7 @@ import { Message } from 'discord.js'
 import Guild, { GuildSettings } from '../models/guild'
 import config from '../config.json'
 import equal from 'deep-equal'
-import { allConfigAsMessageString } from '../utils'
+import { allConfigAsMessageString, findOrMakeGuild } from '../utils'
 
 export async function setConfig(message: Message, args: string[]) {
     let [key, value] = args
@@ -33,19 +33,6 @@ function updateSettings(key: string, value: string, settings: GuildSettings) {
         default:
             throw new Error(`Invalid config option "${key}"`)
     }
-}
-
-async function findOrMakeGuild(guildId: string) {
-    // Try to get existing guild config
-    let guild = await Guild.findOne({ guildId: guildId })
-    if (!guild) {
-        // Create config if none exists yet for this guild
-        guild = new Guild({
-            guildId: guildId,
-            settings: config.defaultSettings,
-        })
-    }
-    return guild
 }
 
 function updateRandomSpeechProbability(value: string, settings: GuildSettings) {

@@ -2,7 +2,7 @@ import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
 import { speak } from './commands/speak'
 import config from './config.json'
-import { executeCommand } from './utils'
+import { executeCommand, findOrMakeGuild } from './utils'
 import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
 import { logger } from './logger'
 import * as fs from 'fs'
@@ -76,8 +76,8 @@ client.on('message', async (message: Message) => {
     // Ignore bots
     if (message.author.bot) return
 
-    // On messages without prefix run these commands
     if (message.content.indexOf(config.prefix) !== 0) {
+        // On messages without prefix run these commands
         // Randomly meow when a message is received
         if (Math.random() < guildSettings.randomSpeechProbability) {
             speak(message)
