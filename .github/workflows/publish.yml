@@ -39,7 +39,7 @@ jobs:
         run: |
           echo "${{ secrets.AWS_PEM }}" > key.pem
           chmod 400 key.pem
-          ssh -oStrictHostKeyChecking=no -i key.pem ec2-user@35.179.80.203 "docker-compose down && docker-compose up -d"
+          ssh -oStrictHostKeyChecking=no -i key.pem ec2-user@35.179.80.203 "docker image pull daustin/purrito && docker-compose up -d"
 
       - name: Discord notification
         env:
