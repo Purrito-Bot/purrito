@@ -9,13 +9,13 @@ export default async function die(message: Message) {
     let response: string
     guild.purritoState.lives = guild.purritoState.lives - 1
     if (guild.purritoState.lives >= 1) {
-        response = `*purrito dies.* he has ${guild.purritoState.lives} ${
+        response = `*purrito dies.* He has ${guild.purritoState.lives} ${
             guild.purritoState.lives > 1 ? 'lives' : 'life'
         } left. :skull_crossbones:`
     } else if (guild.purritoState.lives === 0) {
         const timeOfDeath = moment()
         guild.purritoState.timeOfDeath = timeOfDeath.toDate()
-        response = `*purrito dies.* he's unresponsive... Time of death: ${timeOfDeath.toLocaleString()}`
+        response = `*purrito dies.* He's unresponsive... Time of death: ${timeOfDeath.toLocaleString()}`
     } else {
         guild.purritoState.lives = 0
         response = `How do you kill that which has no life?`
