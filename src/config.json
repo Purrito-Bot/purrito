@@ -2,5 +2,8 @@
     "prefix": "+",
     "defaultSettings": {
         "randomSpeechProbability": 0.05
+    },
+    "defaultPurritoState": {
+        "lives": 9
     }
 }

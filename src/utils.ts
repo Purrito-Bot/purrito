@@ -9,7 +9,18 @@ import _do from './commands/do'
 import { logger } from './logger'
 import { setConfig } from './commands/setConfig'
 import { getConfig } from './commands/getConfig'
-import { GuildSettings } from './models/guild'
+import { GuildSettings, IGuild } from './models/guild'
+import Guild, { IGuildModel } from './models/guild'
+import die from './commands/dies'
+import en from 'javascript-time-ago/locale/en'
+import TimeAgo from 'javascript-time-ago'
+import resurrect from './commands/resurrect'
+
+// set up TimeAgo
+TimeAgo.addLocale(en)
+
+// Create relative date/time formatter.
+const timeAgo = new TimeAgo('en-GB')
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -32,9 +43,18 @@ function parseMessage(message: Message): [string, string[]] {
  * @description given a message - determine what command is being run and execute it
  * @param message
  */
-export function executeCommand(message: Message): void {
+export async function executeCommand(message: Message) {
     const [command, args] = parseMessage(message)
     logger.debug(`Command parsed: '${command}'`)
+    // Check if Purrito has run out of lives. Only allow resurrect if so.
+    const guild = await findOrMakeGuild(message.guild!.id)
+    if (guild.purritoState.lives <= 0 && command !== 'resurrect') {
+        return await message.channel.send(
+            `Purrito died ${timeAgo.format(
+                guild.purritoState.timeOfDeath
+            )}. It's time to move on.`
+        )
+    }
     switch (command) {
         case 'attack':
             attack(message)
@@ -61,6 +81,12 @@ export function executeCommand(message: Message): void {
         case 'getconfig':
             getConfig(message, args)
             break
+        case 'die':
+            die(message)
+            break
+        case 'resurrect':
+            resurrect(message)
+            break
     }
 }
 
@@ -74,4 +100,17 @@ export function allConfigAsMessageString(settings: GuildSettings) {
     })
 
     return response
+}
+export async function findOrMakeGuild(guildId: string) {
+    // Try to get existing guild config
+    let guild = await Guild.findOne({ guildId: guildId })
+    if (!guild) {
+        // Create config if none exists yet for this guild
+        guild = new Guild({
+            guildId: guildId,
+            settings: config.defaultSettings,
+            purritoState: config.defaultPurritoState,
+        })
+    }
+    return guild
 }
