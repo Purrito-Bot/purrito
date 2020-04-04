@@ -15,6 +15,8 @@ import die from './commands/dies'
 import en from 'javascript-time-ago/locale/en'
 import TimeAgo from 'javascript-time-ago'
 import resurrect from './commands/resurrect'
+import { removeAllListeners } from 'cluster'
+import roll from './commands/roll'
 
 // set up TimeAgo
 TimeAgo.addLocale(en)
@@ -57,35 +59,38 @@ export async function executeCommand(message: Message) {
     }
     switch (command) {
         case 'attack':
-            attack(message)
+            await attack(message)
             break
         case 'ping':
-            ping(message)
+            await ping(message)
             break
         case 'snack':
         case 'snacc':
-            snack(message)
+            await snack(message)
             break
         case 'defend':
-            defend(message)
+            await defend(message)
             break
         case 'speak':
             speak(message)
             break
         case 'do':
-            _do(message, args)
+            await _do(message, args)
             break
         case 'setconfig':
-            setConfig(message, args)
+            await setConfig(message, args)
             break
         case 'getconfig':
-            getConfig(message, args)
+            await getConfig(message, args)
             break
         case 'die':
-            die(message)
+            await die(message)
             break
         case 'resurrect':
-            resurrect(message)
+            await resurrect(message)
+            break
+        case 'roll':
+            await roll(message)
             break
     }
 }
@@ -103,7 +108,13 @@ export function allConfigAsMessageString(settings: GuildSettings) {
 }
 export async function findOrMakeGuild(guildId: string) {
     // Try to get existing guild config
-    let guild = await Guild.findOne({ guildId: guildId })
+    let guild: IGuild | null = null;
+    try {
+        //guild = await Guild.findOne({ guildId: guildId })
+    }
+    catch (e) {
+        logger.warn(e)
+    }
     if (!guild) {
         // Create config if none exists yet for this guild
         guild = new Guild({
