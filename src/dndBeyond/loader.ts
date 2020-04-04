@@ -391,6 +391,7 @@ export function parseCharacter(data: any): Character {
         let attrs = createRepeatingTrait(object, t, fi);
         Object.assign(repeating_attributes, attrs);
     });
+    
     // Race Features
     if (character.race.racialTraits != null) {
         let ti = 0;
