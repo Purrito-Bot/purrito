@@ -42,7 +42,7 @@ export default async function roll(message: Message) {
         // backtick for monospacing
         responseMessage += '`';
         for (const playerRoll of sortedPlayerRolls) {
-            responseMessage += `${playerRoll.name.padEnd(nameLength)}: ${playerRoll.roll} + ${playerRoll.initiative} = ${playerRoll.total}\n`;
+            responseMessage += `${playerRoll.name.padEnd(nameLength)}: ${playerRoll.roll.toString().padStart(2)} + ${playerRoll.initiative.toString().padStart(2)} = ${playerRoll.total.toString().padStart(2)} \n`;
         }
         responseMessage += '`';
         await message.channel.send(responseMessage);
