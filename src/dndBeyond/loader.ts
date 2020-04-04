@@ -1035,7 +1035,7 @@ export function parseCharacter(data: any): Character {
 
     // check for bad attribute values and change them to empty strings, because these will cause a crash otherwise
     // ('Error: Firebase.update failed: First argument contains undefined in property 'current'')
-    let illegal = [];
+    let illegal: any[] = [];
     for (let scan in single_attributes) {
         if ((single_attributes[scan] === undefined) || (single_attributes[scan] === null)) {
             single_attributes[scan] = '';
@@ -1087,7 +1087,7 @@ const calculateInitiativeStyle = (character: any) => {
 }
 
 const updateProficiency = (modifiers: any[], input: any, proficiency_level: number) => {
-    let attribute_bases = [];
+    let attribute_bases: string[] = [];
     switch (input.subType) {
         case 'ability-checks':
             attribute_bases = all_skills;
@@ -1233,7 +1233,7 @@ const createSingleWriteQueue = (attributes: any) => {
     }
 
     // write in deterministic order (class first, then alphabetical)
-    let items = [];
+    let items: any[] = [];
     for (let trigger of class_update_triggers) {
         let value = attributes[trigger];
         if ((value === undefined) || (value === null)) {
@@ -1665,7 +1665,7 @@ const getTotalAbilityScore = (character: any, scoreId: number) => {
     let modifiers = getObjects(character, '', _ABILITY.get(<string>_ABILITIES.get(scoreId)) + "-score");
     if (override > 0) total = override;
     if (modifiers.length > 0) {
-        let used_ids = [];
+        let used_ids: any[] = [];
         for (let i = 0; i < modifiers.length; i++) {
             if (modifiers[i].type == 'bonus' && used_ids.indexOf(modifiers[i].id) == -1) {
                 total += modifiers[i].value;
