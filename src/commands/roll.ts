@@ -35,10 +35,16 @@ export default async function roll(message: Message) {
 
         const sortedPlayerRolls = playerRolls.sort((prA, prB) => (prA.total > prB.total) ? 1 : -1).reverse();
 
+        // get longest name for padding
+        const nameLength = playerRolls.map(pr => pr.name).reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
+
         let responseMessage = 'I am the dice king!\n';
+        // backtick for monospacing
+        responseMessage += '`';
         for (const playerRoll of sortedPlayerRolls) {
-            responseMessage += `${playerRoll.name}: ${playerRoll.roll} + ${playerRoll.initiative} = ${playerRoll.total}\n`;
+            responseMessage += `${playerRoll.name.padEnd(nameLength)}: ${playerRoll.roll} + ${playerRoll.initiative} = ${playerRoll.total}\n`;
         }
+        responseMessage += '`';
         await message.channel.send(responseMessage);
 
         logger.debug("Finished roll command");
