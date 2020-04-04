@@ -1,5 +1,5 @@
-import { findOrMakeGuild } from '../utils'
 import { Message } from 'discord.js'
+import { findOrMakeGuild } from '../database'
 
 export default async function resurrect(message: Message) {
     const guildId = message.guild!.id
@@ -10,7 +10,7 @@ export default async function resurrect(message: Message) {
         guild.purritoState.timeOfDeath = null
         response = `*purrito is resurrected.* he has ${
             guild.purritoState.lives
-        } ${guild.purritoState.lives > 1 ? 'lives' : 'life'} left. :heart:`
+            } ${guild.purritoState.lives > 1 ? 'lives' : 'life'} left. :heart:`
     } else {
         guild.purritoState.lives = 9
         response = `*purrito can't get any more alive!*`

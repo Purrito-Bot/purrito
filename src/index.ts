@@ -2,36 +2,18 @@ import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
 import { speak } from './commands/speak'
 import config from './config.json'
-import { executeCommand, findOrMakeGuild } from './utils'
+import { executeCommand } from './utils'
 import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
 import { logger } from './logger'
 import * as fs from 'fs'
+import { connectDatabase, findByGuildId } from './database'
 
-import mongoose from 'mongoose'
-import Guild, { GuildSettings } from './models/guild'
-import { lookup } from 'dns'
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
 const client = new Client()
 
-const defaultSettings: GuildSettings = {
-    randomSpeechProbability: 0.05,
-}
-
-let databaseConnected = false;
-
-mongoose.connect(
-    process.env.MONGO_CONNECTION_STRING || 'mongodb://mongo:27017/purrito',
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-
-    .then(() => {
-        logger.info("Database successfully connected.")
-        databaseConnected = true;
-    })
-    .catch(e => {
-        logger.warn('Database connection failed.', e)
-    });
+connectDatabase()
 
 client.on('ready', () => {
     // This event will run if the bot starts, and logs in, successfully.
@@ -72,17 +54,7 @@ client.on('message', async (message: Message) => {
     // Ignore messages outside servers
     if (!message.guild) return
 
-    let guildSettings = defaultSettings
-    if (databaseConnected) {
-        try {
-            // Determine settings for this message
-            const savedGuild = await Guild.findByGuildId(message.guild.id)
-            guildSettings = savedGuild?.settings || defaultSettings
-        }
-        catch (e) {
-            logger.warn(e);
-        }
-    }
+    const guildSettings = await findByGuildId(message.guild.id)
 
     if (message.author.tag === 'Dice Maiden#9678') {
         const diceResult = parseDiceMaidenMessage(message.content)

@@ -17,6 +17,7 @@ import TimeAgo from 'javascript-time-ago'
 import resurrect from './commands/resurrect'
 import { removeAllListeners } from 'cluster'
 import roll from './commands/roll'
+import { findOrMakeGuild } from './database'
 
 // set up TimeAgo
 TimeAgo.addLocale(en)
@@ -105,23 +106,4 @@ export function allConfigAsMessageString(settings: GuildSettings) {
     })
 
     return response
-}
-export async function findOrMakeGuild(guildId: string) {
-    // Try to get existing guild config
-    let guild: IGuild | null = null;
-    try {
-        //guild = await Guild.findOne({ guildId: guildId })
-    }
-    catch (e) {
-        logger.warn(e)
-    }
-    if (!guild) {
-        // Create config if none exists yet for this guild
-        guild = new Guild({
-            guildId: guildId,
-            settings: config.defaultSettings,
-            purritoState: config.defaultPurritoState,
-        })
-    }
-    return guild
 }
