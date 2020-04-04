@@ -937,29 +937,24 @@ export function parseCharacter(data: any): Character {
     // TODO there is still something incorrect here
 
     let background = '';
-    if (character.background.definition != null) background = character.background.definition.name;
-    if (background == '' && character.background.customBackground.name != null) background = character.background.customBackground.name;
+    if (character.background.definition != null) {
+        background = character.background.definition.name;
+    }
+    if (background == '' && character.background.customBackground.name != null) {
+        background = character.background.customBackground.name;
+    }
 
     let initiative_bonus = 0;
+
     // add dexterity bonus
-    initiative_bonus += (character.bonusStats[1].value == null ? 0 : character.bonusStats[1].value);
+    let dexterityBase = (character.stats[1].value == null ? 10 : character.stats[1].value);
+    initiative_bonus += Math.floor((dexterityBase - 10) / 2);
+
     // add class modifiers
     initiative_bonus += getObjects(character.modifiers, 'subType', 'initiative').length;
-    const dexBonuses = getObjects(character, 'subType', "dexterity-score");
-    if (dexBonuses.length > 0) {
-        let used_ids = [];
-        for (let i = 0; i < dexBonuses.length; i++) {
-            if (dexBonuses[i].type == 'bonus' && used_ids.indexOf(dexBonuses[i].id) == -1) {
-                initiative_bonus += dexBonuses[i].value;
-                used_ids.push(dexBonuses[i].id);
-            }
-        }
-    }
+
     // other modifiers
     initiative_bonus += ('initiative' in modifiers) ? modifiers.initiative.bonus : 0;
-
-
-
 
     let other_attributes = {
         // Base Info
