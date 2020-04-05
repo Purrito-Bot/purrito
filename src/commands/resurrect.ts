@@ -8,9 +8,8 @@ export default async function resurrect(message: Message) {
     guild.purritoState.lives = guild.purritoState.lives + 1
     if (guild.purritoState.lives <= 8) {
         guild.purritoState.timeOfDeath = null
-        response = `*purrito is resurrected.* he has ${
-            guild.purritoState.lives
-            } ${guild.purritoState.lives > 1 ? 'lives' : 'life'} left. :heart:`
+        const lifeWord = guild.purritoState.lives > 1 ? 'lives' : 'life'
+        response = `*purrito is resurrected.* He has ${guild.purritoState.lives} ${lifeWord} left. :heart:`
     } else {
         guild.purritoState.lives = 9
         response = `*purrito can't get any more alive!*`
