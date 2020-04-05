@@ -26,6 +26,7 @@ Purrito will respond to approximately 5% of messages with a 'Meow.'. It also has
 | `+ping`      | -                                    | Responds with the round-trip latency between sending a message and editing it.                                                   |
 | `+die`       | -                                    | Lowers Purrito's life count by 1. If it hits 0, no commands other than `+resurrect` will work until Purrito has at least 1 life. |
 | `+resurrect` | -                                    | Raises Purrito's life count by 1.                                                                                                |
+| `+roll`      | -                                    | Rolls for initiative for players in the party. The players are currently hard coded.                                             |
 
 ## :runner: Running your own Purrito
 
