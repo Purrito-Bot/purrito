@@ -15,6 +15,8 @@ import die from './commands/dies'
 import en from 'javascript-time-ago/locale/en'
 import TimeAgo from 'javascript-time-ago'
 import resurrect from './commands/resurrect'
+import { ValuedDescriptor } from './models/item'
+import { generateItem } from './commands/generateItem'
 
 // set up TimeAgo
 TimeAgo.addLocale(en)
@@ -87,6 +89,9 @@ export async function executeCommand(message: Message) {
         case 'resurrect':
             resurrect(message)
             break
+        case 'generate':
+            generateItem(message, args)
+            break
     }
 }
 
@@ -113,4 +118,24 @@ export async function findOrMakeGuild(guildId: string) {
         })
     }
     return guild
+}
+
+export function getRandomValueFromArray<T>(array: T[]): T {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+export function createdWeightedList(
+    descriptors: ValuedDescriptor[]
+): ValuedDescriptor[] {
+    let weightedList: ValuedDescriptor[] = []
+
+    descriptors.forEach(descriptor => {
+        const numberToAdd = descriptor.weight
+
+        for (let index = 0; index < numberToAdd; index++) {
+            weightedList.push(descriptor)
+        }
+    })
+
+    return weightedList
 }
