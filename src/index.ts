@@ -1,14 +1,14 @@
 import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
+import * as fs from 'fs'
+import mongoose from 'mongoose'
 import { speak } from './commands/speak'
 import config from './config.json'
-import { executeCommand, findOrMakeGuild } from './utils'
 import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
 import { logger } from './logger'
-import * as fs from 'fs'
-
-import mongoose from 'mongoose'
 import Guild, { GuildSettings } from './models/guild'
+import { executeCommand } from './utils'
+
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
