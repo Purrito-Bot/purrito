@@ -1,7 +1,7 @@
-import { Message } from 'discord.js'
-import Guild, { GuildSettings } from '../models/guild'
-import config from '../config.json'
 import equal from 'deep-equal'
+import { Message } from 'discord.js'
+import config from '../config.json'
+import { GuildSettings } from '../models/guild'
 import { allConfigAsMessageString, findOrMakeGuild } from '../utils'
 
 export async function setConfig(message: Message, args: string[]) {

@@ -1,8 +1,6 @@
 import { Message } from 'discord.js'
-import Guild, { GuildSettings } from '../models/guild'
 import config from '../config.json'
-import equal from 'deep-equal'
-import { Settings } from 'http2'
+import Guild, { GuildSettings } from '../models/guild'
 import { allConfigAsMessageString } from '../utils'
 
 export async function getConfig(message: Message, args: string[]) {

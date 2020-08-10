@@ -1,33 +1,9 @@
 import { Message } from 'discord.js'
-import {
-    Ages,
-    Colours,
-    Conditions,
-    Descriptors,
-    Item,
-    Materials,
-    Renowns,
-    Sizes,
-    Types,
-} from '../models/item'
-import { getRandomValueFromArray, createdWeightedList } from '../utils'
+import { Item } from '../models/item'
 
 export async function generateItem(message: Message, args?: string[]) {
     let messageToReturn: string
-    const randomItem: Item = new Item(
-        getRandomValueFromArray(Types),
-        getRandomValueFromArray(Materials),
-        getRandomValueFromArray(Colours),
-        [
-            getRandomValueFromArray(Descriptors),
-            getRandomValueFromArray(Descriptors),
-            getRandomValueFromArray(Descriptors),
-        ],
-        getRandomValueFromArray(createdWeightedList(Conditions)),
-        getRandomValueFromArray(createdWeightedList(Sizes)),
-        getRandomValueFromArray(createdWeightedList(Renowns)),
-        getRandomValueFromArray(createdWeightedList(Ages))
-    )
+    const randomItem: Item = new Item()
 
     let arg1: string | undefined
     if (Array.isArray(args) && args.length > 0) {

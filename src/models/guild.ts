@@ -1,5 +1,4 @@
-import mongoose, { Schema, Document, Model } from 'mongoose'
-import config from '../config.json'
+import mongoose, { Document, Model, Schema } from 'mongoose'
 
 export interface GuildSettings {
     randomSpeechProbability: number
