@@ -2,7 +2,7 @@ import { Message } from 'discord.js'
 import { logger } from '../logger'
 import nlp from 'compromise'
 
-export default async function _do(message: Message, args: string[]) {
+export async function _do(message: Message, args: string[]) {
     logger.debug('Executing command +do')
     const messageString = args.join(' ')
     const sentence = nlp(messageString)

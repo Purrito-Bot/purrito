@@ -1,7 +1,7 @@
 import { findOrMakeGuild } from '../utils'
 import { Message } from 'discord.js'
 
-export default async function resurrect(message: Message) {
+export async function resurrect(message: Message) {
     const guildId = message.guild!.id
     const guild = await findOrMakeGuild(guildId)
     let response: string

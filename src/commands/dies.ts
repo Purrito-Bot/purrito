@@ -2,7 +2,7 @@ import { Message } from 'discord.js'
 import moment from 'moment'
 import { findOrMakeGuild } from '../utils'
 
-export default async function die(message: Message) {
+export async function die(message: Message) {
     const guildId = message.guild!.id
     const guild = await findOrMakeGuild(guildId)
     let response: string
