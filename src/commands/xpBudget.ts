@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import { XPBudgets } from '../models/xpBudget'
+import { calculateXpBudget } from './encounter/xpUtils'
 
 const characterLevelNotProvided =
     'puurrrovide your character level e.g. +xpbudget 10'
@@ -12,7 +12,7 @@ const invalidCharacterLevel = (numberProvided: number) => {
  * @param message
  * @param args
  */
-export async function calculateXpBudget(message: Message, args?: string[]) {
+export async function xpBudget(message: Message, args?: string[]) {
     let messageToReturn: string
 
     let characterLevel: number | undefined
@@ -35,9 +35,7 @@ export async function calculateXpBudget(message: Message, args?: string[]) {
         if (characterLevel > 20 || characterLevel < 1) {
             messageToReturn = invalidCharacterLevel(characterLevel)
         } else {
-            const XPBudget = XPBudgets.find(
-                xpBudget => xpBudget.level === characterLevel
-            )!
+            const XPBudget = calculateXpBudget([characterLevel])
 
             switch (outputVariant) {
                 case 'easy':
