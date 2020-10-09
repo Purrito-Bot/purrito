@@ -7,7 +7,7 @@ import { generateItem } from './generateItem'
  * @param message
  * @param args
  */
-export default async function generate(message: Message, args: string[]) {
+export async function generate(message: Message, args: string[]) {
     logger.debug('Executing command +generate')
 
     let generationType: string | undefined
