@@ -1,5 +1,6 @@
 import { Message } from 'discord.js'
 import { logger } from '../logger'
+import { generateEncounter } from './generateEncounter'
 import { generateItem } from './generateItem'
 
 /**
@@ -19,6 +20,9 @@ export async function generate(message: Message, args: string[]) {
     switch (generationType) {
         case 'item':
             generateItem(message, args)
+            break
+        case 'encounter':
+            generateEncounter(message, args)
             break
     }
 }
