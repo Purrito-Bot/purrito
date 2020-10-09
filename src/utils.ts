@@ -5,7 +5,7 @@ import { attack } from './commands/attack'
 import { defend } from './commands/defend'
 import die from './commands/dies'
 import _do from './commands/do'
-import { generateItem } from './commands/generateItem'
+import generate from './commands/generate'
 import { getConfig } from './commands/getConfig'
 import { ping } from './commands/ping'
 import resurrect from './commands/resurrect'
@@ -89,7 +89,7 @@ export async function executeCommand(message: Message) {
             resurrect(message)
             break
         case 'generate':
-            generateItem(message, args)
+            generate(message, args)
             break
     }
 }

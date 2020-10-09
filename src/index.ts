@@ -4,7 +4,6 @@ import * as fs from 'fs'
 import mongoose from 'mongoose'
 import { speak } from './commands/speak'
 import config from './config.json'
-import { parseDiceMaidenMessage } from './DiceMaiden/ParseDiceMaiden'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
 import { executeCommand } from './utils'
@@ -65,13 +64,6 @@ client.on('message', async (message: Message) => {
     // Determine settings for this message
     const savedGuild = await Guild.findByGuildId(message.guild.id)
     const guildSettings = savedGuild?.settings || defaultSettings
-
-    if (message.author.tag === 'Dice Maiden#9678') {
-        const diceResult = parseDiceMaidenMessage(message.content)
-        if (diceResult.hasNatural20()) {
-            await message.channel.send(':star2: MEEEOW!!! :star2:')
-        }
-    }
 
     // Ignore bots
     if (message.author.bot) return
