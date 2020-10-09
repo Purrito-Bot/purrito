@@ -12,7 +12,7 @@ import resurrect from './commands/resurrect'
 import { setConfig } from './commands/setConfig'
 import { snack } from './commands/snack'
 import { speak } from './commands/speak'
-import { calculateXpBudget } from './commands/xpBudget'
+import { xpBudget } from './commands/xpBudget'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
@@ -93,7 +93,7 @@ export async function executeCommand(message: Message) {
             generate(message, args)
             break
         case 'xpbudget':
-            calculateXpBudget(message, args)
+            xpBudget(message, args)
             break
     }
 }
