@@ -1,10 +1,9 @@
 import { Message } from 'discord.js'
-import { logger } from '../logger'
 import { Encounter, EncounterDifficulty } from '../models/encounter'
 import { Environment } from '../models/monster'
 import { getRandomValueFromArray } from '../utils'
 import { filterMonstersByEnvironment } from './encounter/monsterUtils'
-import { calculateXpBudget } from './encounter/xpUtils'
+import { calculateXpBudgetForDifficulty } from './encounter/xpUtils'
 
 /**
  * Given +generate encounter, generate an item based on the sets of data
@@ -14,8 +13,6 @@ import { calculateXpBudget } from './encounter/xpUtils'
 export async function generateEncounter(message: Message, args?: string[]) {
     let messageToReturn: string
 
-    let encounterEnvironment: Environment | undefined
-    let difficulty: EncounterDifficulty | undefined
     // arg[1] - environment
     // arg[2] - difficulty
     if (Array.isArray(args) && args.length > 0) {
@@ -23,36 +20,22 @@ export async function generateEncounter(message: Message, args?: string[]) {
             messageToReturn =
                 'please provide details of your encounter e.g. +generate encounter mountain easy'
         } else {
-            encounterEnvironment = args[1].toUpperCase() as Environment
-            difficulty = args[2].toUpperCase() as EncounterDifficulty
+            const encounterEnvironment = args[1].toUpperCase() as Environment
+            const difficulty = args[2].toUpperCase() as EncounterDifficulty
 
-            const xpBudgetForParty = calculateXpBudget([7, 7, 2])
-            let xpBudget: number
-
-            switch (difficulty) {
-                case 'EASY':
-                    xpBudget = xpBudgetForParty.easy
-                    break
-                case 'HARD':
-                    xpBudget = xpBudgetForParty.hard
-                    break
-                case 'DEADLY':
-                    xpBudget = xpBudgetForParty.deadly
-                    break
-                case 'MEDIUM':
-                default:
-                    xpBudget = xpBudgetForParty.medium
-                    break
-            }
-
+            // Filter monsters based on the given environment
             const potentialMonsters = filterMonstersByEnvironment(
                 encounterEnvironment
             )
 
-            let encounter: Encounter = {
-                monsters: [],
-                totalXP: 0,
-            }
+            // Calculate the XP Budget
+            //TODO how can we sensibly pass in party details?
+            const xpBudget = calculateXpBudgetForDifficulty(
+                [7, 7, 2],
+                difficulty
+            )
+
+            let encounter = new Encounter()
 
             while (encounter.totalXP < xpBudget) {
                 const monster = getRandomValueFromArray(potentialMonsters)
@@ -70,7 +53,7 @@ export async function generateEncounter(message: Message, args?: string[]) {
                 encounter.totalXP = encounter.totalXP + monster.xp
             }
 
-            messageToReturn = JSON.stringify(encounter)
+            messageToReturn = encounter.formatEncounterForMessage()
         }
     } else {
         messageToReturn =
