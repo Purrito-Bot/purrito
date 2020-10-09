@@ -6,7 +6,7 @@ import { speak } from './commands/speak'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
-import { executeCommand } from './utils'
+import { executeCommand } from './commands/executeCommand'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
