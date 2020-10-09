@@ -56,14 +56,14 @@ export async function findOrMakeGuild(guildId: string) {
 
 /**
  * When given an array, pick a random element from it and return to the user
- * @param array the array 
+ * @param array the array
  */
 export function getRandomValueFromArray<T>(array: T[]): T {
     return array[Math.floor(Math.random() * array.length)]
 }
 
 /**
- * When generated an item, some descriptors are weighted, to give them more / less 
+ * When generated an item, some descriptors are weighted, to give them more / less
  * chance to appear than others. This function will created that weighted list
  * @param descriptors descriptors from which to created a weighted list
  */
