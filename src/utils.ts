@@ -82,3 +82,29 @@ export function createdWeightedList(
 
     return weightedList
 }
+
+/**
+ * Given a string such as '!generate encounter foo bar' with a key of 'foo'
+ * pull out the text 'bar'
+ * @param haystack the string to extract from
+ * @param flagName the name of the flag e.g. 'env'
+ */
+export function extractFlag(
+    haystack: string,
+    flagName: string
+): string | undefined {
+    // The needle in our haystack
+    let needle: string | undefined
+
+    // Convert the flag name into a regular expression
+    const regex = new RegExp(`(?:${flagName}\\s+)(\\w*)`)
+    // Try and match this regexp using the haystack string
+    const regexArray = haystack.match(regex)
+
+    // if there's a match, assume we want the first match
+    if (regexArray) {
+        needle = regexArray[1]
+    }
+
+    return needle
+}
