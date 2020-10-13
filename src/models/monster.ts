@@ -7,6 +7,6 @@ export type Monster = {
 export type Environment = 'MOUNTAIN' | 'TREE'
 
 export const Monsters: Monster[] = [
-    { name: 'Goblin', environments: ['MOUNTAIN'], xp: 25 },
-    { name: 'Frost Giant', environments: ['MOUNTAIN'], xp: 2900 },
+    { name: 'Goblin', environments: ['MOUNTAIN'], xp: 50 },
+    { name: 'Frost Giant', environments: ['MOUNTAIN'], xp: 3900 },
 ]
