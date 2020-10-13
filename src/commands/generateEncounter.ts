@@ -48,7 +48,7 @@ export async function generateEncounter(message: Message, args?: string[]) {
 
     const encounter = _generateEncounter(party, environment, difficulty)
 
-    messageToReturn = encounter.formatEncounterForMessage()
+    messageToReturn = encounter.formatEncounterForMessage(party.length)
 
     await message.channel.send(messageToReturn)
 }

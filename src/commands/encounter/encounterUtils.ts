@@ -34,9 +34,10 @@ export function _generateEncounter(
 
     let encounter = new Encounter()
 
-    while (encounter.totalXP < xpBudget) {
+    while (encounter.getAdjustedXP(partyMemberLevels.length) < xpBudget) {
         // We don't want a monster where the XP is higher than this value
-        const xpDifference = xpBudget - encounter.totalXP
+        const xpDifference =
+            xpBudget - encounter.getAdjustedXP(partyMemberLevels.length)
 
         const monstersWithCorrectXP = potentialMonsters.filter(
             monster => monster.xp <= xpDifference
