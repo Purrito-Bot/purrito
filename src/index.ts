@@ -62,8 +62,8 @@ client.on('message', async (message: Message) => {
     if (!message.guild) return
 
     // Determine settings for this message
-    // const savedGuild = await Guild.findByGuildId(message.guild.id)
-    // const guildSettings = savedGuild?.settings || defaultSettings
+    const savedGuild = await Guild.findByGuildId(message.guild.id)
+    const guildSettings = savedGuild?.settings || defaultSettings
 
     // Ignore bots
     if (message.author.bot) return
@@ -71,9 +71,9 @@ client.on('message', async (message: Message) => {
     if (message.content.indexOf(config.prefix) !== 0) {
         // On messages without prefix run these commands
         // Randomly meow when a message is received
-        // if (Math.random() < guildSettings.randomSpeechProbability) {
-        //     speak(message)
-        // }
+        if (Math.random() < guildSettings.randomSpeechProbability) {
+            speak(message)
+        }
     } else {
         executeCommand(message)
     }

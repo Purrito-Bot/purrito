@@ -29,7 +29,16 @@ const timeAgo = new TimeAgo('en-GB')
 export async function executeCommand(message: Message) {
     const [command, args] = parseMessage(message)
     logger.debug(`Command parsed: '${command}'`)
+
     // Check if Purrito has run out of lives. Only allow resurrect if so.
+    const guild = await findOrMakeGuild(message.guild!.id)
+    if (guild.purritoState.lives <= 0 && command !== 'resurrect') {
+        return await message.channel.send(
+            `Purrito died ${timeAgo.format(
+                guild.purritoState.timeOfDeath
+            )}. It's time to move on.`
+        )
+    }
 
     switch (command) {
         case 'attack':
