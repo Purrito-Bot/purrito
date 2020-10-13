@@ -1,8 +1,9 @@
 import { Encounter, EncounterDifficulty } from '../../models/encounter'
-import { Environment } from '../../models/monster'
+import { Environment, Monsters, Monster } from '../../models/monster'
 import { getRandomValueFromArray } from '../../utils'
 import { filterMonstersByEnvironment } from './monsterUtils'
 import { calculateXpBudgetForDifficulty } from './xpUtils'
+import { logger } from '../../logger'
 
 /**
  * Generate a random encounter based on the parameters given in the discord message.
@@ -12,17 +13,25 @@ import { calculateXpBudgetForDifficulty } from './xpUtils'
  * XP total of an encounter
  */
 export function _generateEncounter(
-    environment: Environment,
-    difficulty: EncounterDifficulty,
-    partyMemberLevels: number[]
+    partyMemberLevels: number[],
+    environment?: Environment,
+    difficulty?: EncounterDifficulty
 ) {
-    // Filter monsters based on the given environment
-    const potentialMonsters = filterMonstersByEnvironment(environment)
+    let potentialMonsters: Monster[] = []
+
+    if (environment) {
+        // Filter monsters based on the given environment
+        potentialMonsters = Monsters.filter(monster =>
+            monster.environments.includes(environment)
+        )
+    } else {
+        potentialMonsters = [...Monsters]
+    }
 
     // Calculate the XP Budget
     const xpBudget = calculateXpBudgetForDifficulty(
         partyMemberLevels,
-        difficulty
+        difficulty || 'MEDIUM'
     )
 
     let encounter = new Encounter()
