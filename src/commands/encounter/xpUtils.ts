@@ -66,7 +66,6 @@ export function calculateXpBudgetForDifficulty(
             xpBudget = budget.deadly
             break
         case 'MEDIUM':
-        default:
             xpBudget = budget.medium
             break
     }

@@ -2,6 +2,7 @@ import { Message } from 'discord.js'
 import { EncounterDifficulty } from '../models/encounter'
 import { Environment } from '../models/monster'
 import { _generateEncounter } from './encounter/encounterUtils'
+import { extractFlagNumberList, extractFlagWord } from './flagUtils'
 
 /**
  * Given +generate encounter, generate an item based on the sets of data
@@ -10,48 +11,44 @@ import { _generateEncounter } from './encounter/encounterUtils'
  */
 export async function generateEncounter(message: Message, args?: string[]) {
     let messageToReturn: string
-    // arg[1] - environment
-    // arg[2] - difficulty
-    // arg[3] - party size
-    // arg[4] - party average level
-    if (Array.isArray(args) && args.length > 0) {
-        if (!args[1] || !args[2] || !args[3] || !args[4]) {
-            messageToReturn =
-                'please provide details of your encounter with environment, difficulty, party size and average level' +
-                '\ne.g. +generate encounter mountain easy 2 1'
-        } else {
-            const environment = args[1].toUpperCase() as Environment
-            const difficulty = args[2].toUpperCase() as EncounterDifficulty
-            const partySize = parseInt(args[3])
-            const averageLevel = parseInt(args[4])
 
-            if (isNaN(averageLevel)) {
-                messageToReturn = `average level must be a number e.g. 1 or 2 not ${args[3]}`
-            } else if (isNaN(partySize)) {
-                messageToReturn = `party size must be a number e.g. 1 or 2 not ${args[4]}`
-            } else {
-                // Is average level and party size the best way here? I don't think so
-                // but it is the easiest
-                const estimatedParty: number[] = []
-                for (let index = 0; index < partySize; index++) {
-                    estimatedParty.push(averageLevel)
-                }
+    // arg[1] help
 
-                //TODO how do we sensible put the party levels into a discord message?
-                // Do we need to?
-                const encounter = _generateEncounter(
-                    environment,
-                    difficulty,
-                    estimatedParty
-                )
-
-                messageToReturn = encounter.formatEncounterForMessage()
-            }
-        }
-    } else {
-        messageToReturn =
-            'please provide details of your encounter e.g. +generate encounter mountain easy'
+    if (
+        Array.isArray(args) &&
+        args.length > 0 &&
+        args[1] &&
+        args[1].toLowerCase() === 'help'
+    ) {
+        return await message.channel.send(
+            'generate an encounter with the following flags\nparty -p = party levels e.g. 1 2 3 (required)\nenv -e = choose an environment e.g. mountain\ndifficulty -d = choose a difficulty e.g. easy'
+        )
     }
+
+    const environment = (
+        extractFlagWord(message.content, 'env') ||
+        extractFlagWord(message.content, '-e')
+    )?.toUpperCase() as Environment
+
+    const difficulty = (
+        extractFlagWord(message.content, 'difficulty') ||
+        extractFlagWord(message.content, '-d')
+    )?.toUpperCase() as EncounterDifficulty
+
+    const party =
+        extractFlagNumberList(message.content, 'party') ||
+        extractFlagNumberList(message.content, '-p')
+
+    if (!party || party.length === 0) {
+        await message.channel.send(
+            'please provide an party levels using the party or -p flag'
+        )
+        return
+    }
+
+    const encounter = _generateEncounter(party, environment, difficulty)
+
+    messageToReturn = encounter.formatEncounterForMessage()
 
     await message.channel.send(messageToReturn)
 }
