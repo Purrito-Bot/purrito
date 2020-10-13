@@ -1,8 +1,14 @@
-import { Message } from 'discord.js'
+import { Message, EmojiResolvable, MessageReaction, User } from 'discord.js'
 import { EncounterDifficulty } from '../models/encounter'
 import { Environment } from '../models/monster'
 import { _generateEncounter } from './encounter/encounterUtils'
 import { extractFlagNumberList, extractFlagWord } from './flagUtils'
+
+function createEmojiFilter(emoji: EmojiResolvable[], userId: string) {
+    return (react: MessageReaction, user: User) => {
+        return emoji.includes(react.emoji.name) && user.id === userId
+    }
+}
 
 /**
  * Given +generate encounter, generate an item based on the sets of data
@@ -10,10 +16,6 @@ import { extractFlagNumberList, extractFlagWord } from './flagUtils'
  * @param args arguments provided for the command
  */
 export async function generateEncounter(message: Message, args?: string[]) {
-    let messageToReturn: string
-
-    // arg[1] help
-
     if (
         Array.isArray(args) &&
         args.length > 0 &&
@@ -24,31 +26,47 @@ export async function generateEncounter(message: Message, args?: string[]) {
             'generate an encounter with the following flags\nparty -p = party levels e.g. 1 2 3 (required)\nenv -e = choose an environment e.g. mountain\ndifficulty -d = choose a difficulty e.g. easy'
         )
     }
-
-    const environment = (
-        extractFlagWord(message.content, 'env') ||
-        extractFlagWord(message.content, '-e')
-    )?.toUpperCase() as Environment
-
-    const difficulty = (
-        extractFlagWord(message.content, 'difficulty') ||
-        extractFlagWord(message.content, '-d')
-    )?.toUpperCase() as EncounterDifficulty
-
-    const party =
-        extractFlagNumberList(message.content, 'party') ||
-        extractFlagNumberList(message.content, '-p')
-
-    if (!party || party.length === 0) {
-        await message.channel.send(
-            'please provide an party levels using the party or -p flag'
-        )
-        return
+    const filter = (response: Message) => {
+        return response.author.id === message.author.id
     }
+    const difficultyFilter = createEmojiFilter(['✔️'], message.author.id)
 
-    const encounter = _generateEncounter(party, environment, difficulty)
+    let party: string | undefined
+    let difficulty: EncounterDifficulty | undefined
 
-    messageToReturn = encounter.formatEncounterForMessage(party.length)
+    const partyResponse = await message.reply('describe your party e.g. 1 2 3')
 
-    await message.channel.send(messageToReturn)
+    await partyResponse.channel
+        .awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
+        .then(collected => {
+            const response = collected.first()
+
+            party = response?.content
+        })
+        .catch(() => message.channel.send('please respond'))
+
+    if (!partyResponse) return
+
+    const difficultyResponse = await message.reply(
+        'react with your difficulty!'
+    )
+    await difficultyResponse.react('✔️')
+
+    await difficultyResponse
+        .awaitReactions(difficultyFilter, {
+            max: 1,
+            time: 30000,
+            errors: ['time'],
+        })
+        .then(collected => {
+            const emoji = collected.first()
+
+            if (emoji?.emoji.name === '✔️') {
+                difficulty = 'EASY'
+            }
+        })
+
+    if (!difficulty) return
+
+    message.reply(`${difficulty} encounter with party: ${party}`)
 }
