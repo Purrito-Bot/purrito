@@ -35,23 +35,7 @@ export function calculateXpBudgetForDifficulty(
     levels: number[],
     encounterDifficulty: EncounterDifficulty
 ): number {
-    const budgets: XPBudget[] = []
-    let budget: XPBudget = {
-        level: 0,
-        easy: 0,
-        medium: 0,
-        hard: 0,
-        deadly: 0,
-        dailyBudget: 0,
-    }
-
-    levels.forEach(level =>
-        budgets.push(XPBudgets.find(XPBudget => XPBudget.level === level)!)
-    )
-
-    budgets.forEach(xpBudget => {
-        budget = addXPBudgets(budget, xpBudget)
-    })
+    const budget = calculateXpBudget(levels)
 
     let xpBudget: number
 
