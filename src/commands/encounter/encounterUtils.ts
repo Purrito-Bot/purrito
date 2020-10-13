@@ -1,9 +1,7 @@
 import { Encounter, EncounterDifficulty } from '../../models/encounter'
-import { Environment, Monsters, Monster } from '../../models/monster'
+import { Environment, Monster, Monsters } from '../../models/monster'
 import { getRandomValueFromArray } from '../../utils'
-import { filterMonstersByEnvironment } from './monsterUtils'
 import { calculateXpBudgetForDifficulty } from './xpUtils'
-import { logger } from '../../logger'
 
 /**
  * Generate a random encounter based on the parameters given in the discord message.
