@@ -5,6 +5,7 @@ import { logger } from '../logger'
 import { findOrMakeGuild, parseMessage } from '../utils'
 import { attack } from './attack'
 import { defend } from './defend'
+import { describeMonster } from './describe'
 import { die } from './dies'
 import { _do } from './do'
 import { generate } from './generate'
@@ -38,7 +39,7 @@ export async function executeCommand(message: Message) {
                 guild.purritoState.timeOfDeath
             )}. It's time to move on.`
         )
-    }
+            }
 
     switch (command) {
         case 'attack':
@@ -77,6 +78,9 @@ export async function executeCommand(message: Message) {
             break
         case 'xpbudget':
             xpBudget(message, args)
+            break
+        case 'describe':
+            describeMonster(message)
             break
     }
 }
