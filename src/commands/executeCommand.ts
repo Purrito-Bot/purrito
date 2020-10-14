@@ -6,6 +6,7 @@ import { findOrMakeGuild, parseMessage } from '../utils'
 import { attack } from './attack'
 import { defend } from './defend'
 import { describeMonster } from './describe'
+import { rollDice } from './dice'
 import { die } from './dies'
 import { _do } from './do'
 import { generate } from './generate'
@@ -81,6 +82,9 @@ export async function executeCommand(message: Message) {
             break
         case 'describe':
             describeMonster(message)
+            break
+        case 'dice':
+            rollDice(message)
             break
     }
 }
