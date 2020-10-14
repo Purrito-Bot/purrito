@@ -95,10 +95,11 @@ export async function askForReaction(
     originMessage: Message,
     responseMessage: string,
     emojis: EmojiResolvable[],
+    deleteOnCompletion?: boolean,
     allowOtherUsers?: boolean,
     failureToRespondMessage?: string
 ): Promise<MessageReaction | undefined> {
-    const botMessage = await originMessage.reply(responseMessage)
+    const botMessage =  await originMessage.reply(responseMessage)
 
     let userReaction: MessageReaction | undefined
 
@@ -123,6 +124,7 @@ export async function askForReaction(
         })
         .then(collected => {
             userReaction = collected.first()
+            if(deleteOnCompletion) botMessage.delete();
         })
 
         .catch(() =>
@@ -143,6 +145,7 @@ export async function askForReaction(
 export async function askForTextResponse(
     message: Message,
     responseMessage: string,
+    deleteOnCompletion?: boolean,
     allowOtherUsers?: boolean,
     failureToRespondMessage?: string
 ): Promise<string | undefined> {
@@ -163,6 +166,8 @@ export async function askForTextResponse(
             const response = collected.first()
 
             userResponse = response?.content
+
+            if(deleteOnCompletion) botMessage.delete();
         })
         .catch(() =>
             message.channel.send(failureToRespondMessage || 'please respond')
