@@ -28,6 +28,8 @@ export async function generate(message: Message, args: string[]) {
         case 'help':
             return message.channel.send(new MessageEmbed(generateCommands))
         default:
-            return message.reply("what would you like to generate? use +generate help if you're not sure")
+            return message.reply(
+                "what would you like to generate? use +generate help if you're not sure"
+            )
     }
 }
