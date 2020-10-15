@@ -1,6 +1,6 @@
 import { Message } from 'discord.js'
 import moment from 'moment'
-import { findOrMakeGuild } from '../utils'
+import { findOrMakeGuild } from '../utils/utils'
 
 export async function die(message: Message) {
     const guildId = message.guild!.id

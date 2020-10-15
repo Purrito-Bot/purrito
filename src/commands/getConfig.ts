@@ -1,7 +1,7 @@
 import { Message } from 'discord.js'
 import config from '../config.json'
 import Guild, { GuildSettings } from '../models/guild'
-import { allConfigAsMessageString } from '../utils'
+import { allConfigAsMessageString } from '../utils/utils'
 
 export async function getConfig(message: Message, args: string[]) {
     const [key] = args

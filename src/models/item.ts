@@ -1,4 +1,4 @@
-import { getRandomValueFromArray, createdWeightedList } from '../utils'
+import { getRandomValueFromArray, createdWeightedList } from '../utils/utils'
 import { ValuedDescriptor } from './valuedDescriptor'
 import { Materials } from '../const/materials'
 import { Colours } from '../const/colours'

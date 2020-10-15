@@ -1,7 +1,7 @@
-import { Encounter, EncounterDifficulty } from '../../models/encounter'
-import { Environment, IMonster } from '../../models/monster'
-import monsters from '../../monsters.json'
-import { getRandomValueFromArray } from '../../utils'
+import { Encounter, EncounterDifficulty } from '../models/encounter'
+import { Environment, IMonster } from '../models/monster'
+import monsters from '../monsters.json'
+import { getRandomValueFromArray } from './utils'
 import { calculateXpBudgetForDifficulty } from './xpUtils'
 
 /**
@@ -19,9 +19,9 @@ export function _generateEncounter(
     let potentialMonsters: IMonster[] = []
 
     if (environment) {
-                         // Filter monsters based on the given environment
-                         //  Monsters don't have environment at the mo
-                     } else {
+        // Filter monsters based on the given environment
+        //  Monsters don't have environment at the mo
+    } else {
         potentialMonsters = [...monsters]
     }
 

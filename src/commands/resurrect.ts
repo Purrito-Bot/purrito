@@ -1,4 +1,4 @@
-import { findOrMakeGuild } from '../utils'
+import { findOrMakeGuild } from '../utils/utils'
 import { Message } from 'discord.js'
 
 export async function resurrect(message: Message) {
