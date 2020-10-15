@@ -65,11 +65,11 @@ export async function generateEncounter(message: Message, args?: string[]) {
 
     if (!difficulty) return
 
-    message.reply(
-        `\n${_generateEncounter(
-            partyLevels,
-            undefined,
-            difficulty
-        ).formatEncounterForMessage(partyLevels.length)}`
-    )
+    const embed = _generateEncounter(
+        partyLevels,
+        undefined,
+        difficulty
+    ).createEmbed(partyLevels, difficulty)
+
+    return message.reply(embed)
 }
