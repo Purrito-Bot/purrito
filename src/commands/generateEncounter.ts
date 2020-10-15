@@ -31,6 +31,16 @@ export async function generateEncounter(message: Message, args?: string[]) {
         return
     }
 
+    if (partyLevels.some(partyLevel => partyLevel > 20)) {
+        message.reply("you can't have a party member over level 20")
+        return
+    }
+
+    if (partyLevels.some(partyLevel => partyLevel < 1)) {
+        message.reply("you can't have a party member under level 1")
+        return
+    }
+
     const difficultyResponse = await askForReaction(
         message,
         'almost there, now react with your difficulty!\n1 easy\n2 medium\n3 hard\n4 deadly',
