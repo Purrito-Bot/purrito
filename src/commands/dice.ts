@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js'
 import config from '../config.json'
-import { Dice } from '@ensemblebr/dice'
+import { Dice, DiceResult } from '@ensemblebr/dice'
 import diceCommands from '../diceHelp.json'
 
 /**
@@ -24,7 +24,12 @@ export function rollDice(message: Message) {
     const reason = commands[1]
 
     const dice = new Dice()
-    const result = dice.roll(commands[0])
+    let result: DiceResult
+    try {
+        result = dice.roll(commands[0])
+    } catch {
+        return message.reply(`cmon ...${command}`)
+    }
 
     if (result.errors.length > 0) {
         return message.reply(`c'mon ...${command}?`)
@@ -32,7 +37,7 @@ export function rollDice(message: Message) {
 
     message.reply(
         `Results: ${result.renderedExpression} Total: ${result.total} ${
-            reason ? `reason: ${reason.trim()}` : ''
+            reason ? `Reason: ${reason.trim()}` : ''
         }`
     )
 }
