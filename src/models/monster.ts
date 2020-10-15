@@ -147,10 +147,7 @@ export class Monster {
                 if (index === 0) {
                     embed.addField('Actions', action)
                 } else {
-                    embed.addField(
-                        'Actions continued....',
-                        action
-                    )
+                    embed.addField('Actions continued....', action)
                 }
             })
         }
@@ -177,15 +174,9 @@ export class Monster {
 
             actionSubStrings.forEach((action, index) => {
                 if (index === 0) {
-                    embed.addField(
-                        'Legendary Actions',
-                        action
-                    )
+                    embed.addField('Legendary Actions', action)
                 } else {
-                    embed.addField(
-                        'Legendary Actions continued....',
-                        action
-                    )
+                    embed.addField('Legendary Actions continued....', action)
                 }
             })
         }
