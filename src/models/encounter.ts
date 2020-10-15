@@ -56,9 +56,7 @@ export class Encounter implements PrintableObject {
         embed.setTitle('Random Encounter')
 
         if (difficulty)
-            embed.setDescription(
-                `Difficulty: ${difficulty.toLowerCase()}`
-            )
+            embed.setDescription(`Difficulty: ${difficulty.toLowerCase()}`)
         if (party) embed.addField('Party', party.join(' '))
 
         const encounterMonsters: string[] = []
