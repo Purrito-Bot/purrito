@@ -1,0 +1,18 @@
+{
+    "title": "Generate commands",
+    "description": "Like all powerful Wizards I, Purrito, can create something from thin air",
+    "fields": [
+        {
+            "name": "+generate item",
+            "value": "generate a random item, with some description text to inspire a piece of loot you have found"
+        },
+        {
+            "name": "+generate item lite",
+            "value": "generate a random item, but don't print the description text"
+        },
+        {
+            "name": "+generate encounter",
+            "value": "this will start a multi stage process where I'll try and make the best encounter for your party"
+        }
+    ]
+}
