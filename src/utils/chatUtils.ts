@@ -1,4 +1,5 @@
 import { Message, EmojiResolvable, MessageReaction, User } from 'discord.js'
+import { logger } from '../logger'
 
 /**
  * Reply to a message, asking for a reaction from a user
@@ -21,7 +22,9 @@ export async function askForReaction(
     let userReaction: MessageReaction | undefined
 
     emojis.forEach(async emoji => {
-        await botMessage.react(emoji)
+        await botMessage.react(emoji).catch(() => {
+            logger.debug("Message removed before Purrito could react")
+        })
     })
 
     const filter = (reaction: MessageReaction, user: User) => {
