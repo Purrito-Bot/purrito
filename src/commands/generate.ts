@@ -1,7 +1,8 @@
-import { Message } from 'discord.js'
+import { Message, MessageEmbed } from 'discord.js'
 import { logger } from '../logger'
 import { generateEncounter } from './generateEncounter'
 import { generateItem } from './generateItem'
+import generateCommands from '../generateHelp.json'
 
 /**
  * When receiving a message with +generate, determine what the user wants to generate.
@@ -24,5 +25,7 @@ export async function generate(message: Message, args: string[]) {
         case 'encounter':
             generateEncounter(message, args)
             break
+        case 'help':
+            return message.channel.send(new MessageEmbed(generateCommands))
     }
 }
