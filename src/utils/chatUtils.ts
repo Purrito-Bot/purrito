@@ -23,7 +23,7 @@ export async function askForReaction(
 
     emojis.forEach(async emoji => {
         await botMessage.react(emoji).catch(() => {
-            logger.debug("Message removed before Purrito could react")
+            logger.debug('Message removed before Purrito could react')
         })
     })
 
