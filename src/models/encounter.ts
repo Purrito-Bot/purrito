@@ -1,7 +1,8 @@
 import { MessageEmbed } from 'discord.js'
 import { IMonster } from './monster'
+import { PrintableObject } from './printableObject'
 
-export class Encounter {
+export class Encounter implements PrintableObject {
     monsters: { monster: IMonster; amount: number }[]
     totalXP: number
 

@@ -1,4 +1,5 @@
 import { MessageEmbed } from 'discord.js'
+import { PrintableObject } from './printableObject'
 
 export type IMonster = {
     name: string
@@ -30,7 +31,7 @@ export type IMonster = {
     environments?: Environment[]
 }
 
-export class Monster {
+export class Monster implements PrintableObject {
     name: string
     meta: string
     'Armor Class': string
