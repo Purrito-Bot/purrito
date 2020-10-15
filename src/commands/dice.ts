@@ -31,8 +31,8 @@ export function rollDice(message: Message) {
     }
 
     message.reply(
-        `Results: ${result.renderedExpression} Total: ${
-            result.total
-        } ${reason ? `reason: ${reason.trim()}` : ''}`
+        `Results: ${result.renderedExpression} Total: ${result.total} ${
+            reason ? `reason: ${reason.trim()}` : ''
+        }`
     )
 }

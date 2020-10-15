@@ -41,7 +41,7 @@ export async function executeCommand(message: Message) {
                 guild.purritoState.timeOfDeath
             )}. It's time to move on.`
         )
-            }
+    }
 
     switch (command) {
         case 'attack':

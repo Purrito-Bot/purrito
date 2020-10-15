@@ -1,3 +1,5 @@
+import { MessageEmbed } from 'discord.js'
+
 export type IMonster = {
     name: string
     meta: string
@@ -23,7 +25,7 @@ export type IMonster = {
     Languages: string
     xp: number
     Actions?: string
-    "Legendary Actions"?: string,
+    'Legendary Actions'?: string
     img_url: string
     environments?: Environment[]
 }
@@ -53,7 +55,7 @@ export class Monster {
     Languages: string
     xp: number
     Actions?: string
-    "Legendary Actions"?: string
+    'Legendary Actions'?: string
     img_url: string
     environments?: Environment[]
 
@@ -87,71 +89,110 @@ export class Monster {
         this.environments = monster.environments
     }
 
-    formatForMessage() {
-        const messageArray: string[] = []
-
-        // Name in BOLD
-        messageArray.push(`**${this.name}**`)
-
-        // Extra info
-        messageArray.push(
+    createEmbed(): MessageEmbed {
+        const embed = new MessageEmbed()
+        embed.setTitle(this.name)
+        embed.setDescription([
             this.meta,
             `Armor Class: ${this['Armor Class']}`,
             `Hit Points: ${this['Hit Points']}`,
-            `Speed: ${this.Speed}`
-        )
+            `Speed: ${this.Speed}`,
+            ,
+        ])
 
-        // Stat block
-        messageArray.push(
-            '**Stats**',
+        embed.addField('Stats', [
             `Strength: ${this.STR} ${this.STR_mod}`,
             `Dexterity: ${this.DEX} ${this.DEX_mod}`,
             `Constitution: ${this.CON} ${this.CON_mod}`,
             `Intelligence: ${this.INT} ${this.INT_mod}`,
             `Wisdom: ${this.WIS} ${this.WIS_mod}`,
-            `Charisma: ${this.CHA} ${this.CHA_mod}`
-        )
+            `Charisma: ${this.CHA} ${this.CHA_mod}`,
+        ])
 
-        // Abilities
-        messageArray.push(
-            '**Abilities**',
+        embed.addField('Abilities', [
             `Senses: ${this.Senses}`,
-            `Languages: ${this.Languages}`
-        )
+            `Languages: ${this.Languages}`,
+        ])
 
-        if (this['Saving Throws'])
-            messageArray.push(`Saving Throws: ${this['Saving Throws']}`)
-        if (this.Skills) messageArray.push(`Skills ${this.Skills}`)
+        if (this['Saving Throws']) {
+            embed.addField('Saving Throws', this['Saving Throws'])
+        }
+        if (this.Skills) {
+            embed.addField('Skills', this.Skills)
+        }
+
         if (this['Damage Immunities'])
-            messageArray.push(`Damage Immunites: ${this['Damage Immunities']}`)
+            embed.addField('Damage Immunites', this['Damage Immunities'])
 
-            // Actions
+        // Actions - this can get quite long so splitting it into chunks of 1024 length
         if (this.Actions) {
-            messageArray.push(
-                '**Actions**',
-                this.Actions.replace(/<em>/g, '*')
-                    .replace(/<\/em>/g, '*')
-                    .replace(/<strong>/g, '**')
-                    .replace(/<\/strong>/g, '**')
-                    .replace(/<p>/g, '')
-                    .replace(/<\/p>/g, '\n')
-            )
+            // Remove all the HTML
+            const formattedActions = this.Actions.replace(/<em>/g, '*')
+                .replace(/<\/em>/g, '*')
+                .replace(/<strong>/g, '**')
+                .replace(/<\/strong>/g, '**')
+                .replace(/<p>/g, '')
+                .replace(/<\/p>/g, '\n')
+
+            // Calculate how many chunks there are
+            const numberOfChunks = Math.ceil(formattedActions.length / 1024)
+            const actionSubStrings = new Array(numberOfChunks)
+
+            // Break the string into the neccessary amount of chunks
+            for (let i = 0, o = 0; i < numberOfChunks; ++i, o += 1024) {
+                actionSubStrings[i] = formattedActions.substr(o, 1024)
+            }
+
+            actionSubStrings.forEach((action, index) => {
+                if (index === 0) {
+                    embed.addField('Actions', action)
+                } else {
+                    embed.addField(
+                        'Actions continued....',
+                        action
+                    )
+                }
+            })
         }
 
         // Legendary actions
-        if (this["Legendary Actions"]) {
-            messageArray.push(
-                '**Legendary Actions**',
-                this["Legendary Actions"].replace(/<em>/g, '*')
-                    .replace(/<\/em>/g, '*')
-                    .replace(/<strong>/g, '**')
-                    .replace(/<\/strong>/g, '**')
-                    .replace(/<p>/g, '')
-                    .replace(/<\/p>/g, '\n')
-            )
+        if (this['Legendary Actions']) {
+            // Remove all the HTML
+            const formattedActions = this['Legendary Actions']
+                .replace(/<em>/g, '*')
+                .replace(/<\/em>/g, '*')
+                .replace(/<strong>/g, '**')
+                .replace(/<\/strong>/g, '**')
+                .replace(/<p>/g, '')
+                .replace(/<\/p>/g, '\n')
+
+            // Calculate how many chunks there are
+            const numberOfChunks = Math.ceil(formattedActions.length / 1024)
+            const actionSubStrings = new Array(numberOfChunks)
+
+            // Break the string into the neccessary amount of chunks
+            for (let i = 0, o = 0; i < numberOfChunks; ++i, o += 1024) {
+                actionSubStrings[i] = formattedActions.substr(o, 1024)
+            }
+
+            actionSubStrings.forEach((action, index) => {
+                if (index === 0) {
+                    embed.addField(
+                        'Legendary Actions',
+                        action
+                    )
+                } else {
+                    embed.addField(
+                        'Legendary Actions continued....',
+                        action
+                    )
+                }
+            })
         }
 
-        return messageArray.join('\n')
+        embed.setThumbnail(this.img_url)
+
+        return embed
     }
 }
 

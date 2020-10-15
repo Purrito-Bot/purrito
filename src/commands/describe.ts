@@ -25,12 +25,14 @@ export async function describeMonster(message: Message) {
     )
 
     if (json) {
-        messageToReturn = new Monster(json).formatForMessage()
+        return message.channel.send(new Monster(json).createEmbed())
     } else {
-        return await message.reply(`couldn't find ${monsterName}, probably having a cat nap`);
+        return await message.reply(
+            `couldn't find ${monsterName}, probably having a cat nap`
+        )
     }
 
-    // There's a 2000 character limit on messages, and creatures 
+    // There's a 2000 character limit on messages, and creatures
     // with Legendary actions easily get over that.
     if (messageToReturn.length >= 2000) {
         const numChunks = Math.ceil(messageToReturn.length / 2000)
