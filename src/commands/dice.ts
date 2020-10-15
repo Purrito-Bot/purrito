@@ -13,14 +13,21 @@ export function rollDice(message: Message) {
         return message.reply(`looks like you dropped your dice`)
     }
 
+    // commands[0] roll
+    // commands [1] reason
+    const commands = command.split('!')
+    const reason = commands[1]
+
     const dice = new Dice()
-    const result = dice.roll(command)
+    const result = dice.roll(commands[0])
 
     if (result.errors.length > 0) {
         return message.reply(`c'mon ...${command}?`)
     }
 
     message.reply(
-        `Results: ${result.renderedExpression} Total: ${result.total}`
+        `Results: ${result.renderedExpression} Total: ${
+            result.total
+        } ${reason ? `reason: ${reason.trim()}` : ''}`
     )
 }
