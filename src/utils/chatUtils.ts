@@ -46,7 +46,8 @@ export async function askForReaction(
 
         .catch(() =>
             originMessage.channel.send(
-                failureToRespondMessage || 'please respond'
+                failureToRespondMessage ||
+                    '...request expired. going back to sleep'
             )
         )
     return userReaction
@@ -87,7 +88,10 @@ export async function askForTextResponse(
             if (deleteOnCompletion) botMessage.delete()
         })
         .catch(() =>
-            message.channel.send(failureToRespondMessage || 'please respond')
+            message.channel.send(
+                failureToRespondMessage ||
+                    '...request expired. going back to sleep'
+            )
         )
 
     return userResponse
