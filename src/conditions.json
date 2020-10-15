@@ -18,6 +18,7 @@
         {
             "name": "Exhaustion",
             "value": [
+                "Exhaustion is measured in six levels. An effect can give a creature one or more levels of exhaustion, as specified in the effect’s description.",
                 "Level 1: Disadvantage on ability checks",
                 "Level 2: Speed halved",
                 "Level 3: Disadvantage on attack rolls and saving throws",
