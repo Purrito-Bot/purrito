@@ -8,6 +8,8 @@ import { Sizes } from '../const/sizes'
 import { Renowns } from '../const/renowns'
 import { Ages } from '../const/ages'
 import { ItemTypes } from '../const/itemTypes'
+import { PrintableObject } from './printableObject'
+import { Message, MessageEmbed } from 'discord.js'
 
 export interface IItem {
     type: string
@@ -20,7 +22,7 @@ export interface IItem {
     age: ValuedDescriptor
 }
 
-export class Item {
+export class Item implements PrintableObject {
     type: string
     material: string
     colour: string
@@ -61,26 +63,26 @@ export class Item {
             : getRandomValueFromArray(createdWeightedList(Ages))
     }
 
-    formatItemForMessage(): string {
-        let message: string
-
-        message = `Treasure Type: ${this.type} \nMaterial: ${
-            this.material
-        } \nColour: ${this.colour} \nDescriptors:${this.descriptors.map(
-            descriptor => {
-                return ` ${descriptor}`
-            }
-        )} \nCondition: ${this.condition.label} \nSize: ${
-            this.size.label
-        } \nRenown: ${this.renown.label} \nAge: ${
-            this.age.label
-        }\n Value: ${this.generateValue()}`
-
-        return message
+    createEmbed(): MessageEmbed {
+        const embed = new MessageEmbed()
+        embed.setTitle('Random Item')
+        embed.addField('Type', this.type)
+        embed.addField('Material', this.material)
+        embed.addField('Colour', this.colour)
+        embed.addField('Descriptors', this.descriptors)
+        embed.addField('Condition', this.condition.label)
+        embed.addField('Size', this.size.label)
+        embed.addField('Renown', this.renown.label)
+        embed.addField('Age', this.age.label)
+        embed.addField('Value', this.generateValue())
+        return embed
     }
 
-    formateLiteMessage(): string {
-        return `Treasure Type: ${this.type}\nValue: ${this.generateValue()}`
+    createLiteEmbed(): MessageEmbed {
+        const embed = new MessageEmbed()
+        embed.setTitle('Random Item')
+        embed.addField('Value', this.generateValue())
+        return embed
     }
 
     generateValue(): number {

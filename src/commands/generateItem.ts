@@ -7,7 +7,6 @@ import { Item } from '../models/item'
  * @param args
  */
 export async function generateItem(message: Message, args?: string[]) {
-    let messageToReturn: string
     const randomItem: Item = new Item()
 
     let outputVariant: string | undefined
@@ -19,11 +18,8 @@ export async function generateItem(message: Message, args?: string[]) {
 
     switch (outputVariant) {
         case 'lite':
-            messageToReturn = randomItem.formateLiteMessage()
-            break
+            return message.channel.send(randomItem.createLiteEmbed())
         default:
-            messageToReturn = randomItem.formatItemForMessage()
+            return message.channel.send(randomItem.createEmbed())
     }
-
-    await message.channel.send(messageToReturn)
 }
