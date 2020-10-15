@@ -6,8 +6,7 @@ import monsters from '../monsters.json'
 /**
  * Given +describe and a monster name, find that monster and print
  * the info in the channel
- * @param message
- * @param args
+ * @param message the message - used to return a message to the correct channel
  */
 export async function describeMonster(message: Message) {
     let messageToReturn: string
@@ -19,7 +18,7 @@ export async function describeMonster(message: Message) {
         .trim()
 
     if (!monsterName)
-        return await message.channel.send('please provide a monster name')
+        return await message.reply('please provide a monster name')
 
     const json: IMonster | undefined = monsters.find(
         monster => monster.name.toLowerCase() === monsterName?.toLowerCase()
@@ -28,11 +27,13 @@ export async function describeMonster(message: Message) {
     if (json) {
         messageToReturn = new Monster(json).formatForMessage()
     } else {
-        messageToReturn = `couldn't find ${monsterName}, probably having a cat nap`
+        return await message.reply(`couldn't find ${monsterName}, probably having a cat nap`);
     }
 
+    // There's a 2000 character limit on messages, and creatures 
+    // with Legendary actions easily get over that.
     if (messageToReturn.length >= 2000) {
-        const numChunks = Math.ceil(messageToReturn.length / 1500)
+        const numChunks = Math.ceil(messageToReturn.length / 2000)
         const chunks = new Array(numChunks)
 
         for (let i = 0, o = 0; i < numChunks; ++i, o += 2000) {
