@@ -1,6 +1,9 @@
 import { MessageEmbed } from 'discord.js'
 import { PrintableObject } from './printableObject'
 
+/**
+ * Represents the JSON from the CRD
+ */
 export type IMonster = {
     name: string
     meta: string
@@ -31,11 +34,14 @@ export type IMonster = {
     environments?: Environment[]
 }
 
+/**
+ * The class we used, used primarily for creating an embed
+ */
 export class Monster implements PrintableObject {
     name: string
     meta: string
-    'Armor Class': string
-    'Hit Points': string
+    armorClass: string
+    hitPoints: string
     Speed: string
     STR: string
     STR_mod: string
@@ -49,22 +55,22 @@ export class Monster implements PrintableObject {
     WIS_mod: string
     CHA: string
     CHA_mod: string
-    'Saving Throws'?: string
+    savingThrows?: string
     Skills?: string
-    'Damage Immunities'?: string
+    damageImmunities?: string
     Senses: string
     Languages: string
     xp: number
     Actions?: string
-    'Legendary Actions'?: string
+    legendaryActions?: string
     img_url: string
     environments?: Environment[]
 
     constructor(monster: IMonster) {
         this.name = monster.name
         this.meta = monster.meta
-        this['Armor Class'] = monster['Armor Class']
-        this['Hit Points'] = monster['Hit Points']
+        this.armorClass = monster['Armor Class']
+        this.hitPoints = monster['Hit Points']
         this.Speed = monster.Speed
         this.STR = monster.STR
         this.STR_mod = monster.STR_mod
@@ -78,14 +84,14 @@ export class Monster implements PrintableObject {
         this.WIS_mod = monster.WIS_mod
         this.CHA = monster.CHA
         this.CHA_mod = monster.CHA_mod
-        this['Saving Throws'] = monster['Saving Throws']
+        this.savingThrows = monster['Saving Throws']
         this.Skills = monster.Skills
-        this['Damage Immunities'] = monster['Damage Immunities']
+        this.damageImmunities = monster['Damage Immunities']
         this.Senses = monster.Senses
         this.Languages = monster.Languages
         this.xp = monster.xp
         this.Actions = monster.Actions
-        this['Legendary Actions'] = monster['Legendary Actions']
+        this.legendaryActions = monster['Legendary Actions']
         this.img_url = monster.img_url
         this.environments = monster.environments
     }
@@ -95,8 +101,8 @@ export class Monster implements PrintableObject {
         embed.setTitle(this.name)
         embed.setDescription([
             this.meta,
-            `Armor Class: ${this['Armor Class']}`,
-            `Hit Points: ${this['Hit Points']}`,
+            `Armor Class: ${this.armorClass}`,
+            `Hit Points: ${this.hitPoints}`,
             `Speed: ${this.Speed}`,
             ,
         ])
@@ -115,15 +121,15 @@ export class Monster implements PrintableObject {
             `Languages: ${this.Languages}`,
         ])
 
-        if (this['Saving Throws']) {
-            embed.addField('Saving Throws', this['Saving Throws'])
+        if (this.savingThrows) {
+            embed.addField('Saving Throws', this.savingThrows)
         }
         if (this.Skills) {
             embed.addField('Skills', this.Skills)
         }
 
-        if (this['Damage Immunities'])
-            embed.addField('Damage Immunites', this['Damage Immunities'])
+        if (this.damageImmunities)
+            embed.addField('Damage Immunites', this.damageImmunities)
 
         // Actions - this can get quite long so splitting it into chunks of 1024 length
         if (this.Actions) {
@@ -154,9 +160,9 @@ export class Monster implements PrintableObject {
         }
 
         // Legendary actions
-        if (this['Legendary Actions']) {
+        if (this.legendaryActions) {
             // Remove all the HTML
-            const formattedActions = this['Legendary Actions']
+            const formattedActions = this.legendaryActions
                 .replace(/<em>/g, '*')
                 .replace(/<\/em>/g, '*')
                 .replace(/<strong>/g, '**')
