@@ -4,6 +4,7 @@ import en from 'javascript-time-ago/locale/en'
 import { logger } from '../logger'
 import { findOrMakeGuild, parseMessage } from '../utils/utils'
 import { attack } from './attack'
+import { condition } from './condition'
 import { defend } from './defend'
 import { describeMonster } from './describe'
 import { rollDice } from './dice'
@@ -86,6 +87,9 @@ export async function executeCommand(message: Message) {
             break
         case 'dice':
             rollDice(message)
+            break
+        case 'condition':
+            condition(message)
             break
         case 'help':
             help(message)
