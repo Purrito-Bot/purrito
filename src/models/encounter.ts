@@ -46,23 +46,34 @@ export class Encounter {
         return this.totalXP * adjustment
     }
 
-    createEmbed(party?: number[], difficulty?: EncounterDifficulty): MessageEmbed {
-        const embed = new MessageEmbed();
+    createEmbed(
+        party?: number[],
+        difficulty?: EncounterDifficulty
+    ): MessageEmbed {
+        const embed = new MessageEmbed()
 
-        embed.setTitle("Random Encounter")
-        
-        if(difficulty) embed.setDescription(`This encounter will be ${difficulty.toLowerCase()}`)
-        if(party) embed.addField("Party", party.join(" "))
+        embed.setTitle('Random Encounter')
 
-        const encounterMonsters: string[] = [] 
-        
-        this.monsters.forEach(monster => encounterMonsters.push(`${monster.monster.name} x${monster.amount}`))
+        if (difficulty)
+            embed.setDescription(
+                `This encounter will be ${difficulty.toLowerCase()}`
+            )
+        if (party) embed.addField('Party', party.join(' '))
 
-        embed.addField("Monsters", encounterMonsters)
+        const encounterMonsters: string[] = []
 
-        embed.addField("Encounter XP", `${this.totalXP}`)
+        this.monsters.forEach(monster =>
+            encounterMonsters.push(`${monster.monster.name} x${monster.amount}`)
+        )
 
-        return embed;
+        embed.addField('Monsters', encounterMonsters)
+
+        embed.addField('Encounter XP', `${this.totalXP}`)
+        embed.setFooter(
+            'Use the +describe command to find out more about any monsters'
+        )
+
+        return embed
     }
 }
 

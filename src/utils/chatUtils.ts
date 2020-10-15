@@ -20,7 +20,9 @@ export async function askForReaction(
 
     let userReaction: MessageReaction | undefined
 
-    emojis.forEach(emoji => botMessage.react(emoji))
+    emojis.forEach(async emoji => {
+        await botMessage.react(emoji)
+    })
 
     const filter = (reaction: MessageReaction, user: User) => {
         if (!allowOtherUsers) {

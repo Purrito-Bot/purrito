@@ -44,8 +44,7 @@ export async function generateEncounter(message: Message, args?: string[]) {
     const difficultyResponse = await askForReaction(
         message,
         'almost there, now react with your difficulty!\n1 easy\n2 medium\n3 hard\n4 deadly',
-        ['1️⃣', '2️⃣', '3️⃣', '4️⃣'],
-        true
+        ['1️⃣', '2️⃣', '3️⃣', '4️⃣']
     )
 
     switch (difficultyResponse?.emoji.name) {
