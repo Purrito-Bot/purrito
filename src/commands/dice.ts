@@ -1,6 +1,7 @@
-import { Message } from 'discord.js'
+import { Message, MessageEmbed } from 'discord.js'
 import config from '../config.json'
 import { Dice } from '@ensemblebr/dice'
+import diceCommands from '../diceHelp.json'
 
 /**
  * Given +dice and a command e.g. 1d20 roll the dice
@@ -11,6 +12,10 @@ export function rollDice(message: Message) {
 
     if (!command) {
         return message.reply(`looks like you dropped your dice`)
+    }
+
+    if (command.trim() === 'help') {
+        return message.channel.send(new MessageEmbed(diceCommands))
     }
 
     // commands[0] roll
