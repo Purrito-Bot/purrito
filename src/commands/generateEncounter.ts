@@ -1,7 +1,7 @@
 import { Message } from 'discord.js'
 import { EncounterDifficulty } from '../models/encounter'
-import { askForReaction, askForTextResponse } from '../utils'
-import { _generateEncounter } from './encounter/encounterUtils'
+import { askForReaction, askForTextResponse } from '../utils/chatUtils'
+import { _generateEncounter } from '../utils/encounterUtils'
 
 /**
  * Given +generate encounter, generate an item based on the sets of data

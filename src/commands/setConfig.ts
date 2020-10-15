@@ -2,7 +2,7 @@ import equal from 'deep-equal'
 import { Message } from 'discord.js'
 import config from '../config.json'
 import { GuildSettings } from '../models/guild'
-import { allConfigAsMessageString, findOrMakeGuild } from '../utils'
+import { allConfigAsMessageString, findOrMakeGuild } from '../utils/utils'
 
 export async function setConfig(message: Message, args: string[]) {
     let [key, value] = args

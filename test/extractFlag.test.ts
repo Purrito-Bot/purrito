@@ -1,7 +1,4 @@
-import {
-    extractFlagWord,
-    extractFlagNumberList,
-} from '../src/commands/flagUtils'
+import { extractFlagWord, extractFlagNumberList } from '../src/utils/flagUtils'
 
 describe('testing the extract flag function', () => {
     it('successfully extracts a valid flag', () => {

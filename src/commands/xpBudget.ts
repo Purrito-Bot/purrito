@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import { calculateXpBudget } from './encounter/xpUtils'
+import { calculateXpBudget } from '../utils/xpUtils'
 
 const characterLevelNotProvided =
     'puurrrovide your character level e.g. +xpbudget 10'

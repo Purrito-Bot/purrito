@@ -1,5 +1,5 @@
-import { EncounterDifficulty } from '../../models/encounter'
-import { XPBudget, XPBudgets } from '../../models/xpBudget'
+import { EncounterDifficulty } from '../models/encounter'
+import { XPBudget, XPBudgets } from '../models/xpBudget'
 
 /**
  * Given a list of character levels, calculate the XP Budget
