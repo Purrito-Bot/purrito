@@ -1,19 +1,17 @@
-import { getRandomValueFromArray, createdWeightedList } from '../utils/utils'
-import { ValuedDescriptor } from './valuedDescriptor'
-import { Materials } from '../const/materials'
-import { Colours } from '../const/colours'
-import { Descriptors } from '../const/descriptors'
-import { Conditions } from '../const/conditions'
-import { Sizes } from '../const/sizes'
-import { Renowns } from '../const/renowns'
+import { MessageEmbed } from 'discord.js'
 import { Ages } from '../const/ages'
+import { Colours } from '../const/colours'
+import { Conditions } from '../const/conditions'
+import { Descriptors } from '../const/descriptors'
 import { ItemTypes } from '../const/itemTypes'
+import { Renowns } from '../const/renowns'
+import { Sizes } from '../const/sizes'
+import { createdWeightedList, getRandomValueFromArray } from '../utils/utils'
 import { PrintableObject } from './printableObject'
-import { Message, MessageEmbed } from 'discord.js'
+import { ValuedDescriptor } from './valuedDescriptor'
 
 export interface IItem {
     type: string
-    material: string
     colour: string
     descriptors: string[]
     condition: ValuedDescriptor
@@ -24,7 +22,6 @@ export interface IItem {
 
 export class Item implements PrintableObject {
     type: string
-    material: string
     colour: string
     descriptors: string[]
     condition: ValuedDescriptor
@@ -36,9 +33,6 @@ export class Item implements PrintableObject {
     constructor(item: IItem)
     constructor(item?: IItem) {
         this.type = item?.type ? item.type : getRandomValueFromArray(ItemTypes)
-        this.material = item?.material
-            ? item.material
-            : getRandomValueFromArray(Materials)
         this.colour = item?.colour
             ? item.colour
             : getRandomValueFromArray(Colours)
@@ -67,21 +61,37 @@ export class Item implements PrintableObject {
         const embed = new MessageEmbed()
         embed.setTitle('Random Item')
         embed.addField('Type', this.type)
-        embed.addField('Material', this.material)
-        embed.addField('Colour', this.colour)
-        embed.addField('Descriptors', this.descriptors)
-        embed.addField('Condition', this.condition.label)
-        embed.addField('Size', this.size.label)
-        embed.addField('Renown', this.renown.label)
-        embed.addField('Age', this.age.label)
-        embed.addField('Value', this.generateValue())
+
+        if (this.type.includes('Magic Item')) {
+            embed.setFooter(
+                'You have a magic item, roll on the appropriate table to find out what you got.'
+            )
+        } else {
+            embed.setDescription(
+                'Use the value as a guideline on what GP value to assign it for your party. This number will range between -7 (trash) to 28 (god like item)'
+            )
+            embed.addField('Colour', this.colour)
+            embed.addField('Descriptors', this.descriptors)
+            embed.addField('Condition', this.condition.label)
+            embed.addField('Size', this.size.label)
+            embed.addField('Renown', this.renown.label)
+            embed.addField('Age', this.age.label)
+            embed.addField('Value', this.generateValue())
+        }
         return embed
     }
 
     createLiteEmbed(): MessageEmbed {
         const embed = new MessageEmbed()
         embed.setTitle('Random Item')
+        if (this.type.includes('Magic Item')) {
+            embed.setDescription(this.type)
+            embed.setFooter(
+                'You have a magic item, roll on the appropriate table to find out what you got.'
+            )
+        } else {
         embed.addField('Value', this.generateValue())
+        }
         return embed
     }
 
