@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from 'discord.js'
 import { logger } from '../logger'
 import { generateEncounter } from './generateEncounter'
 import { generateItem } from './generateItem'
-import generateCommands from '../generateHelp.json'
+import generateCommands from '../reference/generateHelp.json'
 
 /**
  * When receiving a message with +generate, determine what the user wants to generate.

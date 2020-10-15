@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js'
 import config from '../config.json'
 import { Dice, DiceResult } from '@ensemblebr/dice'
-import diceCommands from '../diceHelp.json'
+import diceCommands from '../reference/diceHelp.json'
 
 /**
  * Given +dice and a command e.g. 1d20 roll the dice
