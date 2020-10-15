@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js'
-import conditions from '../conditions.json'
+import conditions from '../reference/conditions.json'
 import config from '../config.json'
 
 /**

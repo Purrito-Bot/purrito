@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js'
-import helpJson from '../help.json'
+import helpJson from '../reference/help.json'
 
 /**
  * Given the +help command, return the user a list of available commands

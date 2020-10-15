@@ -1,6 +1,6 @@
 import { Encounter, EncounterDifficulty } from '../models/encounter'
 import { Environment, IMonster } from '../models/monster'
-import monsters from '../monsters.json'
+import monsters from '../reference/monsters.json'
 import { getRandomValueFromArray } from './utils'
 import { calculateXpBudgetForDifficulty } from './xpUtils'
 

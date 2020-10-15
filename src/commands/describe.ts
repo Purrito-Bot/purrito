@@ -1,7 +1,7 @@
 import { Message, MessageAttachment } from 'discord.js'
 import config from '../config.json'
 import { IMonster, Monster } from '../models/monster'
-import monsters from '../monsters.json'
+import monsters from '../reference/monsters.json'
 
 /**
  * Given +describe and a monster name, find that monster and print
