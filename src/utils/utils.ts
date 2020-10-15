@@ -67,10 +67,10 @@ export function getRandomValueFromArray<T>(array: T[]): T {
  * chance to appear than others. This function will created that weighted list
  * @param descriptors descriptors from which to created a weighted list
  */
-export function createdWeightedList(
-    descriptors: ValuedDescriptor[]
-): ValuedDescriptor[] {
-    let weightedList: ValuedDescriptor[] = []
+export function createdWeightedList<T extends ValuedDescriptor>(
+    descriptors: T[]
+): T[] {
+    let weightedList: T[] = []
 
     descriptors.forEach(descriptor => {
         const numberToAdd = descriptor.weight

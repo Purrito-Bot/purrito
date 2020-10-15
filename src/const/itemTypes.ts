@@ -1,4 +1,21 @@
-export const ItemTypes: string[] = [
+import { ItemType } from '../models/itemType'
+
+export const ItemTypes: ItemType[] = [
+    {
+        label: 'Tiara',
+        value: 2,
+        weight: 2,
+        potentialMaterials: [
+            {
+                label: 'Gold',
+                value: 2,
+                weight: 2,
+            },
+        ],
+    },
+]
+
+export const idea: string[] = [
     'Art - caligraphy',
     'Art - Manuscript',
     'Art - Embroidery',

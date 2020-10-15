@@ -7,11 +7,13 @@ import { ItemTypes } from '../const/itemTypes'
 import { Renowns } from '../const/renowns'
 import { Sizes } from '../const/sizes'
 import { createdWeightedList, getRandomValueFromArray } from '../utils/utils'
+import { ItemType } from './itemType'
 import { PrintableObject } from './printableObject'
 import { ValuedDescriptor } from './valuedDescriptor'
 
 export interface IItem {
-    type: string
+    type: ValuedDescriptor
+    material: ValuedDescriptor
     colour: string
     descriptors: string[]
     condition: ValuedDescriptor
@@ -21,7 +23,8 @@ export interface IItem {
 }
 
 export class Item implements PrintableObject {
-    type: string
+    type: ValuedDescriptor
+    material: ValuedDescriptor
     colour: string
     descriptors: string[]
     condition: ValuedDescriptor
@@ -32,7 +35,13 @@ export class Item implements PrintableObject {
     constructor()
     constructor(item: IItem)
     constructor(item?: IItem) {
-        this.type = item?.type ? item.type : getRandomValueFromArray(ItemTypes)
+        const itemType = getRandomValueFromArray(createdWeightedList(ItemTypes))
+        this.type = item?.type ? item.type : itemType
+        this.material = item?.material
+            ? item.material
+            : getRandomValueFromArray(
+                  createdWeightedList(itemType.potentialMaterials)
+              )
         this.colour = item?.colour
             ? item.colour
             : getRandomValueFromArray(Colours)
@@ -60,16 +69,17 @@ export class Item implements PrintableObject {
     createEmbed(): MessageEmbed {
         const embed = new MessageEmbed()
         embed.setTitle('Random Item')
-        embed.addField('Type', this.type)
+        embed.addField('Type', this.type.label)
 
-        if (this.type.includes('Magic Item')) {
+        if (this.type.label.includes('Magic Item')) {
             embed.setFooter(
                 'You have a magic item, roll on the appropriate table to find out what you got.'
             )
         } else {
             embed.setDescription(
-                'Use the value as a guideline on what GP value to assign it for your party. This number will range between -7 (trash) to 28 (god like item)'
+                'Use the value as a guideline on what GP value to assign it for your party. This number will range between 0 (trash) to 34 (god like item)'
             )
+            embed.addField("Material", this.material.label)
             embed.addField('Colour', this.colour)
             embed.addField('Descriptors', this.descriptors)
             embed.addField('Condition', this.condition.label)
@@ -84,13 +94,13 @@ export class Item implements PrintableObject {
     createLiteEmbed(): MessageEmbed {
         const embed = new MessageEmbed()
         embed.setTitle('Random Item')
-        if (this.type.includes('Magic Item')) {
+        if (this.type.label.includes('Magic Item')) {
             embed.setDescription(this.type)
             embed.setFooter(
                 'You have a magic item, roll on the appropriate table to find out what you got.'
             )
         } else {
-        embed.addField('Value', this.generateValue())
+            embed.addField('Value', this.generateValue())
         }
         return embed
     }
