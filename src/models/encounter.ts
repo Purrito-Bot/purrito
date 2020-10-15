@@ -57,7 +57,7 @@ export class Encounter implements PrintableObject {
 
         if (difficulty)
             embed.setDescription(
-                `This encounter will be ${difficulty.toLowerCase()}`
+                `Difficulty: ${difficulty.toLowerCase()}`
             )
         if (party) embed.addField('Party', party.join(' '))
 
