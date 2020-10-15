@@ -1,3 +1,4 @@
+import { MessageEmbed } from 'discord.js'
 import { IMonster } from './monster'
 
 export class Encounter {
@@ -45,19 +46,23 @@ export class Encounter {
         return this.totalXP * adjustment
     }
 
-    formatEncounterForMessage(players?: number): string {
-        let encounterString = 'Encounter:'
+    createEmbed(party?: number[], difficulty?: EncounterDifficulty): MessageEmbed {
+        const embed = new MessageEmbed();
 
-        this.monsters.forEach(
-            monster =>
-                (encounterString = `${encounterString}\n${monster.amount} ${monster.monster.name}`)
-        )
+        embed.setTitle("Random Encounter")
+        
+        if(difficulty) embed.setDescription(`This encounter will be ${difficulty.toLowerCase()}`)
+        if(party) embed.addField("Party", party.join(" "))
 
-        encounterString = `${encounterString}\nEncounter XP: ${
-            this.totalXP
-        }\nAdjusted XP: ${this.getAdjustedXP(players)}`
+        const encounterMonsters: string[] = [] 
+        
+        this.monsters.forEach(monster => encounterMonsters.push(`${monster.monster.name} x${monster.amount}`))
 
-        return encounterString
+        embed.addField("Monsters", encounterMonsters)
+
+        embed.addField("Encounter XP", `${this.totalXP}`)
+
+        return embed;
     }
 }
 
