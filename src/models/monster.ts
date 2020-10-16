@@ -29,6 +29,7 @@ export type IMonster = {
     Languages: string
     xp: number
     Actions?: string
+    Traits?: string
     'Legendary Actions'?: string
     img_url: string
     environments?: Environment[]
@@ -58,10 +59,11 @@ export class Monster implements PrintableObject {
     savingThrows?: string
     Skills?: string
     damageImmunities?: string
-    Senses: string
-    Languages: string
+    senses: string
+    languages: string
     xp: number
-    Actions?: string
+    traits?: string
+    actions?: string
     legendaryActions?: string
     img_url: string
     environments?: Environment[]
@@ -87,10 +89,11 @@ export class Monster implements PrintableObject {
         this.savingThrows = monster['Saving Throws']
         this.Skills = monster.Skills
         this.damageImmunities = monster['Damage Immunities']
-        this.Senses = monster.Senses
-        this.Languages = monster.Languages
+        this.senses = monster.Senses
+        this.languages = monster.Languages
         this.xp = monster.xp
-        this.Actions = monster.Actions
+        this.traits = monster.Traits
+        this.actions = monster.Actions
         this.legendaryActions = monster['Legendary Actions']
         this.img_url = monster.img_url
         this.environments = monster.environments
@@ -117,8 +120,8 @@ export class Monster implements PrintableObject {
         ])
 
         embed.addField('Abilities', [
-            `Senses: ${this.Senses}`,
-            `Languages: ${this.Languages}`,
+            `Senses: ${this.senses}`,
+            `Languages: ${this.languages}`,
         ])
 
         if (this.savingThrows) {
@@ -131,10 +134,39 @@ export class Monster implements PrintableObject {
         if (this.damageImmunities)
             embed.addField('Damage Immunites', this.damageImmunities)
 
-        // Actions - this can get quite long so splitting it into chunks of 1024 length
-        if (this.Actions) {
+        if (this.traits) {
             // Remove all the HTML
-            const formattedActions = this.Actions.replace(/<em>/g, '*')
+            const formattedActions = this.traits
+                .replace(/<em>/g, '*')
+                .replace(/<\/em>/g, '*')
+                .replace(/<strong>/g, '**')
+                .replace(/<\/strong>/g, '**')
+                .replace(/<p>/g, '')
+                .replace(/<\/p>/g, '\n')
+
+            // Calculate how many chunks there are
+            const numberOfChunks = Math.ceil(formattedActions.length / 1024)
+            const actionSubStrings = new Array(numberOfChunks)
+
+            // Break the string into the neccessary amount of chunks
+            for (let i = 0, o = 0; i < numberOfChunks; ++i, o += 1024) {
+                actionSubStrings[i] = formattedActions.substr(o, 1024)
+            }
+
+            actionSubStrings.forEach((action, index) => {
+                if (index === 0) {
+                    embed.addField('Traits', action)
+                } else {
+                    embed.addField('Traits continued....', action)
+                }
+            })
+        }
+
+        // Actions - this can get quite long so splitting it into chunks of 1024 length
+        if (this.actions) {
+            // Remove all the HTML
+            const formattedActions = this.actions
+                .replace(/<em>/g, '*')
                 .replace(/<\/em>/g, '*')
                 .replace(/<strong>/g, '**')
                 .replace(/<\/strong>/g, '**')
