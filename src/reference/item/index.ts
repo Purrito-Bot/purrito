@@ -24,7 +24,7 @@ export {
     ItemTypes,
     MagicalProperties,
     Metals,
-    Intrigue as Intrigue,
+    Intrigue,
     Sizes,
     Stones,
     Woods,

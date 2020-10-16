@@ -16,7 +16,7 @@ export function randomDescriptor(message: Message, args: string[]) {
         numberOfDescriptors = 10
     }
 
-    for(let i = 0; i < numberOfDescriptors; i++) {
+    for (let i = 0; i < numberOfDescriptors; i++) {
         messageToReturn.push(getRandomValueFromArray(Descriptors))
     }
 
