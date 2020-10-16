@@ -1,12 +1,62 @@
 [
-    { "weight": 1, "label": "Awful", "minValue": 0, "maxValue": 1 },
-    { "weight": 1, "label": "Very Poor", "minValue": 1, "maxValue": 3 },
-    { "weight": 2, "label": "Poor", "minValue": 3, "maxValue": 4 },
-    { "weight": 2, "label": "Below Avg.", "minValue": 5, "maxValue": 7 },
-    { "weight": 7, "label": "Average", "minValue": 6, "maxValue": 13 },
-    { "weight": 4, "label": "Above Avg.", "minValue": 10, "maxValue": 15 },
-    { "weight": 1, "label": "Good", "minValue": 15, "maxValue": 19 },
-    { "weight": 1, "label": "Very Good", "minValue": 18, "maxValue": 21 },
-    { "weight": 1, "label": "Excellent", "minValue": 22, "maxValue": 23 },
-    { "weight": 1, "label": "Flawless", "minValue": 24, "maxValue": 25 }
+    {
+        "label": "Awful",
+        "weight": 1,
+        "minValue": 0,
+        "maxValue": 1
+    },
+    {
+        "label": "Very Poor",
+        "weight": 1,
+        "minValue": 1,
+        "maxValue": 3
+    },
+    {
+        "label": "Poor",
+        "weight": 2,
+        "minValue": 3,
+        "maxValue": 4
+    },
+    {
+        "label": "Below Avg.",
+        "weight": 2,
+        "minValue": 5,
+        "maxValue": 7
+    },
+    {
+        "label": "Average",
+        "weight": 7,
+        "minValue": 6,
+        "maxValue": 13
+    },
+    {
+        "label": "Above Avg.",
+        "weight": 4,
+        "minValue": 10,
+        "maxValue": 15
+    },
+    {
+        "label": "Good",
+        "weight": 1,
+        "minValue": 15,
+        "maxValue": 19
+    },
+    {
+        "label": "Very Good",
+        "weight": 1,
+        "minValue": 18,
+        "maxValue": 21
+    },
+    {
+        "label": "Excellent",
+        "weight": 1,
+        "minValue": 22,
+        "maxValue": 23
+    },
+    {
+        "label": "Flawless",
+        "weight": 1,
+        "minValue": 24,
+        "maxValue": 25
+    }
 ]

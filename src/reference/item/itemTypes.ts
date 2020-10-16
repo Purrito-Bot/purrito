@@ -75,27 +75,19 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Ancient Tome',
-        potentialMaterials: [
-            { label: 'WOOD', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'WOOD', weight: 1 }],
     },
     {
         label: 'Tapestry',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Rug',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Quilt',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Bowl',
@@ -301,9 +293,7 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Belt',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Brooch',
@@ -318,7 +308,6 @@ export const ItemTypes: ItemType[] = [
         potentialMaterials: [
             { label: 'METAL', weight: 1 },
             { label: 'EARTHEN', weight: 1 },
-
         ],
     },
     {
@@ -505,57 +494,39 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Wallet',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Vestaments',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Blouse',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Bodkin',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Cloak',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Coat',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Doublet',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Dress',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Fez',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Gauntlets',
@@ -574,63 +545,43 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Gown',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Hat',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Jerkin',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Pantaloons',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Petticoat',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Robe',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Sandals',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Shawl',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Toga',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Veil',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Trunk',
@@ -649,9 +600,7 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Birdbath',
-        potentialMaterials: [
-            { label: 'STONE', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'STONE', weight: 1 }],
     },
     {
         label: 'Plaque',
@@ -687,21 +636,15 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Cushion',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Mat',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Desk',
-        potentialMaterials: [
-            { label: 'WOOD', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'WOOD', weight: 1 }],
     },
     {
         label: 'Pedestal',
@@ -736,9 +679,7 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Ingots',
-        potentialMaterials: [
-            { label: 'METAL', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'METAL', weight: 1 }],
     },
     {
         label: 'Raw Materials',
@@ -750,27 +691,19 @@ export const ItemTypes: ItemType[] = [
     },
     {
         label: 'Bolts of Cloth',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Embroidered Material',
-        potentialMaterials: [
-            { label: 'FABRIC', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'FABRIC', weight: 1 }],
     },
     {
         label: 'Cut Stone',
-        potentialMaterials: [
-            { label: 'STONE', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'STONE', weight: 1 }],
     },
     {
         label: 'Cut Wood',
-        potentialMaterials: [
-            { label: 'WOOD', weight: 1 },
-        ],
+        potentialMaterials: [{ label: 'WOOD', weight: 1 }],
     },
     {
         label: 'Laboratory Equipment',

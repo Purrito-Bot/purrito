@@ -5,4 +5,4 @@ import Help from './help.json'
 import Monsters from './monsters.json'
 
 export * from './item'
-export { Conditions, DiceHelp, GenerateHelp, Help, Monsters}
+export { Conditions, DiceHelp, GenerateHelp, Help, Monsters }
