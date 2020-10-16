@@ -9,6 +9,7 @@ import {
     Fabrics,
     Fantasy,
     ItemConditions,
+    MagicalProperties,
     Metals,
     Renowns,
     Sizes,
@@ -25,9 +26,13 @@ import {
  */
 export function _generateItem(): Item {
     const itemType = getRandomValueFromArray(ItemTypes)
+    const isMagical = Math.random() < 0.05
 
     const item: IItem = {
         type: itemType,
+        magicalProperty: isMagical
+            ? getRandomValueFromArray(MagicalProperties)
+            : undefined,
         material: itemType.potentialMaterials
             ? generateMaterial(itemType.potentialMaterials)
             : undefined,

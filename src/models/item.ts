@@ -13,6 +13,7 @@ export interface IItem {
     size: ValuedDescriptor
     renown: ValuedDescriptor
     age: ValuedDescriptor
+    magicalProperty?: string
 }
 
 export class Item implements PrintableObject {
@@ -24,6 +25,7 @@ export class Item implements PrintableObject {
     size: string
     renown: string
     age: string
+    magicalProperty?: string
     value: number
 
     constructor(item: IItem) {
@@ -35,6 +37,7 @@ export class Item implements PrintableObject {
         this.size = item.size.label
         this.renown = item.renown.label
         this.age = item.age.label
+        this.magicalProperty = item.magicalProperty
         this.value =
             randomIntegerBetweenNumbers(
                 item.condition.minValue,
@@ -68,6 +71,7 @@ export class Item implements PrintableObject {
             embed.addField('Size', this.size)
             embed.addField('Renown', this.renown)
             embed.addField('Age', this.age)
+            if (this.magicalProperty) embed.addField("Magical Property", this.magicalProperty)
             embed.addField('Value', this.value)
             embed.setColor(this.colour.hex)
         }
