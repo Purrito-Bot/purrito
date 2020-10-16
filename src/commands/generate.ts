@@ -26,10 +26,18 @@ export async function generate(message: Message, args: string[]) {
             generateEncounter(message, args)
             break
         case 'help':
+        case '':
+        case undefined:
             return message.channel.send(new MessageEmbed(generateCommands))
+        case 'cat':
+        case 'purrito':
+        case 'Purrito':
+            return message.reply(
+                "I can't create something that powerful, use `+generate help` to see what I can generate"
+            )
         default:
             return message.reply(
-                "what would you like to generate? use +generate help if you're not sure"
+                "I can't generate that, use `+generate help` to see what I can generate"
             )
     }
 }

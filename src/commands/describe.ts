@@ -18,7 +18,9 @@ export async function describeMonster(message: Message) {
         .trim()
 
     if (!monsterName)
-        return await message.reply('please provide a monster name')
+        return await message.reply(
+            'who do you want me to describe? try `+describe goblin`'
+        )
 
     const json: IMonster | undefined = monsters.find(
         monster => monster.name.toLowerCase() === monsterName?.toLowerCase()

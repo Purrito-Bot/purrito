@@ -11,7 +11,9 @@ export function rollDice(message: Message) {
     const command = message.content.slice(`${config.prefix}dice`.length).trim()
 
     if (!command) {
-        return message.reply(`looks like you dropped your dice`)
+        return message.reply(
+            `looks like you dropped your dice, try \`+dice help\` to find out how to roll`
+        )
     }
 
     if (command.trim() === 'help') {
@@ -28,11 +30,15 @@ export function rollDice(message: Message) {
     try {
         result = dice.roll(commands[0])
     } catch {
-        return message.reply(`cmon ...${command}`)
+        return message.reply(
+            `${command} doesn't look right to me, try \`+dice help\` to find out how to roll`
+        )
     }
 
     if (result.errors.length > 0) {
-        return message.reply(`c'mon ...${command}?`)
+        return message.reply(
+            `${command} doesn't look right to me, try \`+dice help\` to find out how to roll`
+        )
     }
 
     message.reply(
