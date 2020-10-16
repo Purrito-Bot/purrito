@@ -1,4 +1,4 @@
-import { ItemType } from '../models/itemType'
+import { ItemType } from '../../models/itemType'
 
 export const ItemTypes: ItemType[] = [
     {
@@ -14,33 +14,33 @@ export const ItemTypes: ItemType[] = [
             },
         ],
     },
-    // {
-    //     label: 'Magic Item - Table A',
-    // },
-    // {
-    //     label: 'Magic Item - Table B',
-    // },
-    // {
-    //     label: 'Magic Item - Table C',
-    // },
-    // {
-    //     label: 'Magic Item - Table D',
-    // },
-    // {
-    //     label: 'Magic Item - Table E',
-    // },
-    // {
-    //     label: 'Magic Item - Table F',
-    // },
-    // {
-    //     label: 'Magic Item - Table G',
-    // },
-    // {
-    //     label: 'Magic Item - Table H',
-    // },
-    // {
-    //     label: 'Magic Item - Table I',
-    // },
+    {
+        label: 'Magic Item - Table A',
+    },
+    {
+        label: 'Magic Item - Table B',
+    },
+    {
+        label: 'Magic Item - Table C',
+    },
+    {
+        label: 'Magic Item - Table D',
+    },
+    {
+        label: 'Magic Item - Table E',
+    },
+    {
+        label: 'Magic Item - Table F',
+    },
+    {
+        label: 'Magic Item - Table G',
+    },
+    {
+        label: 'Magic Item - Table H',
+    },
+    {
+        label: 'Magic Item - Table I',
+    },
 ]
 
 export const idea: string[] = [
