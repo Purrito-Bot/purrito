@@ -63,22 +63,25 @@ export function getRandomValueFromArray<T>(array: T[]): T {
 }
 
 /**
- * When generated an item, some descriptors are weighted, to give them more / less
- * chance to appear than others. This function will created that weighted list
- * @param descriptors descriptors from which to created a weighted list
+ * Get an item from a weighted array, accounting for their weight
+ * @param items the weighted array
  */
-export function createdWeightedList<T extends WeightedDescriptor>(
-    descriptors: T[]
-): T[] {
-    let weightedList: T[] = []
+export function getRandomValueFromWeightedArray<T extends WeightedDescriptor>(items: T[]) {
+    // Total of all the weights
+    const total = items.reduce((a, b) => a + b.weight, 0)
 
-    descriptors.forEach(descriptor => {
-        const numberToAdd = descriptor.weight
+    // Map each item into a accumulative chance
+    let accumulator = 0;
+    const chances = items.map(item => (accumulator = item.weight + accumulator))
 
-        for (let index = 0; index < numberToAdd; index++) {
-            weightedList.push(descriptor)
-        }
-    })
+    // Roll our dice! 
+    const diceRoll = Math.random() * total;
 
-    return weightedList
+    // Compare the dice roll with the accumulative chance, pull out the one it landed on
+    const result = items[chances.filter(chance => chance <= diceRoll).length]
+    return result;
+}
+
+export function randomIntegerBetweenNumbers(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
