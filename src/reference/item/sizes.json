@@ -1,11 +1,11 @@
 [
-    { "weight": 2, "label": "Tiny", "value": 0 },
-    { "weight": 2, "label": "Small", "value": 1 },
-    { "weight": 2, "label": "Below Avg.", "value": 2 },
-    { "weight": 7, "label": "Average", "value": 3 },
-    { "weight": 3, "label": "Above Avg.", "value": 4 },
-    { "weight": 2, "label": "Large", "value": 5 },
-    { "weight": 1, "label": "Very Large", "value": 6 },
-    { "weight": 1, "label": "Huge", "value": 7 },
-    { "weight": 1, "label": "Gargantuan", "value": 8 }
+    { "weight": 2, "label": "Tiny", "minValue": 0, "maxValue": 10 },
+    { "weight": 2, "label": "Small", "minValue": 1, "maxValue": 10 },
+    { "weight": 2, "label": "Below Avg.", "minValue": 2, "maxValue": 10 },
+    { "weight": 7, "label": "Average", "minValue": 3, "maxValue": 10 },
+    { "weight": 3, "label": "Above Avg.", "minValue": 4, "maxValue": 10 },
+    { "weight": 2, "label": "Large", "minValue": 5, "maxValue": 10 },
+    { "weight": 1, "label": "Very Large", "minValue": 6, "maxValue": 10 },
+    { "weight": 1, "label": "Huge", "minValue": 7, "maxValue": 10 },
+    { "weight": 1, "label": "Gargantuan", "minValue": 8, "maxValue": 10 }
 ]

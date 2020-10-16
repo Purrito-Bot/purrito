@@ -1,5 +1,6 @@
 export interface ValuedDescriptor extends WeightedDescriptor {
-    value: number
+    minValue: number
+    maxValue: number
 }
 
 export interface WeightedDescriptor {

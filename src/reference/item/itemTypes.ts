@@ -8,10 +8,6 @@ export const ItemTypes: ItemType[] = [
                 label: 'METAL',
                 weight: 4,
             },
-            {
-                label: 'WOOD',
-                weight: 1,
-            },
         ],
     },
     {

@@ -1,11 +1,16 @@
 [
-    { "weight": 3, "label": "Unknown", "value": 0 },
-    { "weight": 3, "label": "Obscurely-known", "value": 1 },
-    { "weight": 1, "label": "Obscurely-known", "value": 2 },
-    { "weight": 6, "label": "Regionally-known", "value": 3 },
-    { "weight": 4, "label": "Nationally-known", "value": 4 },
-    { "weight": 1, "label": "Continentally-known", "value": 5 },
-    { "weight": 1, "label": "World-known", "value": 6 },
-    { "weight": 1, "label": "Fabled", "value": 7 },
-    { "weight": 1, "label": "Legendary", "value": 8 }
+    { "weight": 3, "label": "Unknown", "minValue": 0, "maxValue": 10 },
+    { "weight": 3, "label": "Obscurely-known", "minValue": 1, "maxValue": 10 },
+    { "weight": 1, "label": "Obscurely-known", "minValue": 2, "maxValue": 10 },
+    { "weight": 6, "label": "Regionally-known", "minValue": 3, "maxValue": 10 },
+    { "weight": 4, "label": "Nationally-known", "minValue": 4, "maxValue": 10 },
+    {
+        "weight": 1,
+        "label": "Continentally-known",
+        "minValue": 5,
+        "maxValue": 10
+    },
+    { "weight": 1, "label": "World-known", "minValue": 6, "maxValue": 10 },
+    { "weight": 1, "label": "Fabled", "minValue": 7, "maxValue": 10 },
+    { "weight": 1, "label": "Legendary", "minValue": 8, "maxValue": 10 }
 ]

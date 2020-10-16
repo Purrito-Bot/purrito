@@ -1,4 +1,5 @@
 import { MessageEmbed } from 'discord.js'
+import { randomIntegerBetweenNumbers } from '../utils/utils'
 import { ValuedDescriptor } from './itemDescriptor'
 import { ItemType } from './itemType'
 import { PrintableObject } from './printableObject'
@@ -35,10 +36,16 @@ export class Item implements PrintableObject {
         this.renown = item.renown.label
         this.age = item.age.label
         this.value =
-            item.condition.value +
-            item.age.value +
-            item.renown.value +
-            item.size.value
+            randomIntegerBetweenNumbers(
+                item.condition.minValue,
+                item.condition.maxValue
+            ) +
+            randomIntegerBetweenNumbers(item.age.minValue, item.age.maxValue) +
+            randomIntegerBetweenNumbers(
+                item.renown.minValue,
+                item.renown.maxValue
+            ) +
+            randomIntegerBetweenNumbers(item.size.minValue, item.size.maxValue)
     }
 
     createEmbed(): MessageEmbed {
@@ -52,7 +59,7 @@ export class Item implements PrintableObject {
             )
         } else {
             embed.setDescription(
-                'Use the value as a guideline on what GP value to assign it for your party. This number will range between 0 (trash) to 34 (god like item)'
+                'Use the value as a guideline on what GP value to assign it for your party. This number will range between 0 (trash) to 100 (god like item)'
             )
             if (this.material) embed.addField('Material', this.material)
             embed.addField('Colour', this.colour)
