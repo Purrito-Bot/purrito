@@ -18,8 +18,9 @@ export async function generateItem(message: Message, args?: string[]) {
 
     switch (outputVariant) {
         case 'lite':
-            return message.channel.send(randomItem.createLiteEmbed())
+            message.channel.send(randomItem.createLiteEmbed())
         default:
+            if (randomItem.value > 90) message.channel.send('🌟 MEOW 🌟')
             return message.channel.send(randomItem.createEmbed())
     }
 }
