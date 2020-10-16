@@ -1,12 +1,12 @@
 [
-    { "weight": 1, "label": "Avant-garde", "value": 0 },
-    { "weight": 1, "label": "Newly-forged", "value": 1 },
-    { "weight": 4, "label": "Recent past", "value": 2 },
-    { "weight": 7, "label": "Old", "value": 3 },
-    { "weight": 3, "label": "Antique", "value": 4 },
-    { "weight": 2, "label": "Historical", "value": 5 },
-    { "weight": 1, "label": "Venerable", "value": 6 },
-    { "weight": 1, "label": "Archaic", "value": 7 },
-    { "weight": 1, "label": "Adetiluvian", "value": 8 },
-    { "weight": 1, "label": "Primordial", "value": 9 }
+    { "weight": 1, "label": "Avant-garde", "minValue": 0, "maxValue": 1 },
+    { "weight": 1, "label": "Newly-forged", "minValue": 2, "maxValue": 3 },
+    { "weight": 4, "label": "Recent past", "minValue": 4, "maxValue": 6 },
+    { "weight": 7, "label": "Old", "minValue": 7, "maxValue": 10 },
+    { "weight": 3, "label": "Antique", "minValue": 11, "maxValue": 12 },
+    { "weight": 2, "label": "Historical", "minValue": 13, "maxValue": 14 },
+    { "weight": 1, "label": "Venerable", "minValue": 15, "maxValue": 16 },
+    { "weight": 1, "label": "Archaic", "minValue": 17, "maxValue": 20 },
+    { "weight": 1, "label": "Adetiluvian", "minValue": 21, "maxValue": 23 },
+    { "weight": 1, "label": "Primordial", "minValue": 24, "maxValue": 25 }
 ]
