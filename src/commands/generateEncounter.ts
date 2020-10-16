@@ -14,7 +14,7 @@ export async function generateEncounter(message: Message, args?: string[]) {
 
     party = await askForTextResponse(
         message,
-        'describe your party \ne.g for a party of 3, with a level 1 2 and 3 just type 1 2 3'
+        'Step 1: describe your party *Hint: for a party of 3, with a level 1 2 and 3 type "1 2 3"*'
     )
 
     if (!party) return
@@ -43,7 +43,7 @@ export async function generateEncounter(message: Message, args?: string[]) {
 
     const difficultyResponse = await askForReaction(
         message,
-        'almost there, now react with your difficulty!\n1 easy\n2 medium\n3 hard\n4 deadly',
+        'Step 2: react with your desired difficulty\n1 - easy\n2 - medium\n3 - hard\n4 - deadly',
         ['1️⃣', '2️⃣', '3️⃣', '4️⃣'],
         true
     )
