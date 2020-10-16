@@ -1,7 +1,7 @@
 import { Message } from 'discord.js'
 import config from '../config.json'
 import Guild, { GuildSettings } from '../models/guild'
-import { ValuedDescriptor } from '../models/valuedDescriptor'
+import { WeightedDescriptor } from '../models/itemDescriptor'
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -67,7 +67,7 @@ export function getRandomValueFromArray<T>(array: T[]): T {
  * chance to appear than others. This function will created that weighted list
  * @param descriptors descriptors from which to created a weighted list
  */
-export function createdWeightedList<T extends ValuedDescriptor>(
+export function createdWeightedList<T extends WeightedDescriptor>(
     descriptors: T[]
 ): T[] {
     let weightedList: T[] = []

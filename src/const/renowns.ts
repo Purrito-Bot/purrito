@@ -1,4 +1,4 @@
-import { ValuedDescriptor } from '../models/valuedDescriptor'
+import { ValuedDescriptor } from '../models/itemDescriptor'
 
 export const Renowns: ValuedDescriptor[] = [
     { weight: 3, label: 'Unknown', value: 0 },

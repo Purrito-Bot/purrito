@@ -1,5 +1,5 @@
-import { Message } from 'discord.js'
-import { Item } from '../models/item'
+import { Message } from 'discord.js';
+import { _generateItem } from '../utils/itemUtils';
 
 /**
  * Given +generate item, generate an item based on the sets of data
@@ -7,7 +7,7 @@ import { Item } from '../models/item'
  * @param args
  */
 export async function generateItem(message: Message, args?: string[]) {
-    const randomItem: Item = new Item()
+    const randomItem = _generateItem();
 
     let outputVariant: string | undefined
     // arg[0] we know will be "item" whereas arg[1] can be used to specify the

@@ -3,15 +3,39 @@ import { ItemType } from '../models/itemType'
 export const ItemTypes: ItemType[] = [
     {
         label: 'Tiara',
-        value: 2,
-        weight: 2,
         potentialMaterials: [
             {
-                label: 'Gold',
-                value: 2,
-                weight: 2,
+                label: 'METAL',
+                weight: 1,
             },
         ],
+    },
+    {
+        label: 'Magic Item - Table A',
+    },
+    {
+        label: 'Magic Item - Table B',
+    },
+    {
+        label: 'Magic Item - Table C',
+    },
+    {
+        label: 'Magic Item - Table D',
+    },
+    {
+        label: 'Magic Item - Table E',
+    },
+    {
+        label: 'Magic Item - Table F',
+    },
+    {
+        label: 'Magic Item - Table G',
+    },
+    {
+        label: 'Magic Item - Table H',
+    },
+    {
+        label: 'Magic Item - Table I',
     },
 ]
 
@@ -56,13 +80,4 @@ export const idea: string[] = [
     'Jewellery - Wooden Box',
     'Jewellery - Pendant',
     'Jewellery - Tiara/Crown',
-    'Magic Item - Table A',
-    'Magic Item - Table B',
-    'Magic Item - Table C',
-    'Magic Item - Table D',
-    'Magic Item - Table E',
-    'Magic Item - Table F',
-    'Magic Item - Table G',
-    'Magic Item - Table H',
-    'Magic Item - Table I',
 ]
