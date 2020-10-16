@@ -1,60 +1,60 @@
 [
     {
-        "label": "Awful",
+        "label": "Unsalvageable",
         "weight": 1,
         "minValue": 0,
         "maxValue": 1
     },
     {
-        "label": "Very Poor",
+        "label": "Broken",
         "weight": 1,
         "minValue": 1,
         "maxValue": 3
     },
     {
-        "label": "Poor",
+        "label": "Awful",
         "weight": 2,
         "minValue": 3,
-        "maxValue": 4
+        "maxValue": 5
     },
     {
-        "label": "Below Avg.",
+        "label": "Shabby",
         "weight": 2,
         "minValue": 5,
         "maxValue": 7
     },
     {
         "label": "Average",
-        "weight": 7,
+        "weight": 6,
         "minValue": 6,
         "maxValue": 13
     },
     {
-        "label": "Above Avg.",
-        "weight": 4,
+        "label": "Notable ",
+        "weight": 3,
         "minValue": 10,
         "maxValue": 15
     },
     {
         "label": "Good",
-        "weight": 1,
+        "weight": 2,
         "minValue": 15,
         "maxValue": 19
     },
     {
-        "label": "Very Good",
-        "weight": 1,
+        "label": "Excellent",
+        "weight": 2,
         "minValue": 18,
         "maxValue": 21
     },
     {
-        "label": "Excellent",
+        "label": "Flawless",
         "weight": 1,
         "minValue": 22,
         "maxValue": 23
     },
     {
-        "label": "Flawless",
+        "label": "Pristine",
         "weight": 1,
         "minValue": 24,
         "maxValue": 25
