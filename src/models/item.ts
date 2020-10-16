@@ -7,7 +7,7 @@ import { PrintableObject } from './printableObject'
 export interface IItem {
     type: ItemType
     material?: string
-    colour: { hex: string, name: string, rgb: string}
+    colour: { hex: string; name: string; rgb: string }
     descriptors: string[]
     condition: ValuedDescriptor
     size: ValuedDescriptor
@@ -19,7 +19,7 @@ export interface IItem {
 export class Item implements PrintableObject {
     type: string
     material?: string
-    colour:  { hex: string, name: string, rgb: string}
+    colour: { hex: string; name: string; rgb: string }
     descriptors: string[]
     condition: string
     size: string
@@ -71,7 +71,8 @@ export class Item implements PrintableObject {
             embed.addField('Size', this.size)
             embed.addField('Renown', this.renown)
             embed.addField('Age', this.age)
-            if (this.magicalProperty) embed.addField("Magical Property", this.magicalProperty)
+            if (this.magicalProperty)
+                embed.addField('Magical Property', this.magicalProperty)
             embed.addField('Value', this.value)
             embed.setColor(this.colour.hex)
         }

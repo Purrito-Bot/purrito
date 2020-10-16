@@ -7,5 +7,3 @@ export interface WeightedDescriptor {
     weight: number
     label: string
 }
-
-

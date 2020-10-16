@@ -66,20 +66,22 @@ export function getRandomValueFromArray<T>(array: T[]): T {
  * Get an item from a weighted array, accounting for their weight
  * @param items the weighted array
  */
-export function getRandomValueFromWeightedArray<T extends WeightedDescriptor>(items: T[]) {
+export function getRandomValueFromWeightedArray<T extends WeightedDescriptor>(
+    items: T[]
+) {
     // Total of all the weights
     const total = items.reduce((a, b) => a + b.weight, 0)
 
     // Map each item into a accumulative chance
-    let accumulator = 0;
+    let accumulator = 0
     const chances = items.map(item => (accumulator = item.weight + accumulator))
 
-    // Roll our dice! 
-    const diceRoll = Math.random() * total;
+    // Roll our dice!
+    const diceRoll = Math.random() * total
 
     // Compare the dice roll with the accumulative chance, pull out the one it landed on
     const result = items[chances.filter(chance => chance <= diceRoll).length]
-    return result;
+    return result
 }
 
 export function randomIntegerBetweenNumbers(min: number, max: number) {
