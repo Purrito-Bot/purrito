@@ -8,7 +8,7 @@ import ItemConditions from './itemConditions.json'
 import { ItemTypes } from './itemTypes'
 import MagicalProperties from './magicalProperties.json'
 import Metals from './metals.json'
-import Renowns from './renowns.json'
+import Intrigue from './intrigue.json'
 import Sizes from './sizes.json'
 import Stones from './stones.json'
 import Woods from './woods.json'
@@ -24,7 +24,7 @@ export {
     ItemTypes,
     MagicalProperties,
     Metals,
-    Renowns,
+    Intrigue as Intrigue,
     Sizes,
     Stones,
     Woods,

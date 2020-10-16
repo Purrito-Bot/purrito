@@ -11,7 +11,7 @@ export interface IItem {
     descriptors: string[]
     condition: ValuedDescriptor
     size: ValuedDescriptor
-    renown: ValuedDescriptor
+    intrigue: ValuedDescriptor
     age: ValuedDescriptor
     magicalProperty?: string
 }
@@ -23,7 +23,7 @@ export class Item implements PrintableObject {
     descriptors: string[]
     condition: string
     size: string
-    renown: string
+    intrigue: string
     age: string
     magicalProperty?: string
     value: number
@@ -35,7 +35,7 @@ export class Item implements PrintableObject {
         this.descriptors = item.descriptors
         this.condition = item.condition.label
         this.size = item.size.label
-        this.renown = item.renown.label
+        this.intrigue = item.intrigue.label
         this.age = item.age.label
         this.magicalProperty = item.magicalProperty
         this.value =
@@ -45,8 +45,8 @@ export class Item implements PrintableObject {
             ) +
             randomIntegerBetweenNumbers(item.age.minValue, item.age.maxValue) +
             randomIntegerBetweenNumbers(
-                item.renown.minValue,
-                item.renown.maxValue
+                item.intrigue.minValue,
+                item.intrigue.maxValue
             ) +
             randomIntegerBetweenNumbers(item.size.minValue, item.size.maxValue)
     }
@@ -69,7 +69,7 @@ export class Item implements PrintableObject {
             embed.addField('Descriptors', this.descriptors)
             embed.addField('Condition', this.condition)
             embed.addField('Size', this.size)
-            embed.addField('Renown', this.renown)
+            embed.addField('Intrigue', this.intrigue)
             embed.addField('Age', this.age)
             if (this.magicalProperty)
                 embed.addField('Magical Property', this.magicalProperty)

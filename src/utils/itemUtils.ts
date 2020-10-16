@@ -8,10 +8,10 @@ import {
     Earthen,
     Fabrics,
     Fantasy,
+    Intrigue,
     ItemConditions,
     MagicalProperties,
     Metals,
-    Renowns,
     Sizes,
     Stones,
     Woods,
@@ -44,7 +44,7 @@ export function _generateItem(): Item {
         ],
         condition: getRandomValueFromWeightedArray(ItemConditions),
         size: getRandomValueFromWeightedArray(Sizes),
-        renown: getRandomValueFromWeightedArray(Renowns),
+        intrigue: getRandomValueFromWeightedArray(Intrigue),
         age: getRandomValueFromWeightedArray(Ages),
     }
 
