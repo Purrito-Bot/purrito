@@ -6,37 +6,41 @@ export const ItemTypes: ItemType[] = [
         potentialMaterials: [
             {
                 label: 'METAL',
+                weight: 4,
+            },
+            {
+                label: 'WOOD',
                 weight: 1,
             },
         ],
     },
-    {
-        label: 'Magic Item - Table A',
-    },
-    {
-        label: 'Magic Item - Table B',
-    },
-    {
-        label: 'Magic Item - Table C',
-    },
-    {
-        label: 'Magic Item - Table D',
-    },
-    {
-        label: 'Magic Item - Table E',
-    },
-    {
-        label: 'Magic Item - Table F',
-    },
-    {
-        label: 'Magic Item - Table G',
-    },
-    {
-        label: 'Magic Item - Table H',
-    },
-    {
-        label: 'Magic Item - Table I',
-    },
+    // {
+    //     label: 'Magic Item - Table A',
+    // },
+    // {
+    //     label: 'Magic Item - Table B',
+    // },
+    // {
+    //     label: 'Magic Item - Table C',
+    // },
+    // {
+    //     label: 'Magic Item - Table D',
+    // },
+    // {
+    //     label: 'Magic Item - Table E',
+    // },
+    // {
+    //     label: 'Magic Item - Table F',
+    // },
+    // {
+    //     label: 'Magic Item - Table G',
+    // },
+    // {
+    //     label: 'Magic Item - Table H',
+    // },
+    // {
+    //     label: 'Magic Item - Table I',
+    // },
 ]
 
 export const idea: string[] = [

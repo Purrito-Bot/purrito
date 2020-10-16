@@ -6,10 +6,13 @@ import { ItemTypes } from '../const/itemTypes'
 import { Renowns } from '../const/renowns'
 import { Sizes } from '../const/sizes'
 import { IItem, Item } from '../models/item'
-import { Material, MaterialType } from '../models/itemType'
-import { createdWeightedList, getRandomValueFromArray } from './utils'
+import { MaterialType } from '../models/itemType'
 import Metals from '../reference/item/metals.json'
 import Woods from '../reference/item/woods.json'
+import {
+    getRandomValueFromArray,
+    getRandomValueFromWeightedArray,
+} from './utils'
 
 /**
  * Generate a completely random item using the reference data.
@@ -28,10 +31,10 @@ export function _generateItem(): Item {
             getRandomValueFromArray(Descriptors),
             getRandomValueFromArray(Descriptors),
         ],
-        condition: getRandomValueFromArray(createdWeightedList(Conditions)),
-        size: getRandomValueFromArray(createdWeightedList(Sizes)),
-        renown: getRandomValueFromArray(createdWeightedList(Renowns)),
-        age: getRandomValueFromArray(createdWeightedList(Ages)),
+        condition: getRandomValueFromWeightedArray(Conditions),
+        size: getRandomValueFromWeightedArray(Sizes),
+        renown: getRandomValueFromWeightedArray(Renowns),
+        age: getRandomValueFromWeightedArray(Ages),
     }
 
     return new Item(item)
@@ -42,8 +45,7 @@ export function _generateItem(): Item {
  * @param material the variety of material e.g. wood
  */
 function generateMaterial(materialTypes: MaterialType[]): string {
-    const material = getRandomValueFromArray(createdWeightedList(materialTypes))
-        .label
+    const material = getRandomValueFromWeightedArray(materialTypes).label
 
     let specificMaterial: string
     switch (material) {
