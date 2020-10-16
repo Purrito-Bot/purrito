@@ -6,6 +6,7 @@ import Fabrics from './fabrics.json'
 import Fantasy from './fantasy.json'
 import ItemConditions from './itemConditions.json'
 import { ItemTypes } from './itemTypes'
+import MagicalProperties from './magicalProperties.json'
 import Metals from './metals.json'
 import Renowns from './renowns.json'
 import Sizes from './sizes.json'
@@ -21,6 +22,7 @@ export {
     Fantasy,
     ItemConditions,
     ItemTypes,
+    MagicalProperties,
     Metals,
     Renowns,
     Sizes,
