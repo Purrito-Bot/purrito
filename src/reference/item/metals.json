@@ -1,1 +1,20 @@
-["Silver", "Gold", "Bronze", "Brass", "Copper"]
+[
+    "Bronze",
+    "Brass",
+    "Electrum",
+    "Gold",
+    "Copper",
+    "Iron",
+    "Lead",
+    "Platinum",
+    "Silver",
+    "Titanium",
+    "Cobalt",
+    "Nickel",
+    "Adamantine",
+    "Orichalcum",
+    "Bloodiron",
+    "Rimefire",
+    "Mithral",
+    "Trimmed runite"
+]
