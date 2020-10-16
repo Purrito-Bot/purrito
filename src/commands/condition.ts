@@ -38,7 +38,7 @@ export async function condition(message: Message) {
     } else {
         // If nothing comes after +condition give some helper text
         return message.reply(
-            'psst... search for a condition such as "paralyzed" or use "all" to print all conditions'
+            'what condition do you want to learn about? try `+condition paralyzed` or `+condition all` to see all of them'
         )
     }
 }

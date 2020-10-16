@@ -2,7 +2,7 @@ import { Message } from 'discord.js'
 import { calculateXpBudget } from '../utils/xpUtils'
 
 const characterLevelNotProvided =
-    'puurrrovide your character level e.g. +xpbudget 10'
+    "I'll need to know what level you are, try `+xpbudget 10` for a level 10"
 const invalidCharacterLevel = (numberProvided: number) => {
     return `${numberProvided} not a valid level!`
 }
@@ -60,5 +60,5 @@ export async function xpBudget(message: Message, args?: string[]) {
         messageToReturn = characterLevelNotProvided
     }
 
-    await message.channel.send(messageToReturn)
+    await message.reply(messageToReturn)
 }
