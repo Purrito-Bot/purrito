@@ -5,10 +5,14 @@ import {
     Ages,
     Colours,
     Descriptors,
+    Earthen,
+    Fabrics,
+    Fantasy,
     ItemConditions,
-    Metals, 
+    Metals,
     Renowns,
     Sizes,
+    Stones,
     Woods,
 } from '../reference/item'
 import {
@@ -56,6 +60,18 @@ function generateMaterial(materialTypes: MaterialType[]): string {
             break
         case 'WOOD':
             specificMaterial = getRandomValueFromArray(Woods)
+            break
+        case 'STONE':
+            specificMaterial = getRandomValueFromArray(Stones)
+            break
+        case 'FANTASY':
+            specificMaterial = getRandomValueFromArray(Fantasy)
+            break
+        case 'FABRIC':
+            specificMaterial = getRandomValueFromArray(Fabrics)
+            break
+        case 'EARTHEN':
+            specificMaterial = getRandomValueFromArray(Earthen)
             break
     }
 
