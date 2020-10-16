@@ -37,8 +37,8 @@ export async function condition(message: Message) {
         }
     } else {
         // If nothing comes after +condition give some helper text
-        return message.channel.send(
-            'search for a condition e.g. para or use all to find show all conditions'
+        return message.reply(
+            'psst... search for a condition such as "paralyzed" or use "all" to print all conditions'
         )
     }
 }
