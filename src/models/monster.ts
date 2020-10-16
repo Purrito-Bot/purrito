@@ -43,18 +43,18 @@ export class Monster implements PrintableObject {
     armorClass: string
     hitPoints: string
     Speed: string
-    STR: string
-    STR_mod: string
-    DEX: string
-    DEX_mod: string
-    CON: string
-    CON_mod: string
-    INT: string
-    INT_mod: string
-    WIS: string
-    WIS_mod: string
-    CHA: string
-    CHA_mod: string
+    str: string
+    strMod: string
+    dex: string
+    dexMod: string
+    con: string
+    conMod: string
+    int: string
+    intMod: string
+    wis: string
+    wisMod: string
+    cha: string
+    chaMod: string
     savingThrows?: string
     Skills?: string
     damageImmunities?: string
@@ -72,18 +72,18 @@ export class Monster implements PrintableObject {
         this.armorClass = monster['Armor Class']
         this.hitPoints = monster['Hit Points']
         this.Speed = monster.Speed
-        this.STR = monster.STR
-        this.STR_mod = monster.STR_mod
-        this.DEX = monster.DEX
-        this.DEX_mod = monster.DEX_mod
-        this.CON = monster.CON
-        this.CON_mod = monster.CON_mod
-        this.INT = monster.INT
-        this.INT_mod = monster.INT_mod
-        this.WIS = monster.WIS
-        this.WIS_mod = monster.WIS_mod
-        this.CHA = monster.CHA
-        this.CHA_mod = monster.CHA_mod
+        this.str = monster.STR
+        this.strMod = monster.STR_mod
+        this.dex = monster.DEX
+        this.dexMod = monster.DEX_mod
+        this.con = monster.CON
+        this.conMod = monster.CON_mod
+        this.int = monster.INT
+        this.intMod = monster.INT_mod
+        this.wis = monster.WIS
+        this.wisMod = monster.WIS_mod
+        this.cha = monster.CHA
+        this.chaMod = monster.CHA_mod
         this.savingThrows = monster['Saving Throws']
         this.Skills = monster.Skills
         this.damageImmunities = monster['Damage Immunities']
@@ -108,12 +108,12 @@ export class Monster implements PrintableObject {
         ])
 
         embed.addField('Stats', [
-            `Strength: ${this.STR} ${this.STR_mod}`,
-            `Dexterity: ${this.DEX} ${this.DEX_mod}`,
-            `Constitution: ${this.CON} ${this.CON_mod}`,
-            `Intelligence: ${this.INT} ${this.INT_mod}`,
-            `Wisdom: ${this.WIS} ${this.WIS_mod}`,
-            `Charisma: ${this.CHA} ${this.CHA_mod}`,
+            `Strength: ${this.str} ${this.strMod}`,
+            `Dexterity: ${this.dex} ${this.dexMod}`,
+            `Constitution: ${this.con} ${this.conMod}`,
+            `Intelligence: ${this.int} ${this.intMod}`,
+            `Wisdom: ${this.wis} ${this.wisMod}`,
+            `Charisma: ${this.cha} ${this.chaMod}`,
         ])
 
         embed.addField('Abilities', [
