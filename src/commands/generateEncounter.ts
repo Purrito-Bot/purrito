@@ -14,7 +14,8 @@ export async function generateEncounter(message: Message, args?: string[]) {
 
     party = await askForTextResponse(
         message,
-        'Step 1: describe your party *Hint: for a party of 3, with a level 1 2 and 3 type "1 2 3"*'
+        'Step 1: describe your party **Hint**: for a party of 3, with a level 1 2 and 3 type "1 2 3"',
+        true
     )
 
     if (!party) return
@@ -71,5 +72,5 @@ export async function generateEncounter(message: Message, args?: string[]) {
         difficulty
     ).createEmbed(partyLevels, difficulty)
 
-    return message.reply(embed)
+    return message.channel.send(embed)
 }
