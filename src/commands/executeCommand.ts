@@ -14,6 +14,7 @@ import { generate } from './generate'
 import { getConfig } from './getConfig'
 import { help } from './help'
 import { ping } from './ping'
+import { randomDescriptor } from './randomDescriptor'
 import { resurrect } from './resurrect'
 import { setConfig } from './setConfig'
 import { snack } from './snack'
@@ -93,6 +94,9 @@ export async function executeCommand(message: Message) {
             break
         case 'help':
             help(message)
+            break
+        case 'descriptor':
+            randomDescriptor(message, args)
             break
     }
 }

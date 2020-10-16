@@ -15,6 +15,13 @@
             "value": "search for a D&D monster and find out a little bit more about them\n try +describe goblin and find out more about your favourite D&D bad guy"
         },
         {
+            "name": "+descriptor",
+            "value": [
+                "struggling to come up with a word to describe an item? got you covered, use this command to get a random descriptor to add life to your world",
+                "you can even tell me how many you want (up to 10)"
+            ]
+        },
+        {
             "name": "+condition",
             "value": "search for a specific condition and print detail on it, or use 'all' to learn about all the conditions"
         },
