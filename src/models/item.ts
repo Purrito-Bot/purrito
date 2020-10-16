@@ -88,7 +88,10 @@ export class Item implements PrintableObject {
                 'You have a magic item, roll on the appropriate table to find out what you got.'
             )
         } else {
+            embed.addField("Type", this.type)
+            embed.addField("Colour", this.colour.name)
             embed.addField('Value', this.value)
+            embed.setColor(this.colour.hex)
         }
         return embed
     }
