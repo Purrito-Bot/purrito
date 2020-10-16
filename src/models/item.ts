@@ -7,7 +7,7 @@ import { PrintableObject } from './printableObject'
 export interface IItem {
     type: ItemType
     material?: string
-    colour: string
+    colour: { hex: string, name: string, rgb: string}
     descriptors: string[]
     condition: ValuedDescriptor
     size: ValuedDescriptor
@@ -18,7 +18,7 @@ export interface IItem {
 export class Item implements PrintableObject {
     type: string
     material?: string
-    colour: string
+    colour:  { hex: string, name: string, rgb: string}
     descriptors: string[]
     condition: string
     size: string
@@ -62,13 +62,14 @@ export class Item implements PrintableObject {
                 'Use the value as a guideline on what GP value to assign it for your party. This number will range between 0 (trash) to 100 (god like item)'
             )
             if (this.material) embed.addField('Material', this.material)
-            embed.addField('Colour', this.colour)
+            embed.addField('Colour', this.colour.name)
             embed.addField('Descriptors', this.descriptors)
             embed.addField('Condition', this.condition)
             embed.addField('Size', this.size)
             embed.addField('Renown', this.renown)
             embed.addField('Age', this.age)
             embed.addField('Value', this.value)
+            embed.setColor(this.colour.hex)
         }
         return embed
     }
