@@ -1,14 +1,16 @@
-import { Ages } from '../const/ages'
-import { Colours } from '../const/colours'
-import { Conditions } from '../const/conditions'
-import { Descriptors } from '../const/descriptors'
-import { ItemTypes } from '../const/itemTypes'
-import { Renowns } from '../const/renowns'
-import { Sizes } from '../const/sizes'
 import { IItem, Item } from '../models/item'
 import { MaterialType } from '../models/itemType'
-import Metals from '../reference/item/metals.json'
-import Woods from '../reference/item/woods.json'
+import { ItemTypes } from '../reference'
+import {
+    Ages,
+    Colours,
+    Descriptors,
+    ItemConditions,
+    Metals,
+    Renowns,
+    Sizes,
+    Woods,
+} from '../reference/item'
 import {
     getRandomValueFromArray,
     getRandomValueFromWeightedArray,
@@ -31,7 +33,7 @@ export function _generateItem(): Item {
             getRandomValueFromArray(Descriptors),
             getRandomValueFromArray(Descriptors),
         ],
-        condition: getRandomValueFromWeightedArray(Conditions),
+        condition: getRandomValueFromWeightedArray(ItemConditions),
         size: getRandomValueFromWeightedArray(Sizes),
         renown: getRandomValueFromWeightedArray(Renowns),
         age: getRandomValueFromWeightedArray(Ages),
