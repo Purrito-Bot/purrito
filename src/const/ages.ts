@@ -1,4 +1,4 @@
-import { ValuedDescriptor } from '../models/valuedDescriptor'
+import { ValuedDescriptor } from '../models/itemDescriptor'
 
 export const Ages: ValuedDescriptor[] = [
     { weight: 1, label: 'Avant-garde', value: 0 },

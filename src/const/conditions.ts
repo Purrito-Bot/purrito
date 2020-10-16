@@ -1,4 +1,4 @@
-import { ValuedDescriptor } from '../models/valuedDescriptor'
+import { ValuedDescriptor } from '../models/itemDescriptor'
 
 export const Conditions: ValuedDescriptor[] = [
     { weight: 1, label: 'Awful', value: 0 },
