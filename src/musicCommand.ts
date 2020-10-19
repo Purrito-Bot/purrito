@@ -15,20 +15,18 @@ function parseMessage(message: Message): [string, string[]] {
 export async function musicCommand(message: Message, queue: SongQueue) {
     const [command, args] = parseMessage(message)
 
-    const updatedQueue = { ...queue }
-
     switch (command) {
         case 'join':
             if (message.member?.voice.channel) {
-                updatedQueue.connection = await message.member?.voice.channel.join()
-                updatedQueue.voiceChannel = message.member.voice.channel
+                queue.connection = await message.member?.voice.channel.join()
+                queue.voiceChannel = message.member.voice.channel
             } else {
                 message.reply('Join a voice channel so I can join in')
             }
             break
         case 'leave':
-            updatedQueue.voiceChannel?.leave()
-            updatedQueue.voiceChannel = undefined
+            queue.voiceChannel?.leave()
+            queue.voiceChannel = undefined
             break
         case 'add':
             const songInfo = await ytdl.getInfo(args[0])
@@ -36,16 +34,21 @@ export async function musicCommand(message: Message, queue: SongQueue) {
                 title: songInfo.videoDetails.title,
                 url: songInfo.videoDetails.video_url,
             }
-            updatedQueue.songs.push(song)
+            queue.songs.push(song)
             message.channel.send(`${song.title} added to the queue!`)
             break
         case 'list':
-            const embed = new MessageEmbed()
-            embed.setTitle('Music Queue')
-            queue.songs.forEach((song, index) =>
+            if(queue.songs.length > 0 ) {
+
+                const embed = new MessageEmbed()
+                embed.setTitle('Music Queue')
+                queue.songs.forEach((song, index) =>
                 embed.addField(`Song ${index}`, song.title)
-            )
-            message.reply(embed)
+                )
+                message.reply(embed)
+            } else {
+                message.reply("No songs in queue yet")
+            }
             break
         case 'play':
             if (queue.connection && queue.songs.length >= 1) {
@@ -53,8 +56,6 @@ export async function musicCommand(message: Message, queue: SongQueue) {
             }
             break
     }
-
-    return updatedQueue
 }
 
 function play(queue: SongQueue) {
