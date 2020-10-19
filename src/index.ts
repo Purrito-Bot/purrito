@@ -2,16 +2,19 @@ import { Client, Message } from 'discord.js'
 import dotenv from 'dotenv'
 import * as fs from 'fs'
 import mongoose from 'mongoose'
+import { executeCommand } from './commands/executeCommand'
 import { speak } from './commands/speak'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
-import { executeCommand } from './commands/executeCommand'
+import { SongQueue } from './models/songQueue'
+import { musicCommand } from './musicCommand'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
 const client = new Client()
+const musicQueue = new Map<string, SongQueue>()
 
 const defaultSettings: GuildSettings = {
     randomSpeechProbability: 0.05,
@@ -68,14 +71,26 @@ client.on('message', async (message: Message) => {
     // Ignore bots
     if (message.author.bot) return
 
-    if (message.content.indexOf(config.prefix) !== 0) {
+    if (message.content.indexOf(config.prefix) === 0) {
+        executeCommand(message)
+    } else if (message.content.indexOf('~') === 0) {
+        let queue = musicQueue.get(message.guild.id)
+        if (!queue) {
+            queue = {
+                playing: false,
+                songs: [],
+                volume: 5,
+            }
+            musicQueue.set(message.guild.id, queue)
+        }
+        const newQueue = await musicCommand(message, queue)
+        musicQueue.set(message.guild.id, newQueue)
+    } else {
         // On messages without prefix run these commands
         // Randomly meow when a message is received
         if (Math.random() < guildSettings.randomSpeechProbability) {
             speak(message)
         }
-    } else {
-        executeCommand(message)
     }
 })
 
