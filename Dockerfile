@@ -7,6 +7,7 @@ RUN npm prune --production
 
 
 FROM node:alpine
+RUN apk add ffmpeg
 COPY --from=dependencies /app/dist ./dist
 COPY --from=dependencies /app/node_modules ./node_modules
 
