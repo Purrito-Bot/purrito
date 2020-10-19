@@ -83,8 +83,8 @@ client.on('message', async (message: Message) => {
             }
             musicQueue.set(message.guild.id, queue)
         }
-        const newQueue = await musicCommand(message, queue)
-        musicQueue.set(message.guild.id, newQueue)
+    await musicCommand(message, queue)
+       
     } else {
         // On messages without prefix run these commands
         // Randomly meow when a message is received
