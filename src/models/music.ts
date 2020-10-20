@@ -20,6 +20,8 @@ export class Music implements PrintableObject {
     musicIndex: number
     /** The volume which Purrito will play the music */
     volume: number
+    /** Whether or not a song should loop */
+    loop: boolean
     /** Whether or not music is currenty playing */
     playing: boolean
     /** The voice channel which Purrito is playing in */
@@ -32,6 +34,7 @@ export class Music implements PrintableObject {
     constructor() {
         this.songs = []
         this.volume = 5
+        this.loop = false
         this.playing = false
         this.musicIndex = 0
     }
@@ -51,7 +54,10 @@ export class Music implements PrintableObject {
                 song.title
             )
         )
-        embed.setFooter('Use +music help to find out more')
+        embed.setFooter([
+            `Use +music help to find out more`,
+            `${this.loop ? 'Looping: on' : 'Looping: off'}`,
+        ])
 
         return embed
     }
@@ -85,9 +91,15 @@ export class Music implements PrintableObject {
     }
 
     play() {
-        if (!this.songs[this.musicIndex]) {
+        if (!this.songs[this.musicIndex] && this.songs.length > 0) {
+            // If we've reached the end of the play list, and there are still songs in there, go back to the start
+            this.musicIndex = 0
+        } else if (!this.songs[this.musicIndex] && this.songs.length === 0) {
+            // If we reach the end of the playlist and the playlist is empty, leave the voice channel
             this.leave()
-        } else if (this.dispatcher && !this.playing) {
+        }
+
+        if (this.dispatcher && !this.playing) {
             this.dispatcher.resume()
             this.playing = true
         } else if (this.playing) {
@@ -99,7 +111,7 @@ export class Music implements PrintableObject {
             this.dispatcher = this.connection
                 ?.play(song)
                 .on('finish', () => {
-                    this.musicIndex++
+                    if (!this.loop) this.musicIndex++
                     this.play()
                 })
                 .on('error', error => console.log(error))
@@ -133,5 +145,9 @@ export class Music implements PrintableObject {
         if (this.dispatcher) {
             this.dispatcher.setVolumeLogarithmic(volume / 5)
         }
+    }
+
+    setLoop(loop: boolean) {
+        this.loop = loop
     }
 }
