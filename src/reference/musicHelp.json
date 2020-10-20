@@ -15,6 +15,13 @@
             "value": "use this command and provide a YouTube link and I'll add that video to my music queue"
         },
         {
+            "name": "+music remove <value>",
+            "value": [
+                "remove a song from the list, use `+music list` to see where it is in the queue",
+                "if you remove the currently playing song, it will keep playing"
+            ]
+        },
+        {
             "name": "+music list",
             "value": "list all the music that is currently in the queue - also marks which song is currently on the deck"
         },

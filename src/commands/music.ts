@@ -44,19 +44,31 @@ export async function music(message: Message, args: string[]) {
                 )
             }
             break
+        case 'remove':
+            if (args[1]) {
+                const songToRemove = parseInt(args[1])
+                if (isNaN(songToRemove)) {
+                    message.reply(
+                        'You must give a numerical value to remove to, see `+music list` to find out where the song is'
+                    )
+                } else if (
+                    songToRemove > music.songs.length - 1 ||
+                    songToRemove < 0
+                ) {
+                    message.reply("I don't have a song at that number")
+                } else {
+                    const removedSong = music.removeSong(songToRemove)
+                    message.channel.send(`${removedSong?.title} removed from the queue!`)
+                }
+            } else {
+                message.reply(
+                    'Use `+music remove <number> to remove a song, or `music list` to see where it is in the list'
+                )
+            }
+            break
         case 'list':
             if (music.songs.length > 0) {
-                const embed = new MessageEmbed()
-                embed.setTitle('Music Queue')
-                music.songs.forEach((song, index) =>
-                    embed.addField(
-                        `Song ${index}${
-                            music?.musicIndex === index ? ' - On the deck' : ''
-                        }`,
-                        song.title
-                    )
-                )
-                message.reply(embed)
+                message.channel.send(music.createEmbed())
             } else {
                 message.reply(
                     'No songs in queue yet, try the `+music add` command'
@@ -112,13 +124,15 @@ export async function music(message: Message, args: string[]) {
                     message.reply(
                         'You must give a numerical value to skip to, see `+music list` to find out where your song is'
                     )
-                } else if (skipTo > music.songs.length || skipTo < 0) {
+                } else if (skipTo > music.songs.length - 1 || skipTo < 0) {
                     message.reply("I don't have a song at that number")
                 } else {
                     music.skip(skipTo)
+                    message.channel.send(music.createEmbed())
                 }
             } else {
                 music.skip()
+                message.channel.send(music.createEmbed())
             }
             break
         case 'help':
