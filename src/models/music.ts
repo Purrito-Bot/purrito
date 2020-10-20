@@ -86,11 +86,10 @@ export class Music implements PrintableObject {
 
     removeSong(songIndex: number): Song | undefined {
         const song = this.songs.splice(songIndex, 1)
-
-        if (this.musicIndex === songIndex && this.playing) {
-            this.musicIndex = this.musicIndex - 1
+        this.musicIndex = this.musicIndex - 1
+        if (!this.playing && this.musicIndex < 0) {
+            this.musicIndex = 0
         }
-
         return song[0]
     }
 
