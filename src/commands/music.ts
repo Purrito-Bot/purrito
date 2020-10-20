@@ -114,6 +114,7 @@ export async function music(message: Message, args: string[]) {
                     )
                 } else {
                     music.setVolume(newVolume)
+                    message.channel.send(`Set volume to ${music.volume}`)
                 }
             } else {
                 message.reply(`Volume is set to ${music.volume}`)
