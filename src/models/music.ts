@@ -46,14 +46,18 @@ export class Music implements PrintableObject {
         embed.setDescription(
             'Welcome to the best music event on Discord, here is the set list:'
         )
-        this.songs.forEach((song, index) =>
-            embed.addField(
-                `Song ${index}${
-                    this.musicIndex === index ? ' 🎵 On the deck 🎵' : ''
-                }`,
-                song.title
-            )
-        )
+        this.songs.forEach((song, index) => {
+            if (this.musicIndex === index) {
+                embed.addField(
+                    `Song ${index} 🎵 ${
+                        this.playing ? 'Now playing' : 'On the deck'
+                    } 🎵`,
+                    song.title
+                )
+            } else {
+                embed.addField(`Song ${index}`, song.title)
+            }
+        })
         embed.setFooter([
             `Use +music help to find out more`,
             `${this.loop ? 'Looping: on' : 'Looping: off'}`,
@@ -106,12 +110,15 @@ export class Music implements PrintableObject {
             logger.debug('play called when already playing')
         } else {
             const song = ytdl(this.songs[this.musicIndex].url, {
-                filter: 'audioonly',
+                quality: 'highestaudio',
+                highWaterMark: 1 << 25,
             })
             this.dispatcher = this.connection
                 ?.play(song)
                 .on('finish', () => {
-                    if (!this.loop) this.musicIndex++
+                    if (!this.loop) this.musicIndex = this.musicIndex + 1
+                    this.playing = false
+                    this.dispatcher = undefined
                     this.play()
                 })
                 .on('error', error => console.log(error))
