@@ -123,7 +123,7 @@ export class Music implements PrintableObject {
                 })
                 .on('error', error => console.log(error))
             this.playing = true
-            this.dispatcher?.setVolumeLogarithmic(this.volume / 5)
+            this.setVolume(this.volume)
         }
     }
 
