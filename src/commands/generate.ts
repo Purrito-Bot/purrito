@@ -3,6 +3,7 @@ import { logger } from '../logger'
 import { generateEncounter } from './generateEncounter'
 import { generateItem } from './generateItem'
 import generateCommands from '../reference/generateHelp.json'
+import { generateNPC } from './generateNpc'
 
 /**
  * When receiving a message with +generate, determine what the user wants to generate.
@@ -19,6 +20,9 @@ export async function generate(message: Message, args: string[]) {
     }
 
     switch (generationType) {
+        case 'npc':
+            generateNPC(message, args)
+            break
         case 'item':
             generateItem(message, args)
             break
