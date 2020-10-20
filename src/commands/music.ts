@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js'
 import ytdl from 'ytdl-core'
 import { botMusic } from '..'
-import { Music } from '../models/songQueue'
+import { Music } from '../models/music'
 
 export async function music(message: Message, args: string[]) {
     let music = botMusic.get(message.guild!.id)

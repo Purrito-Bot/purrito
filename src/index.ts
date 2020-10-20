@@ -8,7 +8,7 @@ import { speak } from './commands/speak'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
-import { Music } from './models/songQueue'
+import { Music } from './models/music'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
