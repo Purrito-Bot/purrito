@@ -46,6 +46,10 @@
             "value": "skip to the next song in the queue"
         },
         {
+            "name": "+music loop",
+            "value": "flicks the loop switch, when it's on your current song will repeat, when it's off I'll go through your queue"
+        },
+        {
             "name": "+music reset",
             "value": "having trouble with the music? This will reset all my music settings!"
         }

@@ -58,7 +58,9 @@ export async function music(message: Message, args: string[]) {
                     message.reply("I don't have a song at that number")
                 } else {
                     const removedSong = music.removeSong(songToRemove)
-                    message.channel.send(`${removedSong?.title} removed from the queue!`)
+                    message.channel.send(
+                        `${removedSong?.title} removed from the queue!`
+                    )
                 }
             } else {
                 message.reply(
@@ -134,6 +136,10 @@ export async function music(message: Message, args: string[]) {
                 music.skip()
                 message.channel.send(music.createEmbed())
             }
+            break
+        case 'loop':
+            music.setLoop(!music.loop)
+            message.channel.send(`Looping is now ${music.loop ? 'on' : 'off'}`)
             break
         case 'help':
         default:
