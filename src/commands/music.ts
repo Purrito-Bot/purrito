@@ -2,6 +2,7 @@ import { Message, MessageEmbed } from 'discord.js'
 import ytdl from 'ytdl-core'
 import { botMusic } from '..'
 import { Music } from '../models/music'
+import MusicHelp from '../reference/musicHelp.json'
 
 export async function music(message: Message, args: string[]) {
     let music = botMusic.get(message.guild!.id)
@@ -119,6 +120,10 @@ export async function music(message: Message, args: string[]) {
             } else {
                 music.skip()
             }
+            break
+        case 'help':
+        default:
+            message.channel.send(new MessageEmbed(MusicHelp))
             break
     }
 }
