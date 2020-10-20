@@ -1,13 +1,19 @@
-import { StreamDispatcher, VoiceChannel, VoiceConnection } from 'discord.js'
+import {
+    MessageEmbed,
+    StreamDispatcher,
+    VoiceChannel,
+    VoiceConnection,
+} from 'discord.js'
 import ytdl from 'ytdl-core'
 import { logger } from '../logger'
+import { PrintableObject } from './printableObject'
 
 export type Song = {
     title: string
     url: string
 }
 
-export class Music {
+export class Music implements PrintableObject {
     /** The queued up songs */
     songs: Song[]
     /** Which song in the queue is currently being played (0 based index) */
@@ -30,6 +36,26 @@ export class Music {
         this.musicIndex = 0
     }
 
+    createEmbed(): MessageEmbed {
+        const embed = new MessageEmbed()
+
+        embed.setTitle('Music Queue')
+        embed.setDescription(
+            'Welcome to the best music event on Discord, here is the set list:'
+        )
+        this.songs.forEach((song, index) =>
+            embed.addField(
+                `Song ${index}${
+                    this.musicIndex === index ? ' 🎵 On the deck 🎵' : ''
+                }`,
+                song.title
+            )
+        )
+        embed.setFooter('Use +music help to find out more')
+
+        return embed
+    }
+
     async join(voiceChannel: VoiceChannel) {
         this.voiceChannel = voiceChannel
         this.connection = await voiceChannel.join()
@@ -41,10 +67,21 @@ export class Music {
         this.connection = undefined
         this.dispatcher = undefined
         this.playing = false
+        this.musicIndex = 0
     }
 
     addSong(song: Song) {
         this.songs.push(song)
+    }
+
+    removeSong(songIndex: number): Song | undefined {
+        const song = this.songs.splice(songIndex, 1)
+
+        if (this.musicIndex === songIndex && this.playing) {
+            this.musicIndex = this.musicIndex - 1
+        }
+
+        return song[0]
     }
 
     play() {
