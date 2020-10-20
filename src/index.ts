@@ -3,18 +3,18 @@ import dotenv from 'dotenv'
 import * as fs from 'fs'
 import mongoose from 'mongoose'
 import { executeCommand } from './commands/executeCommand'
+import { music } from './commands/music'
 import { speak } from './commands/speak'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
-import { SongQueue } from './models/songQueue'
-import { musicCommand } from './musicCommand'
+import { Music } from './models/songQueue'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
 const client = new Client()
-const musicQueue = new Map<string, SongQueue>()
+export const botMusic = new Map<string, Music>()
 
 const defaultSettings: GuildSettings = {
     randomSpeechProbability: 0.05,
@@ -73,18 +73,6 @@ client.on('message', async (message: Message) => {
 
     if (message.content.indexOf(config.prefix) === 0) {
         executeCommand(message)
-    } else if (message.content.indexOf('~') === 0) {
-        let queue = musicQueue.get(message.guild.id)
-        if (!queue) {
-            queue = {
-                playing: false,
-                songs: [],
-                volume: 5,
-            }
-            musicQueue.set(message.guild.id, queue)
-        }
-    await musicCommand(message, queue)
-       
     } else {
         // On messages without prefix run these commands
         // Randomly meow when a message is received
