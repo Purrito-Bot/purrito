@@ -7,11 +7,7 @@ import {
 import ytdl from 'ytdl-core'
 import { logger } from '../logger'
 import { PrintableObject } from './printableObject'
-
-export type Song = {
-    title: string
-    url: string
-}
+import { Song } from './song'
 
 export class Music implements PrintableObject {
     /** The queued up songs */
@@ -58,10 +54,14 @@ export class Music implements PrintableObject {
                 embed.addField(`Song ${index}`, song.title)
             }
         })
-        embed.setFooter([
-            `Use +music help to find out more`,
-            `${this.loop ? 'Looping: on' : 'Looping: off'}`,
+        embed.addField('Settings', [
+            `Looping: ${this.loop ? 'On' : 'Off'}`,
+            `Volume: ${this.volume}`,
+            `Voice channel: ${
+                this.voiceChannel ? this.voiceChannel.name : 'Not connected'
+            }`,
         ])
+        embed.setFooter([`Use +music help to find out more`])
 
         return embed
     }
