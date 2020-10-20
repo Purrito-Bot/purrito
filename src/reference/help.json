@@ -4,15 +4,18 @@
     "fields": [
         {
             "name": "+dice",
-            "value": "rolls a specified amount of dice, use +dice help to find out more!"
+            "value": "rolls a specified amount of dice, use `+dice` help to find out more!"
         },
         {
             "name": "+generate",
-            "value": "create something out of nothing, 😲 use +generate help to find out more!"
+            "value": "create something out of nothing, 😲 use `+generate help` to find out more!"
         },
         {
             "name": "+describe",
-            "value": "search for a D&D monster and find out a little bit more about them\n try +describe goblin and find out more about your favourite D&D bad guy"
+            "value": [
+                "search for a D&D monster and find out a little bit more about them",
+                "try `+describe goblin` and find out more about your favourite D&D bad guy"
+            ]
         },
         {
             "name": "+descriptor",
@@ -23,11 +26,22 @@
         },
         {
             "name": "+condition",
-            "value": "search for a specific condition and print detail on it, or use 'all' to learn about all the conditions"
+            "value": [
+                "search for a specific condition and print detail on it, try `+condition para`",
+                "or use `+condition all` to learn about all the conditions"
+            ]
         },
         {
             "name": "+xpbudget",
-            "value": "find out the XP budgets for a D&D5e character of a certain level. \nyou can also find out what an easy, medium, hard and deadly encounter would be.\n try +xpbudget 7 easy for example to see what an easy encounter for a level 7 would in terms of XP"
+            "value": [
+                "find out the XP budgets for a D&D5e character of a certain level.",
+                "you can also find out what an easy, medium, hard and deadly encounter would be.",
+                "try `+xpbudget 7 easy` for example to see what an easy encounter for a level 7 would in terms of XP"
+            ]
+        },
+        {
+            "name": "+music",
+            "value": "all cats have multiple lives, and in one of mine I'm a professional DJ 😎. use `+music help` to find out more about my other life"
         }
     ]
 }
