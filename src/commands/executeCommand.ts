@@ -13,6 +13,7 @@ import { _do } from './do'
 import { generate } from './generate'
 import { getConfig } from './getConfig'
 import { help } from './help'
+import { music } from './music'
 import { ping } from './ping'
 import { randomDescriptor } from './randomDescriptor'
 import { resurrect } from './resurrect'
@@ -97,6 +98,9 @@ export async function executeCommand(message: Message) {
             break
         case 'descriptor':
             randomDescriptor(message, args)
+            break
+        case 'music':
+            music(message, args)
             break
     }
 }
