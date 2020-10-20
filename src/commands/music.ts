@@ -37,7 +37,8 @@ export async function music(message: Message, args: string[]) {
                     songInfo.videoDetails.title,
                     songInfo.videoDetails.video_url,
                     songInfo.videoDetails.shortDescription,
-                    songInfo.videoDetails.lengthSeconds
+                    songInfo.videoDetails.lengthSeconds,
+                    songInfo.videoDetails.thumbnail?.thumbnails[0]?.url
                 )
                 music.addSong(song)
                 message.channel.send(`${song.title} added to the queue!`)
