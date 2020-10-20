@@ -46,6 +46,10 @@
             "value": "skip to the next song in the queue"
         },
         {
+            "name": "+music playing",
+            "value": "get the name and description of the currently playing song"
+        },
+        {
             "name": "+music loop",
             "value": "flicks the loop switch, when it's on your current song will repeat, when it's off I'll go through your queue"
         },

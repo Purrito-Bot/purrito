@@ -2,6 +2,7 @@ import { Message, MessageEmbed } from 'discord.js'
 import ytdl from 'ytdl-core'
 import { botMusic } from '..'
 import { Music } from '../models/music'
+import { Song } from '../models/song'
 import MusicHelp from '../reference/musicHelp.json'
 
 export async function music(message: Message, args: string[]) {
@@ -32,10 +33,12 @@ export async function music(message: Message, args: string[]) {
         case 'add':
             if (args[1]) {
                 const songInfo = await ytdl.getInfo(args[1])
-                const song = {
-                    title: songInfo.videoDetails.title,
-                    url: songInfo.videoDetails.video_url,
-                }
+                const song = new Song(
+                    songInfo.videoDetails.title,
+                    songInfo.videoDetails.video_url,
+                    songInfo.videoDetails.shortDescription,
+                    songInfo.videoDetails.lengthSeconds
+                )
                 music.addSong(song)
                 message.channel.send(`${song.title} added to the queue!`)
             } else {
@@ -141,6 +144,23 @@ export async function music(message: Message, args: string[]) {
         case 'loop':
             music.setLoop(!music.loop)
             message.channel.send(`Looping is now ${music.loop ? 'on' : 'off'}`)
+            break
+        case 'playing':
+            if (music.playing) {
+                if (music.songs[music.musicIndex]) {
+                    message.channel.send(
+                        music.songs[music.musicIndex].createEmbed()
+                    )
+                } else {
+                    message.reply(
+                        "I'm playing a song that's no longer in the queue!"
+                    )
+                }
+            } else {
+                message.reply(
+                    "I'm not playing anything right now, use `+music play` to hear me play"
+                )
+            }
             break
         case 'help':
         default:
