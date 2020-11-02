@@ -21,7 +21,7 @@ export async function describeMonster(message: Message) {
         )
 
     const json: IMonster | undefined = monsters.find(
-        monster => monster.name.toLowerCase() === monsterName?.toLowerCase()
+        (monster) => monster.name.toLowerCase() === monsterName?.toLowerCase()
     )
 
     if (json) {

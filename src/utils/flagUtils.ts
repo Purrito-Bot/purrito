@@ -49,7 +49,7 @@ export function extractFlagNumberList(
         const asStrings = regexArray[1].trim().split(' ')
 
         // go through each string, and try parse into an number
-        asStrings.forEach(asString => {
+        asStrings.forEach((asString) => {
             const asNumber = parseInt(asString)
             // if it's a legit number put it in the needle
             if (!isNaN(asNumber)) needle.push(asNumber)

@@ -30,7 +30,7 @@ const GuildSchema: Schema = new Schema({
     },
 })
 
-GuildSchema.statics.findByGuildId = async function(id: string) {
+GuildSchema.statics.findByGuildId = async function (id: string) {
     return this.findOne({ guildId: id }).exec()
 }
 

@@ -39,7 +39,7 @@ export function _generateEncounter(
             xpBudget - encounter.getAdjustedXP(partyMemberLevels.length)
 
         const monstersWithCorrectXP = potentialMonsters.filter(
-            monster => monster.xp <= xpDifference
+            (monster) => monster.xp <= xpDifference
         )
 
         // If there are no monsters left to use, get out of this while
@@ -49,7 +49,7 @@ export function _generateEncounter(
 
         // See if this monster is already being used in the encounter
         let monsterInEncounter = encounter.monsters.find(
-            encounterMonster => encounterMonster.monster === monster
+            (encounterMonster) => encounterMonster.monster === monster
         )
 
         // If the monster is already used, just increment the 'amount'

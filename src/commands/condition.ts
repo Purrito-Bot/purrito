@@ -20,7 +20,7 @@ export async function condition(message: Message) {
             return message.channel.send(new MessageEmbed(conditions))
         } else {
             // Try and find a match for the condition name
-            const conditionData = conditions.fields.find(field =>
+            const conditionData = conditions.fields.find((field) =>
                 field.name.toLowerCase().includes(conditionName)
             )
             // Convert it into an Embed if found

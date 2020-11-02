@@ -6,11 +6,7 @@ export async function _do(message: Message, args: string[]) {
     logger.debug('Executing command +do')
     const messageString = args.join(' ')
     const sentence = nlp(messageString)
-    let proceesedSentence = sentence
-        .verbs()
-        .toPresentTense()
-        .all()
-        .text()
+    let proceesedSentence = sentence.verbs().toPresentTense().all().text()
     if (args[0] === proceesedSentence.split(' ')[0]) {
         logger.error(
             `No verb detected in sentence "${messageString}". Making best attempt.`

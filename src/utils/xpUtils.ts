@@ -16,11 +16,11 @@ export function calculateXpBudget(levels: number[]): XPBudget {
         dailyBudget: 0,
     }
 
-    levels.forEach(level =>
-        budgets.push(XPBudgets.find(XPBudget => XPBudget.level === level)!)
+    levels.forEach((level) =>
+        budgets.push(XPBudgets.find((XPBudget) => XPBudget.level === level)!)
     )
 
-    budgets.forEach(xpBudget => {
+    budgets.forEach((xpBudget) => {
         budget = addXPBudgets(budget, xpBudget)
     })
 
