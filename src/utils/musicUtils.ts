@@ -51,7 +51,7 @@ export async function skipSong(music: Music, songIndex: string) {
     const skipTo = parseInt(songIndex)
     if (isNaN(skipTo)) {
         throw Error(
-            'You must give a numerical value to skip to, see +music list to find out where your song is'
+            'You must give a numerical value to skip to, see `+music list` to find out where your song is'
         )
     } else if (skipTo > music.songs.length || skipTo < 1) {
         throw Error("I don't have a song at that number")
