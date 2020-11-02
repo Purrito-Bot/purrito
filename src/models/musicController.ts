@@ -1,17 +1,18 @@
 import {
     MessageEmbed,
     StreamDispatcher,
+    TextChannel,
     VoiceChannel,
     VoiceConnection,
 } from 'discord.js'
 import ytdl from 'ytdl-core'
 import { logger } from '../logger'
 import { PrintableObject } from './printableObject'
-import { Song } from './song'
+import { QueuedSong } from './queuedSong'
 
-export class Music implements PrintableObject {
+export class MusicController implements PrintableObject {
     /** The queued up songs */
-    songs: Song[]
+    songs: QueuedSong[]
     /** Which song in the queue is currently being played (0 based index) */
     musicIndex: number
     /** The volume which Purrito will play the music */
@@ -26,6 +27,8 @@ export class Music implements PrintableObject {
     connection?: VoiceConnection
     /** The music controller */
     dispatcher?: StreamDispatcher
+    /** The text channel the +join request came from */
+    textChannel?: TextChannel
 
     constructor() {
         this.songs = []
@@ -69,11 +72,12 @@ export class Music implements PrintableObject {
         return embed
     }
 
-    async join(voiceChannel: VoiceChannel) {
+    async join(voiceChannel: VoiceChannel, textChannel: TextChannel) {
         if (voiceChannel) {
             try {
                 this.voiceChannel = voiceChannel
                 this.connection = await voiceChannel.join()
+                this.textChannel = textChannel
             } catch {
                 throw Error('⚠️ I had trouble joining that channel.')
             }
@@ -89,10 +93,11 @@ export class Music implements PrintableObject {
             this.connection = undefined
             this.dispatcher = undefined
             this.playing = false
+            this.textChannel = undefined
             this.musicIndex = 1
         } else {
             throw Error(
-                '⚠️ I\'m not in a voice channel, use `+music join` while in a voice channel and I\'ll join you'
+                "⚠️ I'm not in a voice channel, use `+music join` while in a voice channel and I'll join you"
             )
         }
     }
@@ -106,11 +111,11 @@ export class Music implements PrintableObject {
         }
     }
 
-    addSong(song: Song) {
+    addSong(song: QueuedSong) {
         this.songs.push(song)
     }
 
-    removeSong(songIndex: number): Song | undefined {
+    removeSong(songIndex: number): QueuedSong | undefined {
         const toRemove = Number(songIndex - 1)
         const [song] = this.songs.splice(toRemove, 1)
         this.musicIndex = this.musicIndex - 1
@@ -161,6 +166,7 @@ export class Music implements PrintableObject {
                 quality: 'highestaudio',
                 highWaterMark: 1 << 25,
             })
+
             this.dispatcher = this.connection
                 ?.play(song)
                 .on('finish', () => {
@@ -172,6 +178,7 @@ export class Music implements PrintableObject {
                 .on('error', (error) => console.log(error))
             this.playing = true
             this.setVolume(this.volume)
+            this.textChannel?.send(nowPlaying!.createLiteEmbed())
         }
     }
 
@@ -182,6 +189,7 @@ export class Music implements PrintableObject {
         this.connection = undefined
         this.dispatcher = undefined
         this.playing = false
+        this.textChannel = undefined
         this.musicIndex = 1
     }
 

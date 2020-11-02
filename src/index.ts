@@ -3,18 +3,17 @@ import dotenv from 'dotenv'
 import * as fs from 'fs'
 import mongoose from 'mongoose'
 import { executeCommand } from './commands/executeCommand'
-import { music } from './commands/music'
 import { speak } from './commands/speak'
 import config from './config.json'
 import { logger } from './logger'
 import Guild, { GuildSettings } from './models/guild'
-import { Music } from './models/music'
+import { MusicController } from './models/musicController'
 
 // Initialise dotenv config - if you're doing config that way
 dotenv.config()
 
 const client = new Client()
-export const botMusic = new Map<string, Music>()
+export const botMusic = new Map<string, MusicController>()
 
 const defaultSettings: GuildSettings = {
     randomSpeechProbability: 0.05,

@@ -1,6 +1,6 @@
-import { Message, MessageEmbed } from 'discord.js'
+import { Message, MessageEmbed, TextChannel } from 'discord.js'
 import { botMusic } from '..'
-import { Music } from '../models/music'
+import { MusicController } from '../models/musicController'
 import MusicHelp from '../reference/musicHelp.json'
 import {
     fetchSong,
@@ -14,14 +14,17 @@ export async function music(message: Message, args: string[]) {
     let music = botMusic.get(message.guild!.id)
 
     if (!music) {
-        music = new Music()
+        music = new MusicController()
         botMusic.set(message.guild!.id, music)
     }
 
     switch (args[0]) {
         case 'join':
             try {
-                await music.join(message.member?.voice.channel!)
+                await music.join(
+                    message.member?.voice.channel!,
+                    message.channel as TextChannel
+                )
                 message.react('👍')
             } catch (error) {
                 message.reply(new MessageEmbed({ description: error.message }))
@@ -44,11 +47,7 @@ export async function music(message: Message, args: string[]) {
                         message.author
                     )
                     music.addSong(song)
-                    message.channel.send(
-                        new MessageEmbed({
-                            description: `🎶 ${song.title} added to the queue!`,
-                        })
-                    )
+                    message.channel.send(song.createLiteEmbed())
                 } catch (error) {
                     message.reply(
                         new MessageEmbed({ description: error.message })
@@ -68,7 +67,9 @@ export async function music(message: Message, args: string[]) {
                 try {
                     const removedSong = await removeSong(music, args[1])
                     message.channel.send(
-                        `${removedSong?.title} removed from the queue!`
+                        new MessageEmbed({
+                            description: `${removedSong?.title} removed from the queue!`,
+                        })
                     )
                 } catch (error) {
                     message.reply(
@@ -141,7 +142,6 @@ export async function music(message: Message, args: string[]) {
             if (args[1]) {
                 try {
                     await skipSong(music, args[1])
-                    message.reply(music.createEmbed())
                 } catch (error) {
                     message.reply(
                         new MessageEmbed({ description: error.message })
@@ -149,12 +149,15 @@ export async function music(message: Message, args: string[]) {
                 }
             } else {
                 music.skip()
-                message.reply(music.createEmbed())
             }
             break
         case 'loop':
             music.setLoop(!music.loop)
-            message.channel.send(`Looping is now ${music.loop ? 'on' : 'off'}`)
+            message.reply(
+                new MessageEmbed({
+                    description: `Looping is now ${music.loop ? 'on' : 'off'}`,
+                })
+            )
             break
         case 'playing':
             try {
