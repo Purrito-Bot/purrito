@@ -178,7 +178,7 @@ export class MusicController implements PrintableObject {
                 .on('error', (error) => console.log(error))
             this.playing = true
             this.setVolume(this.volume)
-            this.textChannel?.send(nowPlaying!.createLiteEmbed())
+            this.textChannel?.send(nowPlaying!.createLiteEmbed().setDescription("Now playing"))
         }
     }
 

@@ -43,6 +43,7 @@ export class QueuedSong implements PrintableObject {
             `Requested by ${this.requestingUser.username}`,
             this.requestingUser.avatarURL() || undefined
         )
+        embed.setDescription(`Position in queue: ${this.positionInQueue}`)
         if (this.thumbnailUrl) embed.setThumbnail(this.thumbnailUrl)
         return embed
     }
