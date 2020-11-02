@@ -28,26 +28,26 @@
         "@discordjs/opus": "^0.3.2",
         "@ensemblebr/dice": "^3.0.0",
         "compromise": "^13.1.1",
-        "deep-equal": "^2.0.1",
-        "discord.js": "^12.0.2",
+        "deep-equal": "^2.0.4",
+        "discord.js": "^12.4.1",
         "dotenv": "^8.2.0",
         "ffmpeg": "0.0.4",
         "fluent-ffmpeg": "^2.1.2",
         "javascript-time-ago": "^2.0.7",
         "moment": "^2.24.0",
         "mongoose": "^5.9.5",
-        "winston": "^3.2.1",
-        "ytdl-core": "^3.4.1"
+        "winston": "^3.3.3",
+        "ytdl-core": "^4.0.2"
     },
     "devDependencies": {
         "@types/deep-equal": "^1.0.1",
-        "@types/jest": "^25.1.4",
-        "@types/mongoose": "^5.7.7",
-        "@types/node": "^13.9.2",
-        "jest": "^25.1.0",
-        "prettier": "^1.19.1",
-        "ts-jest": "^25.2.1",
-        "typescript": "^3.9.7"
+        "@types/jest": "^26.0.15",
+        "@types/mongoose": "^5.7.37",
+        "@types/node": "^14.14.6",
+        "jest": "^26.6.1",
+        "prettier": "^2.1.2",
+        "ts-jest": "^26.4.3",
+        "typescript": "^4.0.5"
     },
     "jest": {
         "preset": "ts-jest",
