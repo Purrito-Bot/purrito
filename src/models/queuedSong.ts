@@ -1,7 +1,7 @@
 import { MessageEmbed, User } from 'discord.js'
 import { PrintableObject } from './printableObject'
 
-export class Song implements PrintableObject {
+export class QueuedSong implements PrintableObject {
     title: string
     url: string
     description: string
@@ -29,11 +29,20 @@ export class Song implements PrintableObject {
     }
 
     createEmbed(): MessageEmbed {
+        const embed = this.createLiteEmbed()
+        embed.setDescription(this.description)
+        return embed
+    }
+
+    createLiteEmbed(): MessageEmbed {
         const embed = new MessageEmbed()
 
         embed.setTitle(this.title)
-        embed.setDescription(this.description)
-        embed.setFooter(`Requested by ${this.requestingUser.username}`)
+        embed.setURL(this.url)
+        embed.setFooter(
+            `Requested by ${this.requestingUser.username}`,
+            this.requestingUser.avatarURL() || undefined
+        )
         if (this.thumbnailUrl) embed.setThumbnail(this.thumbnailUrl)
         return embed
     }

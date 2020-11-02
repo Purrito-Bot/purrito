@@ -1,7 +1,7 @@
 import { User } from 'discord.js'
 import ytdl from 'ytdl-core'
-import { Music } from '../models/music'
-import { Song } from '../models/song'
+import { MusicController } from '../models/musicController'
+import { QueuedSong } from '../models/queuedSong'
 
 export async function fetchSong(
     songUrl: string,
@@ -14,7 +14,7 @@ export async function fetchSong(
     } catch {
         throw Error('❌ Something went wrong when fetching your song.')
     }
-    return new Song(
+    return new QueuedSong(
         songInfo.videoDetails.title,
         songInfo.videoDetails.video_url,
         songInfo.videoDetails.shortDescription,
@@ -25,7 +25,7 @@ export async function fetchSong(
     )
 }
 
-export async function removeSong(music: Music, songIndex: string) {
+export async function removeSong(music: MusicController, songIndex: string) {
     const songToRemove = parseInt(songIndex)
     if (isNaN(songToRemove)) {
         throw Error(
@@ -38,7 +38,7 @@ export async function removeSong(music: Music, songIndex: string) {
     }
 }
 
-export async function changeVolume(music: Music, volume: string) {
+export async function changeVolume(music: MusicController, volume: string) {
     const newVolume = parseInt(volume)
     if (isNaN(newVolume) || newVolume > 10 || newVolume < 0) {
         throw Error('⚠️ Please give a value for your volume between 1 and 10')
@@ -47,7 +47,7 @@ export async function changeVolume(music: Music, volume: string) {
     }
 }
 
-export async function skipSong(music: Music, songIndex: string) {
+export async function skipSong(music: MusicController, songIndex: string) {
     const skipTo = parseInt(songIndex)
     if (isNaN(skipTo)) {
         throw Error(
@@ -60,7 +60,7 @@ export async function skipSong(music: Music, songIndex: string) {
     }
 }
 
-export async function playing(music: Music) {
+export async function playing(music: MusicController) {
     if (music.playing) {
         const nowPlaying = music.songs.find(
             (song) => song.positionInQueue === music?.musicIndex
