@@ -92,7 +92,7 @@ export class Music implements PrintableObject {
             this.musicIndex = 1
         } else {
             throw Error(
-                '⚠️ I\'m not in a voice channel, use "+music join" while in a voice channel and I\'ll join you'
+                '⚠️ I\'m not in a voice channel, use `+music join` while in a voice channel and I\'ll join you'
             )
         }
     }
@@ -130,7 +130,7 @@ export class Music implements PrintableObject {
     play() {
         if (this.songs.length === 0) {
             throw Error(
-                '⚠️ The queue is empty right now, use +music add to add some songs'
+                '⚠️ The queue is empty right now, use `+music add` to add some songs'
             )
         } else if (!this.connection) {
             throw Error(

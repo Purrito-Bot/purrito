@@ -79,7 +79,7 @@ export async function music(message: Message, args: string[]) {
                 message.reply(
                     new MessageEmbed({
                         description:
-                            'Use +music remove <number> to remove a song, or `music list` to see where it is in the list',
+                            'Use `+music remove <number>` to remove a song, or `music list` to see where it is in the list',
                     })
                 )
             }
