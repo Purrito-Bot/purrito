@@ -120,7 +120,7 @@ export class Music implements PrintableObject {
                     this.dispatcher = undefined
                     this.play()
                 })
-                .on('error', error => console.log(error))
+                .on('error', (error) => console.log(error))
             this.playing = true
             this.setVolume(this.volume)
         }

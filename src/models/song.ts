@@ -27,7 +27,7 @@ export class Song implements PrintableObject {
         embed.setTitle(this.title)
         embed.setDescription(this.description)
         embed.setFooter(`Length: ${this.lengthInSeconds} seconds`)
-        if(this.thumbnailUrl) embed.setThumbnail(this.thumbnailUrl)
+        if (this.thumbnailUrl) embed.setThumbnail(this.thumbnailUrl)
 
         return embed
     }

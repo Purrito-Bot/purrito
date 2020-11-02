@@ -11,10 +11,7 @@ import { WeightedDescriptor } from '../models/itemDescriptor'
  * @param message - this is the Discord message
  */
 export function parseMessage(message: Message): [string, string[]] {
-    const args = message.content
-        .slice(config.prefix.length)
-        .trim()
-        .split(/ +/g)
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g)
     const command = args.shift()!.toLowerCase()
 
     return [command, args]
@@ -26,7 +23,7 @@ export function parseMessage(message: Message): [string, string[]] {
  */
 export function allConfigAsMessageString(settings: GuildSettings) {
     let response = ''
-    Object.keys(config.defaultSettings).forEach(key => {
+    Object.keys(config.defaultSettings).forEach((key) => {
         const value = (settings as any)[key]
         if (value) {
             response += `${key}:\t**${value}**\n`
@@ -74,13 +71,15 @@ export function getRandomValueFromWeightedArray<T extends WeightedDescriptor>(
 
     // Map each item into a accumulative chance
     let accumulator = 0
-    const chances = items.map(item => (accumulator = item.weight + accumulator))
+    const chances = items.map(
+        (item) => (accumulator = item.weight + accumulator)
+    )
 
     // Roll our dice!
     const diceRoll = Math.random() * total
 
     // Compare the dice roll with the accumulative chance, pull out the one it landed on
-    const result = items[chances.filter(chance => chance <= diceRoll).length]
+    const result = items[chances.filter((chance) => chance <= diceRoll).length]
     return result
 }
 

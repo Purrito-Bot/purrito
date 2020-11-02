@@ -21,7 +21,7 @@ export async function askForReaction(
 
     let userReaction: MessageReaction | undefined
 
-    emojis.forEach(async emoji => {
+    emojis.forEach(async (emoji) => {
         await botMessage.react(emoji).catch(() => {
             logger.debug('Message removed before Purrito could react')
         })
@@ -44,7 +44,7 @@ export async function askForReaction(
             time: 30000,
             errors: ['time'],
         })
-        .then(collected => {
+        .then((collected) => {
             userReaction = collected.first()
             if (deleteOnCompletion) botMessage.delete()
         })
@@ -85,7 +85,7 @@ export async function askForTextResponse(
 
     await botMessage.channel
         .awaitMessages(filter, { max: 1, time: 30000, errors: ['time'] })
-        .then(collected => {
+        .then((collected) => {
             const response = collected.first()
 
             userResponse = response?.content

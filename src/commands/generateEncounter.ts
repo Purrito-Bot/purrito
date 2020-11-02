@@ -25,19 +25,19 @@ export async function generateEncounter(message: Message, args?: string[]) {
     party
         .trim()
         .split(' ')
-        .forEach(level => partyLevels.push(parseInt(level)))
+        .forEach((level) => partyLevels.push(parseInt(level)))
 
-    if (partyLevels.some(partyLevel => isNaN(partyLevel))) {
+    if (partyLevels.some((partyLevel) => isNaN(partyLevel))) {
         message.reply('party levels must be numerical e.g. 4')
         return
     }
 
-    if (partyLevels.some(partyLevel => partyLevel > 20)) {
+    if (partyLevels.some((partyLevel) => partyLevel > 20)) {
         message.reply("you can't have a party member over level 20")
         return
     }
 
-    if (partyLevels.some(partyLevel => partyLevel < 1)) {
+    if (partyLevels.some((partyLevel) => partyLevel < 1)) {
         message.reply("you can't have a party member under level 1")
         return
     }

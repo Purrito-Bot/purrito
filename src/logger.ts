@@ -7,7 +7,7 @@ export const logger = winston.createLogger({
             format: 'YYYY-MM-DD HH:mm:ss',
         }),
         winston.format.printf(
-            info => `[${info.timestamp}] ${info.level}: ${info.message}`
+            (info) => `[${info.timestamp}] ${info.level}: ${info.message}`
         )
     ),
     defaultMeta: { service: 'purrito' },

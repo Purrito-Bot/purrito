@@ -15,7 +15,7 @@ export class Encounter implements PrintableObject {
         let totalMonsters = 0
 
         this.monsters.forEach(
-            monster => (totalMonsters = totalMonsters + monster.amount)
+            (monster) => (totalMonsters = totalMonsters + monster.amount)
         )
 
         let adjustment = 1
@@ -61,7 +61,7 @@ export class Encounter implements PrintableObject {
 
         const encounterMonsters: string[] = []
 
-        this.monsters.forEach(monster =>
+        this.monsters.forEach((monster) =>
             encounterMonsters.push(`${monster.monster.name} x${monster.amount}`)
         )
 

@@ -45,14 +45,14 @@ client.on('ready', () => {
     client.user?.setActivity(`with yarn`)
 })
 
-client.on('guildCreate', async guild => {
+client.on('guildCreate', async (guild) => {
     // This event triggers when the bot joins a guild.
     logger.info(
         `New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`
     )
 })
 
-client.on('guildDelete', guild => {
+client.on('guildDelete', (guild) => {
     // this event triggers when the bot is removed from a guild.
     logger.info(`I have been removed from: ${guild.name} (id: ${guild.id})`)
 })
