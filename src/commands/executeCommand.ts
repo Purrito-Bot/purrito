@@ -20,6 +20,7 @@ import { resurrect } from './resurrect'
 import { setConfig } from './setConfig'
 import { snack } from './snack'
 import { speak } from './speak'
+import { describeSpell } from './spell'
 import { xpBudget } from './xpBudget'
 
 // set up TimeAgo
@@ -101,6 +102,9 @@ export async function executeCommand(message: Message) {
             break
         case 'music':
             music(message, args)
+            break
+        case 'spell':
+            describeSpell(message)
             break
     }
 }
