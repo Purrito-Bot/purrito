@@ -19,7 +19,7 @@ export async function describeSpell(message: Message) {
         )
 
     const json: ISpell | undefined = spells.find(
-        monster => monster.name.toLowerCase() === spellName?.toLowerCase()
+        (monster) => monster.name.toLowerCase() === spellName?.toLowerCase()
     )
 
     if (json) {

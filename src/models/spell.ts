@@ -71,13 +71,13 @@ export class Spell implements PrintableObject {
         if (this.higherLevel)
             embed.addField('At higher levels', this.higherLevel)
         embed.addField('Range', this.range)
-        embed.addField("Components", this.components)
-        if(this.material) embed.addField("Material", this.material)
-        embed.addField("Ritual", this.ritual ? "Yes" : "No")
-        embed.addField("Duration", this.duration)
-        embed.addField("Concentration", this.concentration ? "Yes": "No")
-        embed.addField("Casting time", this.castingTime)
-        embed.addField("Level", this.level)
+        embed.addField('Components', this.components)
+        if (this.material) embed.addField('Material', this.material)
+        embed.addField('Ritual', this.ritual ? 'Yes' : 'No')
+        embed.addField('Duration', this.duration)
+        embed.addField('Concentration', this.concentration ? 'Yes' : 'No')
+        embed.addField('Casting time', this.castingTime)
+        embed.addField('Level', this.level)
 
         return embed
     }
