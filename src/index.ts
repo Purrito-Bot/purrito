@@ -66,6 +66,7 @@ client.on('message', async (message: Message) => {
     // Determine settings for this message
     const savedGuild = await Guild.findByGuildId(message.guild.id)
     const guildSettings = savedGuild?.settings || defaultSettings
+    const purritoLives = savedGuild?.purritoState.lives
 
     // Ignore bots
     if (message.author.bot) return
@@ -75,7 +76,10 @@ client.on('message', async (message: Message) => {
     } else {
         // On messages without prefix run these commands
         // Randomly meow when a message is received
-        if (Math.random() < guildSettings.randomSpeechProbability) {
+        if (
+            Math.random() < guildSettings.randomSpeechProbability &&
+            purritoLives > 0
+        ) {
             speak(message)
         }
     }
