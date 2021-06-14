@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "sourceMap": true,
-        "declaration": true,
         "module": "CommonJS",
         "outDir": "./dist",
         "strict": true,
@@ -18,5 +16,5 @@
     },
 
     "include": ["src"],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "src/**/__test__"]
 }

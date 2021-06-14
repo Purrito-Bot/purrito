@@ -1,9 +1,4 @@
 {
-    "prefix": "+",
-    "defaultSettings": {
-        "randomSpeechProbability": 0.05
-    },
-    "defaultPurritoState": {
-        "lives": 9
-    }
+    "prefix": "!",
+    "developerIds": ["235465385862758410"]
 }
