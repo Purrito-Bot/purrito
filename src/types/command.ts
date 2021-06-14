@@ -17,6 +17,7 @@ interface ICommand {
      * If set to true, only developers in the config.json will be able to run this command
      */
     developerCommand?: boolean
+    subCommands?: boolean
 }
 
 export type CommandsCollection = Collection<string, Command>
@@ -32,6 +33,7 @@ export abstract class Command implements ICommand {
     hidden?: boolean
     developerCommand?: boolean
     checkAdmin: boolean = true
+    subCommands?: boolean
 
     constructor(command: ICommand) {
         this.name = command.name
@@ -40,6 +42,7 @@ export abstract class Command implements ICommand {
         this.roles = command.roles
         this.hidden = command.hidden
         this.developerCommand = command.developerCommand
+        this.subCommands = command.subCommands
         if (command.checkAdmin !== undefined) {
             this.checkAdmin = command.checkAdmin
         }
