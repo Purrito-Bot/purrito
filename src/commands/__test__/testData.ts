@@ -68,10 +68,6 @@ export default class MockDiscord {
         this.client = new Client()
     }
 
-    public setUser(user: User): void {
-        this.user = user
-    }
-
     private mockGuild(): void {
         this.guild = new Guild(this.client, {
             unavailable: false,
