@@ -4,11 +4,12 @@
     "description": "Discord bot",
     "main": "index.js",
     "scripts": {
-        "build-and-run": "tsc && node dist/index.js",
+        "build:start": "tsc && node dist/index.js",
         "prettier": "prettier --write src/**/*.{ts,json}",
         "build": "tsc",
         "test": "jest --coverage",
-        "test:watch": "jest --coverage --watchAll"
+        "test:watch": "jest --coverage --watchAll",
+        "start": "node dist/index.js"
     },
     "repository": {
         "type": "git",
