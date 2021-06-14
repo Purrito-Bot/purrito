@@ -1,4 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js'
+import config from '../../config.json'
 import { Command } from '../../types/command'
 import Help from '../help'
 import MockDiscord from './testData'
@@ -19,7 +20,12 @@ describe('Help', () => {
             description:
                 "Purrito is here for all your D&D needs! Here's what I can do!",
             title: 'Available commands',
-            fields: [{ name: '!help', value: 'Returns this helpful message!' }],
+            fields: [
+                {
+                    name: `${config.prefix}help`,
+                    value: 'Returns this helpful message!',
+                },
+            ],
         })
 
         const send = jest.fn()
@@ -55,7 +61,7 @@ describe('Help', () => {
             description:
                 "You're getting this message as you have permission to use some hidden commands.",
             title: 'Secret commands',
-            fields: [{ name: '!Hidden', value: 'Test command' }],
+            fields: [{ name: `${config.prefix}Hidden`, value: 'Test command' }],
         })
 
         expect(authorMock).toHaveBeenCalledWith(expected)

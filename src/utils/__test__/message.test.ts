@@ -1,6 +1,7 @@
 import { Message, PermissionString } from 'discord.js'
 import { Command } from '../../types/command'
 import { checkUserCanRun, parseMessage } from '../message'
+import config from '../../config.json'
 
 describe('Message Utils', () => {
     describe('parseMessage', () => {
@@ -40,6 +41,9 @@ describe('Message Utils', () => {
                 })
             }
         }
+
+        config.developerIds = ['2']
+
         it('return false when non-developer tries developer command', () => {
             const command = new TestCommand({ developerCommand: true })
             const member: any = { id: '1' }
@@ -51,7 +55,7 @@ describe('Message Utils', () => {
 
         it('return true when a developer tries developer command', () => {
             const command = new TestCommand({ developerCommand: true })
-            const member: any = { id: '235465385862758410' }
+            const member: any = { id: '2' }
 
             const result = checkUserCanRun(member, command)
 
@@ -61,7 +65,7 @@ describe('Message Utils', () => {
         it('return true when a developer tries developer command without required roles', () => {
             const command = new TestCommand({ developerCommand: true })
             const member: any = {
-                id: '235465385862758410',
+                id: '2',
                 roles: ['dummy role'],
             }
 
@@ -73,7 +77,6 @@ describe('Message Utils', () => {
         it('return false to a user without the required role', () => {
             const command = new TestCommand({ roles: ['role'] })
             const member: any = {
-                id: '235465385862758410',
                 roles: { cache: [] },
             }
 
@@ -85,7 +88,6 @@ describe('Message Utils', () => {
         it('return true to a user with the required role', () => {
             const command = new TestCommand({ roles: ['role'] })
             const member: any = {
-                id: '235465385862758410',
                 roles: { cache: [{ name: 'role' }] },
             }
 
@@ -98,7 +100,6 @@ describe('Message Utils', () => {
             const hasPermission = jest.fn()
             const command = new TestCommand({ permissions: ['ADD_REACTIONS'] })
             const member: any = {
-                id: '235465385862758410',
                 roles: { cache: [{ name: 'role' }] },
                 hasPermission,
             }
@@ -120,7 +121,6 @@ describe('Message Utils', () => {
                 permissions: ['ADD_REACTIONS'],
             })
             const member: any = {
-                id: '235465385862758410',
                 roles: { cache: [{ name: 'role' }] },
                 hasPermission,
             }
@@ -142,7 +142,6 @@ describe('Message Utils', () => {
                 checkAdmin: false,
             })
             const member: any = {
-                id: '235465385862758410',
                 hasPermission,
             }
 
