@@ -1,22 +1,9 @@
 import { Message, PermissionString } from 'discord.js'
-import { Command } from '../../types/command'
-import { checkUserCanRun, parseMessage } from '../message'
 import config from '../../config.json'
+import { Command } from '../../types/command'
+import { checkUserCanRun } from '../command'
 
 describe('Message Utils', () => {
-    describe('parseMessage', () => {
-        it('parses command and arguments', () => {
-            const message: any = {
-                content: '!help I need somebody',
-            }
-
-            const { command, args } = parseMessage(message)
-
-            expect(command).toStrictEqual('help')
-            expect(args).toStrictEqual(['I', 'need', 'somebody'])
-        })
-    })
-
     describe('checkUserCanRun', () => {
         class TestCommand extends Command {
             run(_: Message): void {}

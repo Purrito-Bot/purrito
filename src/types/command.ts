@@ -1,5 +1,5 @@
 import { Collection, Message, PermissionString } from 'discord.js'
-import { Purrito } from './client'
+import { Purrito } from '../client'
 
 interface ICommand {
     name: string
@@ -17,6 +17,7 @@ interface ICommand {
      * If set to true, only developers in the config.json will be able to run this command
      */
     developerCommand?: boolean
+    /** Whether the command will have sub commands */
     subCommands?: boolean
 }
 
