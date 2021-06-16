@@ -1,5 +1,5 @@
-import { Message } from 'discord.js'
-import config from '../config.json'
+import { Message } from 'discord.js';
+import config from '../config.json';
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided
@@ -9,11 +9,14 @@ import config from '../config.json'
  * @param message - this is the Discord message
  */
 export function parseMessage(message: Message): {
-    command: string
-    args: string[]
+    command: string;
+    args: string[];
 } {
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g)
-    const command = args.shift()!.toLowerCase()
+    const args = message.content
+        .slice(config.prefix.length)
+        .trim()
+        .split(/ +/g);
+    const command = args.shift()!.toLowerCase();
 
-    return { command, args }
+    return { command, args };
 }

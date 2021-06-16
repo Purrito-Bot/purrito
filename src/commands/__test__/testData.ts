@@ -8,64 +8,64 @@ import {
     User,
     GuildMember,
     Message,
-} from 'discord.js'
+} from 'discord.js';
 
 export default class MockDiscord {
-    private client!: Client
-    private guild!: Guild
-    private channel!: Channel
-    private guildChannel!: GuildChannel
-    private textChannel!: TextChannel
-    private user!: User
-    private guildMember!: GuildMember
-    public message!: Message
+    private client!: Client;
+    private guild!: Guild;
+    private channel!: Channel;
+    private guildChannel!: GuildChannel;
+    private textChannel!: TextChannel;
+    private user!: User;
+    private guildMember!: GuildMember;
+    public message!: Message;
 
     constructor() {
-        this.mockClient()
-        this.mockGuild()
-        this.mockChannel()
-        this.mockGuildChannel()
-        this.mockTextChannel()
-        this.mockUser()
-        this.mockGuildMember()
-        this.guild.addMember(this.user, { accessToken: 'mockAccessToken' })
-        this.mockMessage()
+        this.mockClient();
+        this.mockGuild();
+        this.mockChannel();
+        this.mockGuildChannel();
+        this.mockTextChannel();
+        this.mockUser();
+        this.mockGuildMember();
+        this.guild.addMember(this.user, { accessToken: 'mockAccessToken' });
+        this.mockMessage();
     }
 
     public getClient(): Client {
-        return this.client
+        return this.client;
     }
 
     public getGuild(): Guild {
-        return this.guild
+        return this.guild;
     }
 
     public getChannel(): Channel {
-        return this.channel
+        return this.channel;
     }
 
     public getGuildChannel(): GuildChannel {
-        return this.guildChannel
+        return this.guildChannel;
     }
 
     public getTextChannel(): TextChannel {
-        return this.textChannel
+        return this.textChannel;
     }
 
     public getUser(): User {
-        return this.user
+        return this.user;
     }
 
     public getGuildMember(): GuildMember {
-        return this.guildMember
+        return this.guildMember;
     }
 
     public getMessage(): Message {
-        return this.message
+        return this.message;
     }
 
     private mockClient(): void {
-        this.client = new Client()
+        this.client = new Client();
     }
 
     private mockGuild(): void {
@@ -94,13 +94,13 @@ export default class MockDiscord {
             presences: [],
             voice_states: [],
             emojis: [],
-        })
+        });
     }
 
     private mockChannel(): void {
         this.channel = new Channel(this.client, {
             id: 'channel-id',
-        })
+        });
     }
 
     private mockGuildChannel(): void {
@@ -111,7 +111,7 @@ export default class MockDiscord {
             position: 1,
             parent_id: '123456789',
             permission_overwrites: [],
-        })
+        });
     }
 
     private mockTextChannel(): void {
@@ -123,7 +123,7 @@ export default class MockDiscord {
             last_message_id: '123456789',
             lastPinTimestamp: new Date('2019-01-01').getTime(),
             rate_limit_per_user: 0,
-        })
+        });
     }
 
     private mockUser(): void {
@@ -133,7 +133,7 @@ export default class MockDiscord {
             discriminator: 'user#0000',
             avatar: 'user avatar url',
             bot: false,
-        })
+        });
     }
 
     private mockGuildMember(): void {
@@ -152,7 +152,7 @@ export default class MockDiscord {
                 roles: [],
             },
             this.guild
-        )
+        );
     }
 
     private mockMessage(): void {
@@ -178,6 +178,6 @@ export default class MockDiscord {
                 hit: false,
             },
             this.textChannel
-        )
+        );
     }
 }
