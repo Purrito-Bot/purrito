@@ -1,7 +1,7 @@
 import { Collection, Message, MessageEmbed } from 'discord.js';
 import { Purrito } from '../client';
 import { Command, CommandsCollection } from '../types/command';
-import { checkUserCanRun } from '../shared/command';
+import { checkUserCanRun } from '../shared/permissions';
 
 export default class extends Command {
     commands: CommandsCollection = new Collection();
