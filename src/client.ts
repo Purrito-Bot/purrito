@@ -3,7 +3,7 @@ import fs from 'fs';
 import { prefix } from './config.json';
 import { checkUserCanRun } from './shared/permissions';
 import { logger } from './shared/logger';
-import { parseMessage } from './shared/message';
+import { parseMessage } from './shared/interactions';
 import { Command, CommandsCollection } from './types/command';
 
 /**
