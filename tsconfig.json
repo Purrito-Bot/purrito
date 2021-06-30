@@ -1,20 +1,20 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "module": "CommonJS",
-        "outDir": "./dist",
-        "strict": true,
-        "esModuleInterop": true,
-        "lib": ["dom", "DOM.Iterable", "ESNext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noImplicitAny": false
-    },
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noImplicitAny": false
+  },
 
-    "include": ["src"],
-    "exclude": ["node_modules", "src/**/__test__"]
+  "include": ["src"],
+  "exclude": ["node_modules", "src/**/__test__"]
 }

@@ -10,8 +10,8 @@ Visit [this link](https://discordapp.com/api/oauth2/authorize?client_id=68982709
 
 ### Prerequisites
 
--   A Discord bot token from the Discord developer portal
-    -   Follow the instructions [here](https://discordapp.com/developers/docs/intro) to set up your bot.
+- A Discord bot token from the Discord developer portal
+  - Follow the instructions [here](https://discordapp.com/developers/docs/intro) to set up your bot.
 
 ### Running
 
