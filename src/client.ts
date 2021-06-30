@@ -6,9 +6,9 @@ import { logger } from './shared/logger';
 import { parseMessage } from './shared/interactions';
 import { Command, CommandsCollection } from './types/command';
 
-/**
+/*
  * An extension of the discord.js Client class, which also includes commands.
- */
+ */ 
 export class Purrito extends Client {
     commands: CommandsCollection = new Collection();
 
@@ -43,8 +43,10 @@ async function initCommands(client: Purrito) {
     // Initialises all the commands found in the /commands directory
     const commandFileDir = `${__dirname}/./commands`;
 
-    const commandFiles = fs.readdirSync(commandFileDir);
-    for (const file of commandFiles) {
+    fs.readdirSync(commandFileDir, { withFileTypes: true })
+    .filter(dirent => dirent.isFile())
+    .map(dirent => dirent.name)
+    .forEach(async file => {
         const commandClass = await import(`./commands/${file}`);
 
         if (commandClass.default) {
@@ -54,7 +56,7 @@ async function initCommands(client: Purrito) {
                 client.commands.set(command.name, command);
             }
         }
-    }
+    })
 }
 
 function guildCreate(guild: Guild) {
