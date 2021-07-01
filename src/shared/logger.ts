@@ -14,11 +14,11 @@ export const logger = winston.createLogger({
   transports: [
     new winston.transports.File({
       filename: 'purrito.log',
-      level: 'debug',
+      level: process.env.LOG_LEVEL ?? 'info',
       handleExceptions: true,
     }),
     new winston.transports.Console({
-      level: 'debug',
+      level: process.env.LOG_LEVEL ?? 'info',
       handleExceptions: true,
     }),
   ],
