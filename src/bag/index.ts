@@ -1,2 +1,2 @@
-export * from './create';
-export * from './shared';
+export { createCampaign } from './create';
+export { saveChannelCampaignLink } from './shared';
