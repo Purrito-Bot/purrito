@@ -30,8 +30,11 @@
   "homepage": "https://github.com/djaustin/purrito-bot#readme",
   "dependencies": {
     "@ensemblebr/dice": "^3.0.0",
+    "apollo-boost": "^0.4.9",
+    "cross-fetch": "^3.1.4",
     "discord.js": "^12.4.1",
     "dotenv": "^10.0.0",
+    "graphql-tag": "^2.12.5",
     "winston": "^3.3.3"
   },
   "devDependencies": {
