@@ -3,14 +3,14 @@ import { createCampaign } from '../createCampaign';
 import { CreateCampaignGQL } from '../gql/createCampaignMutation';
 
 const setUpQueryMock = (errors = [] as Error[]) => {
-  return jest.spyOn(client, 'query').mockResolvedValueOnce({
+  return jest.spyOn(client, 'mutate').mockResolvedValueOnce({
     data: { __typename: 'CreatedCampaign', id: '1234' },
     errors,
   } as any);
 };
 
 const expectedQuery = (name: string) => ({
-  query: CreateCampaignGQL,
+  mutation: CreateCampaignGQL,
   variables: {
     name,
   },
