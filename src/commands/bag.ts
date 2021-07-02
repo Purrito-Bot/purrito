@@ -23,7 +23,7 @@ export default class extends Command {
 
     if (!existingCampaign) {
       messageEmbed.setDescription(
-        `You already have a bag on this channel. Use ${prefix}bag to check it's contents.`
+        `You don't have a bag on this channel. Use "${prefix}bag create campaign name" to make one!`
       );
     } else {
       const campaign = await fetchCampaign(existingCampaign.campaignId);

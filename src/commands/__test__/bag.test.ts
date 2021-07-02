@@ -193,7 +193,7 @@ describe('bag', () => {
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
           description:
-            "You already have a bag on this channel. Use !bag to check it's contents.",
+            'You don\'t have a bag on this channel. Use "!bag create campaign name" to make one!',
         })
       );
     });
