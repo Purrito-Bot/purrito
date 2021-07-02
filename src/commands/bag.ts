@@ -1,4 +1,5 @@
 import { createCampaign, saveChannelCampaignLink } from 'bag';
+import { getCampaignIdForChannel } from 'bag/shared';
 import { prefix } from 'config.json';
 import { Message, MessageEmbed } from 'discord.js';
 import { logger } from 'shared';
@@ -28,17 +29,28 @@ export default class extends Command {
     } else {
       const campaignName = args.join(' ').trim();
 
-      logger.debug(`Creating campaign ${campaignName}`);
-      const campaign = await createCampaign(campaignName);
+      logger.debug('Checking if channel has a campaign');
+      const exisitingCampaign = await getCampaignIdForChannel(
+        message.channel.id
+      );
 
-      logger.debug(`Saving campaign with ID ${campaign.id}`);
-      await saveChannelCampaignLink({
-        channelId: message.channel.id,
-        campaignId: campaign.id,
-      });
+      if (exisitingCampaign) {
+        messageEmbed.setDescription(
+          `You already have a bag on this channel. Use ${prefix}bag to check it's contents.`
+        );
+      } else {
+        logger.debug(`Creating campaign ${campaignName}`);
+        const campaign = await createCampaign(campaignName);
 
-      messageEmbed.setDescription('💰 Bag created!');
-      messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
+        logger.debug(`Saving campaign with ID ${campaign.id}`);
+        await saveChannelCampaignLink({
+          channelId: message.channel.id,
+          campaignId: campaign.id,
+        });
+
+        messageEmbed.setDescription('💰 Bag created!');
+        messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
+      }
     }
     message.channel.send(messageEmbed);
   }

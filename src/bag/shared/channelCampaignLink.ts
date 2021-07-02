@@ -10,3 +10,11 @@ export const saveChannelCampaignLink = async (input: {
 
   return toSave;
 };
+
+export const getCampaignIdForChannel = async (
+  channelId: string
+): Promise<ChannelCampaignLink | null> => {
+  const foundLink = await ChannelCampaignLinkModel.findOne({ channelId });
+
+  return foundLink;
+};

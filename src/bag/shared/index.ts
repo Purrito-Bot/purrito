@@ -1,1 +1,4 @@
-export { saveChannelCampaignLink } from './channelCampaignLink';
+export {
+  saveChannelCampaignLink,
+  getCampaignIdForChannel,
+} from './channelCampaignLink';

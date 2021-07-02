@@ -1,10 +1,20 @@
-import { saveChannelCampaignLink } from '../channelCampaignLink';
+import {
+  getCampaignIdForChannel,
+  saveChannelCampaignLink,
+} from '../channelCampaignLink';
 import { ChannelCampaignLinkModel } from '../model';
 
-const setUpMongoMock = () => {
+const setUpSaveMock = () => {
   return jest
     .spyOn(ChannelCampaignLinkModel.prototype, 'save')
     .mockReturnValueOnce({ channelId: 'channelId', campaignId: 'campaignId' });
+};
+
+const setUpFindOneMock = () => {
+  return jest.spyOn(ChannelCampaignLinkModel, 'findOne').mockReturnValueOnce({
+    channelId: 'channelId',
+    campaignId: 'campaignId',
+  } as any);
 };
 
 describe('channelCampaignLink', () => {
@@ -12,7 +22,7 @@ describe('channelCampaignLink', () => {
     it('saves the channel campaign link to db', async () => {
       const input = { channelId: 'channelId', campaignId: 'campaignId' };
 
-      const mongoMock = setUpMongoMock();
+      const mongoMock = setUpSaveMock();
 
       await saveChannelCampaignLink(input);
 
@@ -22,12 +32,22 @@ describe('channelCampaignLink', () => {
     it('returns the campaign after saving', async () => {
       const input = { channelId: 'channelId', campaignId: 'campaignId' };
 
-      setUpMongoMock();
+      setUpSaveMock();
 
       const result = await saveChannelCampaignLink(input);
 
       expect(result.channelId).toStrictEqual(input.channelId);
       expect(result.campaignId).toStrictEqual(input.campaignId);
+    });
+  });
+
+  describe('getCampaignIdForChannel', () => {
+    it('searches the database for the channel ID', async () => {
+      const findMock = setUpFindOneMock();
+
+      await getCampaignIdForChannel('channelId');
+
+      expect(findMock).toHaveBeenCalledWith({ channelId: 'channelId' });
     });
   });
 });

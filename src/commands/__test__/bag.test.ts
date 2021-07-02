@@ -5,7 +5,11 @@ import * as GQLMock from '../../bag/create/createCampaign';
 import * as MongoMock from '../../bag/shared/channelCampaignLink';
 import { MessageEmbed } from 'discord.js';
 
-const setUpMocks = () => {
+const setUpMocks = ({
+  getCampaignMockResult = null,
+}: {
+  getCampaignMockResult?: any;
+}) => {
   const createCampaignMock = jest
     .spyOn(GQLMock, 'createCampaign')
     .mockResolvedValueOnce({
@@ -20,7 +24,11 @@ const setUpMocks = () => {
       campaignId: 'campaignId',
     } as any);
 
-  return { createCampaignMock, saveMock };
+  const getCampaignMock = jest
+    .spyOn(MongoMock, 'getCampaignIdForChannel')
+    .mockResolvedValueOnce(getCampaignMockResult);
+
+  return { createCampaignMock, saveMock, getCampaignMock };
 };
 
 describe('bag', () => {
@@ -44,8 +52,48 @@ describe('bag', () => {
   });
 
   describe('create', () => {
+    it('checks if the channel already has an exisiting bag', async () => {
+      const { getCampaignMock } = setUpMocks({});
+
+      await bag.create(discord.getMessage(), ['Campaign Name']);
+
+      expect(getCampaignMock).toHaveBeenCalledWith(discord.getChannel().id);
+    });
+
+    it('does not create a campaign if one exists for that channel', async () => {
+      const { saveMock, createCampaignMock } = setUpMocks({
+        getCampaignMockResult: {
+          channelId: 'channelId',
+          campaignId: 'campaignId',
+        },
+      });
+
+      await bag.create(discord.getMessage(), ['Campaign Name']);
+
+      expect(saveMock).not.toHaveBeenCalled();
+      expect(createCampaignMock).not.toHaveBeenCalled();
+    });
+
+    it('informs the user when they already have a bag', async () => {
+      setUpMocks({
+        getCampaignMockResult: {
+          channelId: 'channelId',
+          campaignId: 'campaignId',
+        },
+      });
+
+      await bag.create(discord.getMessage(), ['Campaign Name']);
+
+      expect(send).toHaveBeenLastCalledWith(
+        new MessageEmbed({
+          description:
+            "You already have a bag on this channel. Use !bag to check it's contents.",
+        })
+      );
+    });
+
     it('creates a bag and saves the id against the channel id', async () => {
-      const { createCampaignMock, saveMock } = setUpMocks();
+      const { createCampaignMock, saveMock } = setUpMocks({});
 
       await bag.create(discord.getMessage(), ['Campaign Name']);
 
@@ -58,7 +106,7 @@ describe('bag', () => {
     });
 
     it('messages the user the campaign has been saved', async () => {
-      setUpMocks();
+      setUpMocks({});
 
       await bag.create(discord.getMessage(), ['Campaign Name']);
 
@@ -71,7 +119,7 @@ describe('bag', () => {
     });
 
     it('wants the user when they have not provided a name', async () => {
-      setUpMocks();
+      setUpMocks({});
 
       await bag.create(discord.getMessage(), []);
 
