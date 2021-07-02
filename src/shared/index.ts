@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export { client } from './gqlClient';
 export { parseMessage } from './interactions';
 export { logger } from './logger';
