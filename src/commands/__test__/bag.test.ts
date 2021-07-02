@@ -2,13 +2,17 @@ import config from '../../config.json';
 import Bag from '../bag';
 import MockDiscord from './testData';
 import * as GQLMock from '../../bag/create/createCampaign';
+import * as FetchMock from '../../bag/fetch/fetchCampaign';
 import * as MongoMock from '../../bag/shared/channelCampaignLink';
 import { MessageEmbed } from 'discord.js';
+import { FetchCampaign_fetchCampaign_Campaign as Campaign } from 'bag/fetch/gql';
 
 const setUpMocks = ({
   getCampaignMockResult = null,
+  fetchCampaignMockResult = null,
 }: {
   getCampaignMockResult?: any;
+  fetchCampaignMockResult?: any;
 }) => {
   const createCampaignMock = jest
     .spyOn(GQLMock, 'createCampaign')
@@ -28,7 +32,11 @@ const setUpMocks = ({
     .spyOn(MongoMock, 'getCampaignIdForChannel')
     .mockResolvedValueOnce(getCampaignMockResult);
 
-  return { createCampaignMock, saveMock, getCampaignMock };
+  const fetchMock = jest
+    .spyOn(FetchMock, 'fetchCampaign')
+    .mockResolvedValueOnce(fetchCampaignMockResult);
+
+  return { createCampaignMock, saveMock, getCampaignMock, fetchMock };
 };
 
 describe('bag', () => {
@@ -127,6 +135,86 @@ describe('bag', () => {
         new MessageEmbed({
           description:
             '❌ You must provide a campaign name, e.g. !bag create AWESOME CAMPAIGN',
+        })
+      );
+    });
+  });
+
+  describe('fetch', () => {
+    const fetchCampaignMockResult: Campaign = {
+      __typename: 'Campaign',
+      id: 'campaignId',
+      name: 'test',
+      gold: 0,
+      silver: 0,
+      bronze: 0,
+      items: [
+        {
+          __typename: 'Item',
+          name: 'Item name',
+          description: 'Item description',
+        },
+      ],
+    };
+
+    it('looks for a campaign for the given channel', async () => {
+      const { getCampaignMock } = setUpMocks({
+        getCampaignMockResult: {
+          channelId: 'channelId',
+          campaignId: 'campaignId',
+        },
+        fetchCampaignMockResult,
+      });
+
+      await bag.run(discord.getMessage());
+
+      expect(getCampaignMock).toHaveBeenCalledWith(discord.getChannel().id);
+    });
+
+    it('fetches the bag if it exists', async () => {
+      const { fetchMock } = setUpMocks({
+        getCampaignMockResult: {
+          channelId: 'channelId',
+          campaignId: 'campaignId',
+        },
+        fetchCampaignMockResult,
+      });
+
+      await bag.run(discord.getMessage());
+
+      expect(fetchMock).toHaveBeenCalledWith('campaignId');
+    });
+
+    it('informs the user if they do not have a campaign', async () => {
+      setUpMocks({});
+
+      await bag.run(discord.getMessage());
+
+      expect(send).toHaveBeenCalledWith(
+        new MessageEmbed({
+          description:
+            "You already have a bag on this channel. Use !bag to check it's contents.",
+        })
+      );
+    });
+
+    it('fetches the bag if it exists', async () => {
+      setUpMocks({
+        getCampaignMockResult: {
+          channelId: 'channelId',
+          campaignId: 'campaignId',
+        },
+        fetchCampaignMockResult,
+      });
+
+      await bag.run(discord.getMessage());
+
+      expect(send).toHaveBeenCalledWith(
+        new MessageEmbed({
+          description: 'Gold: 0\nSilver: 0\nCopper: 0',
+          title: 'test',
+          fields: [{ name: 'Item name', value: 'Item description' }],
+          footer: { text: 'Campaign ID: campaignId' },
         })
       );
     });

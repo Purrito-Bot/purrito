@@ -1,0 +1,1 @@
+export { fetchCampaign } from './fetchCampaign';

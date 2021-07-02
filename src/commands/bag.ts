@@ -1,5 +1,6 @@
 import { createCampaign, saveChannelCampaignLink } from 'bag';
-import { getCampaignIdForChannel } from 'bag/shared';
+import { fetchCampaign } from 'bag';
+import { getCampaignIdForChannel } from 'bag';
 import { prefix } from 'config.json';
 import { Message, MessageEmbed } from 'discord.js';
 import { logger } from 'shared';
@@ -16,7 +17,31 @@ export default class extends Command {
   }
 
   async run(message: Message) {
-    message.channel.send('Under construction');
+    const messageEmbed = new MessageEmbed();
+
+    logger.debug('Checking if channel has a campaign');
+    const existingCampaign = await getCampaignIdForChannel(message.channel.id);
+
+    if (!existingCampaign) {
+      messageEmbed.setDescription(
+        `You already have a bag on this channel. Use ${prefix}bag to check it's contents.`
+      );
+    } else {
+      const campaign = await fetchCampaign(existingCampaign.campaignId);
+      messageEmbed.setTitle(campaign.name);
+      messageEmbed.setDescription(
+        `Gold: ${campaign.gold}\nSilver: ${campaign.silver}\nCopper: ${campaign.bronze}`
+      );
+      messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
+      messageEmbed.addFields(
+        campaign.items.map((item) => ({
+          name: item.name,
+          value: item.description,
+        }))
+      );
+    }
+
+    message.channel.send(messageEmbed);
   }
 
   async create(message: Message, args: string[]) {
