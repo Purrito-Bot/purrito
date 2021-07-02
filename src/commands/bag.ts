@@ -11,7 +11,6 @@ export default class extends Command {
     super({
       name: 'bag',
       description: `Keep track of your bag of holding! For more detailed help use ${prefix}bag help`,
-      developerCommand: true,
       subCommands: true,
     });
   }
