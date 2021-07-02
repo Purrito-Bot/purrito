@@ -1,7 +1,7 @@
-import { Command } from '../types/command';
-import { prefix } from '../config.json';
 import { Message, MessageEmbed } from 'discord.js';
 import { conditions } from '../condition';
+import { prefix } from '../config.json';
+import { Command } from '../types';
 
 export default class extends Command {
   constructor() {
@@ -16,7 +16,7 @@ export default class extends Command {
     const [conditionName] = args;
     if (conditionName) {
       const foundCondition = conditions.fields.find(
-        condition =>
+        (condition) =>
           condition.name.toLowerCase().trim() ===
           conditionName.toLowerCase().trim()
       );

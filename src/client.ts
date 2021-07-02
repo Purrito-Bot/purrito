@@ -1,10 +1,8 @@
 import { Client, ClientOptions, Collection, Guild, Message } from 'discord.js';
 import fs from 'fs';
 import { prefix } from './config.json';
-import { checkUserCanRun } from './shared/permissions';
-import { logger } from './shared/logger';
-import { parseMessage } from './shared/interactions';
-import { Command, CommandsCollection } from './types/command';
+import { checkUserCanRun, logger, parseMessage } from './shared';
+import { Command, CommandsCollection } from './types';
 
 /*
  * An extension of the discord.js Client class, which also includes commands.
