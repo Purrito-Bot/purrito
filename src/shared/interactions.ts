@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import config from '../config.json';
+import config from 'config.json';
 
 /**
  * @description Parse the message into a command and a list of arguments which have been provided

@@ -1,6 +1,8 @@
-import { client } from '../../shared/gqlClient';
-import { CreateCampaignGQL } from './gql/createCampaignMutation';
-import { CreateCampaign_createCampaign as CreatedCampaign } from './gql/__generated__/CreateCampaign';
+import { client } from 'shared/gqlClient';
+import {
+  CreateCampaignGQL,
+  CreateCampaign_createCampaign as CreatedCampaign,
+} from './gql';
 
 export const createCampaign = async (
   name: string

@@ -3,6 +3,7 @@
     "target": "ES6",
     "module": "CommonJS",
     "outDir": "./dist",
+    "baseUrl": "./src",
     "strict": true,
     "esModuleInterop": true,
     "lib": ["dom", "DOM.Iterable", "ESNext"],

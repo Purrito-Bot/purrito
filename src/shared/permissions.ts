@@ -1,6 +1,6 @@
 import { GuildMember } from 'discord.js';
-import config from '../config.json';
-import { Command } from '../types';
+import config from 'config.json';
+import { Command } from 'types';
 
 /**
  * Check the user has permission to run a certain command

@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { conditions } from '../condition';
-import { prefix } from '../config.json';
-import { Command } from '../types';
+import { conditions } from 'condition';
+import { prefix } from 'config.json';
+import { Command } from 'types';
 
 export default class extends Command {
   constructor() {

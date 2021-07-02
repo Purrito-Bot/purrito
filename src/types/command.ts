@@ -1,5 +1,5 @@
 import { Collection, Message, PermissionString } from 'discord.js';
-import { Purrito } from '../client';
+import { Purrito } from 'client';
 
 interface ICommand {
   name: string;
