@@ -300,7 +300,7 @@ describe('bag', () => {
       );
     });
 
-    it('warns the user when no item name was provided', async () => {
+    it('informs the user when an item is created', async () => {
       setUpMocks({
         getCampaignForChannelMockResult: {
           channelId: 'channelId',

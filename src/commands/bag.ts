@@ -1,15 +1,72 @@
 import {
+  addItem,
   createCampaign,
+  fetchCampaign,
+  getCampaignIdForChannel,
+  parseItem,
   saveChannelCampaignLink,
   updateChannelCampaignLink,
 } from 'bag';
-import { fetchCampaign } from 'bag';
-import { getCampaignIdForChannel } from 'bag';
-import { addItem, parseItem } from 'bag/item';
+import { FetchCampaign_fetchCampaign_Campaign as Campaign } from 'bag/fetch/gql';
+import { ChannelCampaignLink } from 'bag/shared/model';
 import { prefix } from 'config.json';
 import { Message, MessageEmbed } from 'discord.js';
 import { logger } from 'shared';
 import { Command } from 'types';
+
+const checkForCampaign = async (id: string) => {
+  logger.debug('Checking if channel has a campaign');
+  const existingCampaign = await getCampaignIdForChannel(id);
+
+  if (!existingCampaign) {
+    throw new Error(
+      `You don't have a bag on this channel. Use "${prefix}bag create campaign name" to make one!`
+    );
+  }
+
+  return existingCampaign;
+};
+
+const checkNoCampaignExists = async (id: string) => {
+  logger.debug('Checking if channel has a campaign');
+  const existingCampaign = await getCampaignIdForChannel(id);
+
+  if (existingCampaign) {
+    throw new Error(
+      `You already have a bag on this channel. Use ${prefix}bag to check it's contents.`
+    );
+  }
+};
+
+const campaignToMessageEmbed = (campaign: Campaign) => {
+  const messageEmbed = new MessageEmbed();
+  messageEmbed.setTitle(campaign.name);
+  messageEmbed.setDescription(
+    `Gold: ${campaign.gold}\nSilver: ${campaign.silver}\nCopper: ${campaign.bronze}`
+  );
+  messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
+  messageEmbed.addFields(
+    campaign.items.map((item) => ({
+      name: item.name,
+      value: item.description,
+    }))
+  );
+
+  return messageEmbed;
+};
+
+const saveCampaign = async (campaignName: string, channelId: string) => {
+  logger.debug(`Creating campaign ${campaignName}`);
+  const { id: campaignId } = await createCampaign(campaignName);
+
+  logger.debug(`Saving campaign with ID ${campaignId}`);
+  await saveChannelCampaignLink({
+    channelId,
+    campaignId,
+  });
+
+  return campaignId;
+};
 
 export default class extends Command {
   constructor() {
@@ -21,121 +78,110 @@ export default class extends Command {
   }
 
   async run(message: Message) {
-    const messageEmbed = new MessageEmbed();
+    let existingCampaign: ChannelCampaignLink;
 
-    logger.debug('Checking if channel has a campaign');
-    const existingCampaign = await getCampaignIdForChannel(message.channel.id);
-
-    if (!existingCampaign) {
-      messageEmbed.setDescription(
-        `You don't have a bag on this channel. Use "${prefix}bag create campaign name" to make one!`
-      );
-    } else {
-      const campaign = await fetchCampaign(existingCampaign.campaignId);
-      messageEmbed.setTitle(campaign.name);
-      messageEmbed.setDescription(
-        `Gold: ${campaign.gold}\nSilver: ${campaign.silver}\nCopper: ${campaign.bronze}`
-      );
-      messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
-      messageEmbed.addFields(
-        campaign.items.map((item) => ({
-          name: item.name,
-          value: item.description,
-        }))
+    try {
+      existingCampaign = await checkForCampaign(message.channel.id);
+    } catch (error) {
+      return message.channel.send(
+        new MessageEmbed({ description: error.message })
       );
     }
 
-    message.channel.send(messageEmbed);
+    const campaign = await fetchCampaign(existingCampaign.campaignId);
+    return message.channel.send(campaignToMessageEmbed(campaign));
   }
 
   async create(message: Message, args: string[]) {
-    const messageEmbed = new MessageEmbed();
-
     if (args.length === 0) {
-      messageEmbed.setDescription(
-        `❌ You must provide a campaign name, e.g. ${prefix}bag create AWESOME CAMPAIGN`
+      return message.channel.send(
+        new MessageEmbed({
+          description: `❌ You must provide a campaign name, e.g. ${prefix}bag create AWESOME CAMPAIGN`,
+        })
       );
-    } else {
-      const campaignName = args.join(' ').trim();
-
-      logger.debug('Checking if channel has a campaign');
-      const exisitingCampaign = await getCampaignIdForChannel(
-        message.channel.id
-      );
-
-      if (exisitingCampaign) {
-        messageEmbed.setDescription(
-          `You already have a bag on this channel. Use ${prefix}bag to check it's contents.`
-        );
-      } else {
-        logger.debug(`Creating campaign ${campaignName}`);
-        const campaign = await createCampaign(campaignName);
-
-        logger.debug(`Saving campaign with ID ${campaign.id}`);
-        await saveChannelCampaignLink({
-          channelId: message.channel.id,
-          campaignId: campaign.id,
-        });
-
-        messageEmbed.setDescription('💰 Bag created!');
-        messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
-      }
     }
-    message.channel.send(messageEmbed);
+
+    const campaignName = args.join(' ').trim();
+
+    try {
+      await checkNoCampaignExists(message.channel.id);
+    } catch (error) {
+      return message.channel.send(
+        new MessageEmbed({ description: error.message })
+      );
+    }
+
+    const campaignId = await saveCampaign(campaignName, message.channel.id);
+
+    return message.channel.send(
+      new MessageEmbed({
+        description: '💰 Bag created!',
+        footer: { text: `Campaign ID: ${campaignId}` },
+      })
+    );
   }
 
   async item(message: Message, args: string[]) {
-    const messageEmbed = new MessageEmbed();
+    let existingCampaign: ChannelCampaignLink;
 
-    logger.debug('Checking if channel has a campaign');
-    const existingCampaign = await getCampaignIdForChannel(message.channel.id);
-
-    if (!existingCampaign) {
-      messageEmbed.setDescription(
-        `You don't have a bag on this channel. Use "${prefix}bag create campaign name" to make one!`
+    try {
+      existingCampaign = await checkForCampaign(message.channel.id);
+    } catch (error) {
+      return message.channel.send(
+        new MessageEmbed({ description: error.message })
       );
-    } else {
-      if (args.length === 0) {
-        messageEmbed.setDescription(
-          `❌ You must provide an item name, e.g. ${prefix}bag item AMAZING BOOK`
-        );
-      } else {
-        const item = parseItem(args);
-
-        const campaign = await addItem(existingCampaign.campaignId, item);
-
-        messageEmbed.setDescription('💰 Item added!');
-        messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
-      }
     }
 
-    message.channel.send(messageEmbed);
+    if (args.length === 0) {
+      return message.channel.send(
+        new MessageEmbed({
+          description: `❌ You must provide an item name, e.g. ${prefix}bag item AMAZING BOOK`,
+        })
+      );
+    }
+    const item = parseItem(args);
+
+    const { id: campaignId } = await addItem(existingCampaign.campaignId, item);
+
+    return message.channel.send(
+      new MessageEmbed({
+        description: '💰 Item added!',
+        footer: { text: `Campaign ID: ${campaignId}` },
+      })
+    );
   }
 
   async link(message: Message, args: string[]) {
-    const messageEmbed = new MessageEmbed();
     const [id] = args;
+
     if (!id) {
-      messageEmbed.setDescription(
-        `❌ Please provide the ID of the campaign you want to link this channel to, e.g. ${prefix}bag link 12345.`
+      return message.channel.send(
+        new MessageEmbed({
+          description: `❌ Please provide the ID of the campaign you want to link this channel to, e.g. ${prefix}bag link 12345.`,
+        })
       );
-    } else {
-      let campaignId: string | undefined;
-      try {
-        const campaign = await fetchCampaign(id);
-        campaignId = campaign.id;
-      } catch (error) {
-        messageEmbed.setDescription(error.message);
-      }
-      if (campaignId) {
-        await updateChannelCampaignLink({
-          channelId: message.channel.id,
-          campaignId,
-        });
-        messageEmbed.setDescription('💰 Bag linked!');
-        messageEmbed.setFooter(`Campaign ID: ${campaignId}`);
-      }
     }
-    message.channel.send(messageEmbed);
+
+    let campaignId: string;
+    try {
+      const campaign = await fetchCampaign(id);
+      campaignId = campaign.id;
+    } catch (error) {
+      return message.channel.send(
+        new MessageEmbed({ description: error.message })
+      );
+    }
+
+    await updateChannelCampaignLink({
+      channelId: message.channel.id,
+      campaignId,
+    });
+
+    return message.channel.send(
+      new MessageEmbed({
+        description: '💰 Bag linked!',
+        footer: { text: `Campaign ID: ${campaignId}` },
+      })
+    );
   }
 }
