@@ -335,6 +335,18 @@ describe('bag', () => {
       expect(fetchMock).toHaveBeenCalledWith('campaignId');
     });
 
+    it('sends an error when the campaign does not exist', async () => {
+      jest
+        .spyOn(FetchMock, 'fetchCampaign')
+        .mockRejectedValueOnce({ message: 'Fail' });
+
+      await bag.link(discord.getMessage(), ['campaignId']);
+
+      expect(send).toHaveBeenCalledWith(
+        new MessageEmbed({ description: 'Fail' })
+      );
+    });
+
     it('warns the user when a campaign id is not provided', async () => {
       const { fetchMock } = setUpMocks({
         fetchCampaignMockResult,

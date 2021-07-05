@@ -120,13 +120,21 @@ export default class extends Command {
         `❌ Please provide the ID of the campaign you want to link this channel to, e.g. ${prefix}bag link 12345.`
       );
     } else {
-      const { id: campaignId } = await fetchCampaign(id);
-      await updateChannelCampaignLink({
-        channelId: message.channel.id,
-        campaignId,
-      });
-      messageEmbed.setDescription('💰 Bag linked!');
-      messageEmbed.setFooter(`Campaign ID: ${campaignId}`);
+      let campaignId: string | undefined;
+      try {
+        const campaign = await fetchCampaign(id);
+        campaignId = campaign.id;
+      } catch (error) {
+        messageEmbed.setDescription(error.message);
+      }
+      if (campaignId) {
+        await updateChannelCampaignLink({
+          channelId: message.channel.id,
+          campaignId,
+        });
+        messageEmbed.setDescription('💰 Bag linked!');
+        messageEmbed.setFooter(`Campaign ID: ${campaignId}`);
+      }
     }
     message.channel.send(messageEmbed);
   }
