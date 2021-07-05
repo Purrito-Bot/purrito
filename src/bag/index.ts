@@ -6,3 +6,4 @@ export {
   saveChannelCampaignLink,
   updateChannelCampaignLink,
 } from './shared';
+export { bagHelp } from './help';

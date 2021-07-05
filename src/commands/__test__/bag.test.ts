@@ -1,12 +1,13 @@
+import { FetchCampaign_fetchCampaign_Campaign as Campaign } from 'bag/fetch/gql';
+import { MessageEmbed } from 'discord.js';
+import * as GQLMock from '../../bag/create/createCampaign';
+import * as FetchMock from '../../bag/fetch/fetchCampaign';
+import { bagHelp } from '../../bag/help/help';
+import * as AddItemMock from '../../bag/item/addItem';
+import * as MongoMock from '../../bag/shared/channelCampaignLink';
 import config from '../../config.json';
 import Bag from '../bag';
 import MockDiscord from './testData';
-import * as GQLMock from '../../bag/create/createCampaign';
-import * as FetchMock from '../../bag/fetch/fetchCampaign';
-import * as MongoMock from '../../bag/shared/channelCampaignLink';
-import * as AddItemMock from '../../bag/item/addItem';
-import { MessageEmbed } from 'discord.js';
-import { FetchCampaign_fetchCampaign_Campaign as Campaign } from 'bag/fetch/gql';
 
 const setUpMocks = ({
   getCampaignForChannelMockResult = null,
@@ -174,6 +175,14 @@ describe('bag', () => {
             '❌ You must provide a campaign name, e.g. !bag create AWESOME CAMPAIGN',
         })
       );
+    });
+  });
+
+  describe('help', () => {
+    it('returns a helpful message', async () => {
+      bag.help(discord.getMessage());
+
+      expect(send).toHaveBeenCalledWith(bagHelp);
     });
   });
 

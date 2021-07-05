@@ -1,5 +1,6 @@
 import {
   addItem,
+  bagHelp,
   createCampaign,
   fetchCampaign,
   getCampaignIdForChannel,
@@ -90,6 +91,10 @@ export default class extends Command {
 
     const campaign = await fetchCampaign(existingCampaign.campaignId);
     return message.channel.send(campaignToMessageEmbed(campaign));
+  }
+
+  async help(message: Message) {
+    return message.channel.send(bagHelp);
   }
 
   async create(message: Message, args: string[]) {
