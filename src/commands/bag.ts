@@ -107,4 +107,23 @@ export default class extends Command {
 
     message.channel.send(messageEmbed);
   }
+
+  async link(message: Message, args: string[]) {
+    const messageEmbed = new MessageEmbed();
+    const [id] = args;
+    if (!id) {
+      messageEmbed.setDescription(
+        `❌ Please provide the ID of the campaign you want to link this channel to, e.g. ${prefix}bag link 12345.`
+      );
+    } else {
+      const { id: campaignId } = await fetchCampaign(id);
+      await saveChannelCampaignLink({
+        channelId: message.channel.id,
+        campaignId,
+      });
+      messageEmbed.setDescription('💰 Bag linked!');
+      messageEmbed.setFooter(`Campaign ID: ${campaignId}`);
+    }
+    message.channel.send(messageEmbed);
+  }
 }

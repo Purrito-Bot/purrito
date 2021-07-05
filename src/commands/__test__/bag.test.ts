@@ -52,6 +52,22 @@ const setUpMocks = ({
   };
 };
 
+const fetchCampaignMockResult: Campaign = {
+  __typename: 'Campaign',
+  id: 'campaignId',
+  name: 'test',
+  gold: 0,
+  silver: 0,
+  bronze: 0,
+  items: [
+    {
+      __typename: 'Item',
+      name: 'Item name',
+      description: 'Item description',
+    },
+  ],
+};
+
 describe('bag', () => {
   config.prefix = '!';
 
@@ -154,22 +170,6 @@ describe('bag', () => {
   });
 
   describe('fetch', () => {
-    const fetchCampaignMockResult: Campaign = {
-      __typename: 'Campaign',
-      id: 'campaignId',
-      name: 'test',
-      gold: 0,
-      silver: 0,
-      bronze: 0,
-      items: [
-        {
-          __typename: 'Item',
-          name: 'Item name',
-          description: 'Item description',
-        },
-      ],
-    };
-
     it('looks for a campaign for the given channel', async () => {
       const { getCampaignMock } = setUpMocks({
         getCampaignForChannelMockResult: {
@@ -311,6 +311,63 @@ describe('bag', () => {
           footer: {
             text: 'Campaign ID: campaignId',
           },
+        })
+      );
+    });
+  });
+
+  describe('link', () => {
+    it('checks the user provided campaign exists', async () => {
+      const { fetchMock } = setUpMocks({
+        fetchCampaignMockResult,
+      });
+
+      await bag.link(discord.getMessage(), ['campaignId']);
+
+      expect(fetchMock).toHaveBeenCalledWith('campaignId');
+    });
+
+    it('warns the user when a campaign id is not provided', async () => {
+      const { fetchMock } = setUpMocks({
+        fetchCampaignMockResult,
+      });
+
+      await bag.link(discord.getMessage(), []);
+
+      expect(send).toHaveBeenCalledWith(
+        new MessageEmbed({
+          description:
+            '❌ Please provide the ID of the campaign you want to link this channel to, e.g. !bag link 12345.',
+        })
+      );
+
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it('links the campaign id to the channel id', async () => {
+      const { saveMock } = setUpMocks({
+        fetchCampaignMockResult,
+      });
+
+      await bag.link(discord.getMessage(), ['campaignId']);
+
+      expect(saveMock).toHaveBeenCalledWith({
+        channelId: discord.getChannel().id,
+        campaignId: 'campaignId',
+      });
+    });
+
+    it('tells the user when the link is successful', async () => {
+      setUpMocks({
+        fetchCampaignMockResult,
+      });
+
+      await bag.link(discord.getMessage(), ['campaignId']);
+
+      expect(send).toHaveBeenCalledWith(
+        new MessageEmbed({
+          description: '💰 Bag linked!',
+          footer: { text: 'Campaign ID: campaignId' },
         })
       );
     });
