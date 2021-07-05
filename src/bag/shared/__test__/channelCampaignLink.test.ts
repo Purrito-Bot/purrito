@@ -72,7 +72,8 @@ describe('channelCampaignLink', () => {
 
       expect(updateLink).toHaveBeenCalledWith(
         { channelId: 'channelId' },
-        { channelId: 'channelId', campaignId: 'campaignId' }
+        { channelId: 'channelId', campaignId: 'campaignId' },
+        { useFindAndModify: false, upsert: true, new: true }
       );
     });
   });

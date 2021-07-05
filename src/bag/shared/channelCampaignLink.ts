@@ -25,7 +25,8 @@ export const updateChannelCampaignLink = async (input: {
 }) => {
   const updatedLink = await ChannelCampaignLinkModel.findOneAndUpdate(
     { channelId: input.channelId },
-    input
+    input,
+    { useFindAndModify: false, upsert: true, new: true }
   );
 
   return updatedLink;
