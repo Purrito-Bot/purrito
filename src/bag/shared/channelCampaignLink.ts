@@ -18,3 +18,15 @@ export const getCampaignIdForChannel = async (
 
   return foundLink;
 };
+
+export const updateChannelCampaignLink = async (input: {
+  channelId: string;
+  campaignId: string;
+}) => {
+  const updatedLink = await ChannelCampaignLinkModel.findOneAndUpdate(
+    { channelId: input.channelId },
+    input
+  );
+
+  return updatedLink;
+};

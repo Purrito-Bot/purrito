@@ -31,6 +31,13 @@ const setUpMocks = ({
       campaignId: 'campaignId',
     } as any);
 
+  const updateMock = jest
+    .spyOn(MongoMock, 'updateChannelCampaignLink')
+    .mockResolvedValueOnce({
+      channelId: 'channelId',
+      campaignId: 'campaignId',
+    } as any);
+
   const getCampaignMock = jest
     .spyOn(MongoMock, 'getCampaignIdForChannel')
     .mockResolvedValueOnce(getCampaignForChannelMockResult);
@@ -49,6 +56,7 @@ const setUpMocks = ({
     getCampaignMock,
     fetchMock,
     addItemMock,
+    updateMock,
   };
 };
 
@@ -345,13 +353,13 @@ describe('bag', () => {
     });
 
     it('links the campaign id to the channel id', async () => {
-      const { saveMock } = setUpMocks({
+      const { updateMock } = setUpMocks({
         fetchCampaignMockResult,
       });
 
       await bag.link(discord.getMessage(), ['campaignId']);
 
-      expect(saveMock).toHaveBeenCalledWith({
+      expect(updateMock).toHaveBeenCalledWith({
         channelId: discord.getChannel().id,
         campaignId: 'campaignId',
       });

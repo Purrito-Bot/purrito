@@ -1,4 +1,8 @@
-import { createCampaign, saveChannelCampaignLink } from 'bag';
+import {
+  createCampaign,
+  saveChannelCampaignLink,
+  updateChannelCampaignLink,
+} from 'bag';
 import { fetchCampaign } from 'bag';
 import { getCampaignIdForChannel } from 'bag';
 import { addItem, parseItem } from 'bag/item';
@@ -117,7 +121,7 @@ export default class extends Command {
       );
     } else {
       const { id: campaignId } = await fetchCampaign(id);
-      await saveChannelCampaignLink({
+      await updateChannelCampaignLink({
         channelId: message.channel.id,
         campaignId,
       });

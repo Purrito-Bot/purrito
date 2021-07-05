@@ -13,6 +13,7 @@ connect(process.env.DATABASE_CONNECTION_STRING ?? '', {
   },
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: false,
 }).then(() => {
   logger.info('Connected to database');
 });

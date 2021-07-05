@@ -1,6 +1,7 @@
 import {
   getCampaignIdForChannel,
   saveChannelCampaignLink,
+  updateChannelCampaignLink,
 } from '../channelCampaignLink';
 import { ChannelCampaignLinkModel } from '../model';
 
@@ -15,6 +16,15 @@ const setUpFindOneMock = () => {
     channelId: 'channelId',
     campaignId: 'campaignId',
   } as any);
+};
+
+const setUpUpdateMock = () => {
+  return jest
+    .spyOn(ChannelCampaignLinkModel, 'findOneAndUpdate')
+    .mockReturnValueOnce({
+      channelId: 'channelId',
+      campaignId: 'campaignId',
+    } as any);
 };
 
 describe('channelCampaignLink', () => {
@@ -48,6 +58,22 @@ describe('channelCampaignLink', () => {
       await getCampaignIdForChannel('channelId');
 
       expect(findMock).toHaveBeenCalledWith({ channelId: 'channelId' });
+    });
+  });
+
+  describe('updateChannelCampaignLink', () => {
+    it('updates the channel campaign link', async () => {
+      const updateLink = setUpUpdateMock();
+
+      await updateChannelCampaignLink({
+        campaignId: 'campaignId',
+        channelId: 'channelId',
+      });
+
+      expect(updateLink).toHaveBeenCalledWith(
+        { channelId: 'channelId' },
+        { channelId: 'channelId', campaignId: 'campaignId' }
+      );
     });
   });
 });
