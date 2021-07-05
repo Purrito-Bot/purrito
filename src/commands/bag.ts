@@ -1,6 +1,7 @@
 import { createCampaign, saveChannelCampaignLink } from 'bag';
 import { fetchCampaign } from 'bag';
 import { getCampaignIdForChannel } from 'bag';
+import { addItem, parseItem } from 'bag/item';
 import { prefix } from 'config.json';
 import { Message, MessageEmbed } from 'discord.js';
 import { logger } from 'shared';
@@ -76,6 +77,34 @@ export default class extends Command {
         messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
       }
     }
+    message.channel.send(messageEmbed);
+  }
+
+  async item(message: Message, args: string[]) {
+    const messageEmbed = new MessageEmbed();
+
+    logger.debug('Checking if channel has a campaign');
+    const existingCampaign = await getCampaignIdForChannel(message.channel.id);
+
+    if (!existingCampaign) {
+      messageEmbed.setDescription(
+        `You don't have a bag on this channel. Use "${prefix}bag create campaign name" to make one!`
+      );
+    } else {
+      if (args.length === 0) {
+        messageEmbed.setDescription(
+          `❌ You must provide an item name, e.g. ${prefix}bag item AMAZING BOOK`
+        );
+      } else {
+        const item = parseItem(args);
+
+        const campaign = await addItem(existingCampaign.campaignId, item);
+
+        messageEmbed.setDescription('💰 Item added!');
+        messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
+      }
+    }
+
     message.channel.send(messageEmbed);
   }
 }
