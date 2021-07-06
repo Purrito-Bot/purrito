@@ -4,10 +4,10 @@
   "description": "Discord bot",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_PATH=./src nodemon --config nodemon.json src/index.ts",
-    "start": "NODE_PATH=./src ts-node src/index.ts",
-    "test": "NODE_PATH=./src jest --coverage",
-    "test:watch": "NODE_PATH=./src jest --watchAll",
+    "dev": "cross-env NODE_PATH=./src nodemon --config nodemon.json src/index.ts",
+    "start": "cross-env NODE_PATH=./src ts-node src/index.ts",
+    "test": "cross-env NODE_PATH=./src jest --coverage",
+    "test:watch": "cross-env NODE_PATH=./src jest --watchAll",
     "schema:download": "apollo client:download-schema graphql-schema.json",
     "schema:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix=GraphQL$ --tsFileExtension=ts",
     "prettier": "prettier --write ."
@@ -29,6 +29,7 @@
   "dependencies": {
     "@ensemblebr/dice": "^3.0.0",
     "apollo-boost": "^0.4.9",
+    "cross-env": "^7.0.3",
     "cross-fetch": "^3.1.4",
     "discord.js": "^12.4.1",
     "dotenv": "^10.0.0",
