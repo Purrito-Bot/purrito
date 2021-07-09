@@ -26,6 +26,7 @@ const setUpQueryMock = ({
 
 const expectedQuery = (id: string) => ({
   query: FetchCampaignGQL,
+  fetchPolicy: 'no-cache',
   variables: {
     id,
   },

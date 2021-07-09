@@ -8,6 +8,7 @@ import {
 export const fetchCampaign = async (id: string): Promise<Campaign> => {
   const { data, errors } = await client.query<FetchCampaign>({
     query: FetchCampaignGQL,
+    fetchPolicy: 'no-cache',
     variables: {
       id,
     },
