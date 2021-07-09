@@ -1,3 +1,9 @@
 export { createCampaign } from './create';
 export { fetchCampaign } from './fetch';
-export { saveChannelCampaignLink, getCampaignIdForChannel } from './shared';
+export { addItem, parseItem } from './item';
+export {
+  getCampaignIdForChannel,
+  saveChannelCampaignLink,
+  updateChannelCampaignLink,
+} from './shared';
+export { bagHelp } from './help';

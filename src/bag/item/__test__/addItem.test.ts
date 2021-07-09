@@ -1,34 +1,37 @@
+import { AddItemInput } from '../../../../__generated__/globalTypes';
 import { client } from '../../../shared/gqlClient';
-import { fetchCampaign } from '../fetchCampaign';
-import { FetchCampaignGQL } from '../gql/fetchCampaignQuery';
+import { addItem } from '../addItem';
+import { AddItemGQL } from '../gql/addItemMutation';
+
+const id = 'test-id';
+
+const input: AddItemInput = {
+  name: 'test-item',
+};
 
 const setUpQueryMock = ({
   errors = [],
-  fetchCampaign = {
+  addItem = {
     __typename: 'Campaign',
-    id: 'test-id',
-    gold: 0,
-    silver: 0,
-    bronze: 0,
-    items: [],
+    id,
   },
 }: {
   errors?: Error[];
-  fetchCampaign?: any;
+  addItem?: any;
 }) => {
-  return jest.spyOn(client, 'query').mockResolvedValueOnce({
+  return jest.spyOn(client, 'mutate').mockResolvedValueOnce({
     data: {
-      fetchCampaign,
+      addItem,
     },
     errors,
   } as any);
 };
 
-const expectedQuery = (id: string) => ({
-  query: FetchCampaignGQL,
-  fetchPolicy: 'no-cache',
+const expectedQuery = (id: string, input: AddItemInput) => ({
+  mutation: AddItemGQL,
   variables: {
     id,
+    input,
   },
 });
 
@@ -38,39 +41,29 @@ describe('createCampaign', () => {
   });
 
   it('executes a GQL query', async () => {
-    const id = 'test-id';
-
     const clientSpy = setUpQueryMock({});
 
-    await fetchCampaign(id);
+    await addItem(id, input);
 
-    expect(clientSpy).toHaveBeenCalledWith(expectedQuery(id));
+    expect(clientSpy).toHaveBeenCalledWith(expectedQuery(id, input));
   });
 
   it('returns the found campaign details', async () => {
-    const id = 'test-id';
-
     setUpQueryMock({});
 
-    const result = await fetchCampaign(id);
+    const result = await addItem(id, input);
 
     expect(result).toStrictEqual({
       __typename: 'Campaign',
       id: 'test-id',
-      gold: 0,
-      silver: 0,
-      bronze: 0,
-      items: [],
     });
   });
 
   it('throws an error if creation fails', async () => {
-    const id = 'test-id';
-
     setUpQueryMock({ errors: [new Error('Something went wrong')] });
 
     try {
-      await fetchCampaign(id);
+      await addItem(id, input);
     } catch (error) {
       expect((error as Error).message).toStrictEqual(
         'Something when wrong while fetching campaign.'
@@ -79,17 +72,15 @@ describe('createCampaign', () => {
   });
 
   it('throws an error if campaign not found', async () => {
-    const id = 'test-id';
-
     setUpQueryMock({
-      fetchCampaign: {
+      addItem: {
         __typename: 'CampaignNotFound',
         message: 'campaign not found',
       },
     });
 
     try {
-      await fetchCampaign(id);
+      await addItem(id, input);
     } catch (error) {
       expect((error as Error).message).toStrictEqual('campaign not found');
     }

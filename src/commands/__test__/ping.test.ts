@@ -13,6 +13,10 @@ describe('Ping', () => {
     jest.clearAllMocks();
   });
 
+  afterAll(() => {
+    discord.getClient().destroy();
+  });
+
   it('initialises with correct values', () => {
     expect(ping.name).toStrictEqual('ping');
     expect(ping.description).toStrictEqual(

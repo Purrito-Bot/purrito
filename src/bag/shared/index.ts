@@ -1,4 +1,5 @@
 export {
-  saveChannelCampaignLink,
   getCampaignIdForChannel,
+  saveChannelCampaignLink,
+  updateChannelCampaignLink,
 } from './channelCampaignLink';

@@ -21,6 +21,10 @@ describe('Condition', () => {
     jest.resetAllMocks();
   });
 
+  afterAll(() => {
+    discord.getClient().destroy();
+  });
+
   it('initialises with correct values', () => {
     expect(condition.name).toStrictEqual('condition');
     expect(condition.description).toStrictEqual(
