@@ -9,16 +9,9 @@ import { AddItemInput } from "./../../../../../__generated__/globalTypes";
 // GraphQL mutation operation: AddItem
 // ====================================================
 
-export interface AddItem_addItem_Campaign_items {
-  __typename: "Item";
-  name: string;
-  description: string | null;
-}
-
 export interface AddItem_addItem_Campaign {
   __typename: "Campaign";
   id: string;
-  items: AddItem_addItem_Campaign_items[];
 }
 
 export interface AddItem_addItem_CampaignNotFound {

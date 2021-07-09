@@ -6,10 +6,6 @@ export const AddItemGQL = gql`
       __typename
       ... on Campaign {
         id
-        items {
-          name
-          description
-        }
       }
       ... on CampaignNotFound {
         message
