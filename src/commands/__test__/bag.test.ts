@@ -66,7 +66,7 @@ const fetchCampaignMockResult: Campaign = {
   name: 'test',
   gold: 0,
   silver: 0,
-  bronze: 0,
+  copper: 0,
   items: [
     {
       __typename: 'Item',

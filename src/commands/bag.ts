@@ -43,7 +43,7 @@ const campaignToMessageEmbed = (campaign: Campaign) => {
   const messageEmbed = new MessageEmbed();
   messageEmbed.setTitle(campaign.name);
   messageEmbed.setDescription(
-    `Gold: ${campaign.gold}\nSilver: ${campaign.silver}\nCopper: ${campaign.bronze}`
+    `Gold: ${campaign.gold}\nSilver: ${campaign.silver}\nCopper: ${campaign.copper}`
   );
   messageEmbed.setFooter(`Campaign ID: ${campaign.id}`);
   messageEmbed.addFields(
