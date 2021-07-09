@@ -89,6 +89,10 @@ describe('bag', () => {
     jest.resetAllMocks();
   });
 
+  afterAll(() => {
+    discord.getClient().destroy();
+  });
+
   it('initialises with the correct values', () => {
     expect(bag.name).toStrictEqual('bag');
     expect(bag.description).toStrictEqual(

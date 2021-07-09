@@ -7,13 +7,18 @@ import MockDiscord from './testData';
 describe('Help', () => {
   const help = new Help();
 
+  const discord = new MockDiscord();
+
+  afterAll(() => {
+    discord.getClient().destroy();
+  });
+
   it('initialises with correct values', () => {
     expect(help.name).toStrictEqual('help');
     expect(help.description).toStrictEqual('Returns this helpful message!');
   });
 
   it('sends message embed to channel', () => {
-    const discord = new MockDiscord();
     help.commands.set('help', help);
 
     const expected = new MessageEmbed({
@@ -37,7 +42,6 @@ describe('Help', () => {
   });
 
   it('sends private message with hidden commands', () => {
-    const discord = new MockDiscord();
     class HiddenCommand extends Command {
       constructor() {
         super({
