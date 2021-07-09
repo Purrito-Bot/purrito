@@ -7,7 +7,6 @@ import * as AddItemMock from '../../bag/item/addItem';
 import * as MongoMock from '../../bag/shared/channelCampaignLink';
 import config from '../../config.json';
 import Bag from '../bag';
-import MockDiscord from './testData';
 
 const setUpMocks = ({
   getCampaignForChannelMockResult = null,
@@ -81,16 +80,17 @@ describe('bag', () => {
   config.prefix = '!';
 
   const bag = new Bag();
-  const discord = new MockDiscord();
+
   const send = jest.fn();
-  discord.getTextChannel().send = send;
+  const message = {
+    channel: {
+      id: 'channelId',
+      send,
+    },
+  } as any;
 
   beforeEach(() => {
     jest.resetAllMocks();
-  });
-
-  afterAll(() => {
-    discord.getClient().destroy();
   });
 
   it('initialises with the correct values', () => {
@@ -105,9 +105,9 @@ describe('bag', () => {
     it('checks if the channel already has an existing bag', async () => {
       const { getCampaignMock } = setUpMocks({});
 
-      await bag.create(discord.getMessage(), ['Campaign Name']);
+      await bag.create(message, ['Campaign Name']);
 
-      expect(getCampaignMock).toHaveBeenCalledWith(discord.getChannel().id);
+      expect(getCampaignMock).toHaveBeenCalledWith(message.channel.id);
     });
 
     it('does not create a campaign if one exists for that channel', async () => {
@@ -118,7 +118,7 @@ describe('bag', () => {
         },
       });
 
-      await bag.create(discord.getMessage(), ['Campaign Name']);
+      await bag.create(message, ['Campaign Name']);
 
       expect(saveMock).not.toHaveBeenCalled();
       expect(createCampaignMock).not.toHaveBeenCalled();
@@ -132,7 +132,7 @@ describe('bag', () => {
         },
       });
 
-      await bag.create(discord.getMessage(), ['Campaign Name']);
+      await bag.create(message, ['Campaign Name']);
 
       expect(send).toHaveBeenLastCalledWith(
         new MessageEmbed({
@@ -145,10 +145,10 @@ describe('bag', () => {
     it('creates a bag and saves the id against the channel id', async () => {
       const { createCampaignMock, saveMock } = setUpMocks({});
 
-      await bag.create(discord.getMessage(), ['Campaign', 'Name']);
+      await bag.create(message, ['Campaign', 'Name']);
 
       expect(saveMock).toHaveBeenCalledWith({
-        channelId: discord.getChannel().id,
+        channelId: message.channel.id,
         campaignId: 'campaignId',
       });
 
@@ -158,7 +158,7 @@ describe('bag', () => {
     it('messages the user the campaign has been saved', async () => {
       setUpMocks({});
 
-      await bag.create(discord.getMessage(), ['Campaign Name']);
+      await bag.create(message, ['Campaign Name']);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -171,7 +171,7 @@ describe('bag', () => {
     it('wants the user when they have not provided a name', async () => {
       setUpMocks({});
 
-      await bag.create(discord.getMessage(), []);
+      await bag.create(message, []);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -184,7 +184,7 @@ describe('bag', () => {
 
   describe('help', () => {
     it('returns a helpful message', async () => {
-      bag.help(discord.getMessage());
+      bag.help(message);
 
       expect(send).toHaveBeenCalledWith(bagHelp);
     });
@@ -200,9 +200,9 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.run(discord.getMessage());
+      await bag.run(message);
 
-      expect(getCampaignMock).toHaveBeenCalledWith(discord.getChannel().id);
+      expect(getCampaignMock).toHaveBeenCalledWith(message.channel.id);
     });
 
     it('fetches the bag if it exists', async () => {
@@ -214,7 +214,7 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.run(discord.getMessage());
+      await bag.run(message);
 
       expect(fetchMock).toHaveBeenCalledWith('campaignId');
     });
@@ -222,7 +222,7 @@ describe('bag', () => {
     it('informs the user if they do not have a campaign', async () => {
       setUpMocks({});
 
-      await bag.run(discord.getMessage());
+      await bag.run(message);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -241,7 +241,7 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.run(discord.getMessage());
+      await bag.run(message);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -258,15 +258,15 @@ describe('bag', () => {
     it('checks if the channel already has an existing bag', async () => {
       const { getCampaignMock } = setUpMocks({});
 
-      await bag.item(discord.getMessage(), ['My', 'Item']);
+      await bag.item(message, ['My', 'Item']);
 
-      expect(getCampaignMock).toHaveBeenCalledWith(discord.getChannel().id);
+      expect(getCampaignMock).toHaveBeenCalledWith(message.channel.id);
     });
 
     it("informs the user when they don't have a bag", async () => {
       setUpMocks({});
 
-      await bag.item(discord.getMessage(), ['My', 'Item']);
+      await bag.item(message, ['My', 'Item']);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -287,7 +287,7 @@ describe('bag', () => {
         },
       });
 
-      await bag.item(discord.getMessage(), ['My', 'Item,', 'Description']);
+      await bag.item(message, ['My', 'Item,', 'Description']);
 
       expect(addItemMock).toHaveBeenCalledWith('campaignId', {
         name: 'My Item',
@@ -303,7 +303,7 @@ describe('bag', () => {
         },
       });
 
-      await bag.item(discord.getMessage(), []);
+      await bag.item(message, []);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -324,7 +324,7 @@ describe('bag', () => {
         },
       });
 
-      await bag.item(discord.getMessage(), ['My', 'Item,', 'Description']);
+      await bag.item(message, ['My', 'Item,', 'Description']);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -343,7 +343,7 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.link(discord.getMessage(), ['campaignId']);
+      await bag.link(message, ['campaignId']);
 
       expect(fetchMock).toHaveBeenCalledWith('campaignId');
     });
@@ -353,7 +353,7 @@ describe('bag', () => {
         .spyOn(FetchMock, 'fetchCampaign')
         .mockRejectedValueOnce({ message: 'Fail' });
 
-      await bag.link(discord.getMessage(), ['campaignId']);
+      await bag.link(message, ['campaignId']);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({ description: 'Fail' })
@@ -365,7 +365,7 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.link(discord.getMessage(), []);
+      await bag.link(message, []);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({
@@ -382,10 +382,10 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.link(discord.getMessage(), ['campaignId']);
+      await bag.link(message, ['campaignId']);
 
       expect(updateMock).toHaveBeenCalledWith({
-        channelId: discord.getChannel().id,
+        channelId: message.channel.id,
         campaignId: 'campaignId',
       });
     });
@@ -395,7 +395,7 @@ describe('bag', () => {
         fetchCampaignMockResult,
       });
 
-      await bag.link(discord.getMessage(), ['campaignId']);
+      await bag.link(message, ['campaignId']);
 
       expect(send).toHaveBeenCalledWith(
         new MessageEmbed({

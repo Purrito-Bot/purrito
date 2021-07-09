@@ -2,15 +2,24 @@ import { Message, MessageEmbed } from 'discord.js';
 import config from '../../config.json';
 import { Command } from '../../types/command';
 import Help from '../help';
-import MockDiscord from './testData';
 
 describe('Help', () => {
   const help = new Help();
 
-  const discord = new MockDiscord();
+  const send = jest.fn();
+  const author = jest.fn();
+  const message = {
+    author: {
+      send: author,
+    },
+    channel: {
+      id: 'channelId',
+      send,
+    },
+  } as any;
 
-  afterAll(() => {
-    discord.getClient().destroy();
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
   it('initialises with correct values', () => {
@@ -33,10 +42,7 @@ describe('Help', () => {
       ],
     });
 
-    const send = jest.fn();
-    discord.getTextChannel().send = send;
-
-    help.run(discord.getMessage());
+    help.run(message);
 
     expect(send).toHaveBeenCalledWith(expected);
   });
@@ -53,13 +59,11 @@ describe('Help', () => {
       run(_: Message): void {}
     }
 
-    const authorMock = jest.fn();
-    discord.getMessage().author = { send: authorMock } as any;
     const hidden = new HiddenCommand();
     help.commands.set('hidden', hidden);
     help.commands.set('help', help);
 
-    help.run(discord.getMessage());
+    help.run(message);
 
     const expected = new MessageEmbed({
       description:
@@ -68,6 +72,6 @@ describe('Help', () => {
       fields: [{ name: `${config.prefix}Hidden`, value: 'Test command' }],
     });
 
-    expect(authorMock).toHaveBeenCalledWith(expected);
+    expect(author).toHaveBeenCalledWith(expected);
   });
 });

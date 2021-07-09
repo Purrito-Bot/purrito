@@ -2,7 +2,6 @@ import { MessageEmbed } from 'discord.js';
 import { conditions } from '../../condition';
 import config from '../../config.json';
 import Condition from '../condition';
-import MockDiscord from './testData';
 
 describe('Condition', () => {
   config.prefix = '!';
@@ -12,17 +11,18 @@ describe('Condition', () => {
       value: ['Value1'],
     },
   ];
+
   const condition = new Condition();
-  const discord = new MockDiscord();
   const send = jest.fn();
-  discord.getTextChannel().send = send;
+  const message = {
+    channel: {
+      id: 'channelId',
+      send,
+    },
+  } as any;
 
   beforeEach(() => {
     jest.resetAllMocks();
-  });
-
-  afterAll(() => {
-    discord.getClient().destroy();
   });
 
   it('initialises with correct values', () => {
@@ -33,17 +33,13 @@ describe('Condition', () => {
   });
 
   it('returns information about all conditions', () => {
-    discord.getMessage().content = '';
-
-    condition.run(discord.getMessage(), []);
+    condition.run(message, []);
 
     expect(send).toBeCalledWith(new MessageEmbed(conditions));
   });
 
   it('returns information about a condition if specified', () => {
-    discord.getMessage().content = '';
-
-    condition.run(discord.getMessage(), ['test']);
+    condition.run(message, ['test']);
 
     expect(send).toBeCalledWith(
       new MessageEmbed({ title: 'Test', description: 'Value1' })
@@ -51,9 +47,7 @@ describe('Condition', () => {
   });
 
   it('ignores casing of the condition name', () => {
-    discord.getMessage().content = '';
-
-    condition.run(discord.getMessage(), ['TEST']);
+    condition.run(message, ['TEST']);
 
     expect(send).toBeCalledWith(
       new MessageEmbed({ title: 'Test', description: 'Value1' })
@@ -61,9 +55,7 @@ describe('Condition', () => {
   });
 
   it('returns an error if condition is unrecognised', () => {
-    discord.getMessage().content = '';
-
-    condition.run(discord.getMessage(), ['mess']);
+    condition.run(message, ['mess']);
 
     expect(send).toBeCalledWith(
       new MessageEmbed({

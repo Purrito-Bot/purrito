@@ -1,20 +1,21 @@
 import Ping from '../ping';
-import MockDiscord from './testData';
 
 describe('Ping', () => {
   const ping = new Ping();
-  const discord = new MockDiscord();
+
   const send = jest.fn();
   const edit = jest.fn();
-  discord.getTextChannel().send = send;
-  discord.getMessage().edit = edit;
+  const message = {
+    createdTimestamp: 0,
+    channel: {
+      id: 'channelId',
+      send,
+    },
+    edit,
+  } as any;
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  afterAll(() => {
-    discord.getClient().destroy();
   });
 
   it('initialises with correct values', () => {
@@ -26,9 +27,9 @@ describe('Ping', () => {
   });
 
   it('sends message to channel then edits', async () => {
-    send.mockImplementationOnce(() => discord.getMessage());
+    send.mockImplementationOnce(() => message);
 
-    await ping.run(discord.getMessage());
+    await ping.run(message);
 
     expect(send).toHaveBeenCalledWith('Ping');
     expect(edit).toHaveBeenLastCalledWith('Pong! Latency is 0ms.');
